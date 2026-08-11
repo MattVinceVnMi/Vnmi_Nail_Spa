@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+<title>V&amp;Mi Nail Spa — Design Preview</title>
+
+<!--
+  STANDALONE VISUAL PREVIEW — not the production build.
+  Same design tokens, typography, layout, and motion feel as the Next.js app,
+  compressed into one file so it opens with a double-click. The real site is
+  app/ + components/ and is what you deploy.
+-->
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        bg:'#FBFAF8', surface:'#FFFFFF', 'surface-muted':'#F4F1EC',
+        border:'#E5DFD6', 'border-strong':'#D1C8BB',
+        ink:'#1C1917', muted:'#5F574E',
+        accent:'#A8813F', 'accent-ink':'#8A6A2F', espresso:'#2B241E',
+      },
+      fontFamily: {
+        display:['"Cormorant Garamond"','Georgia','serif'],
+        sans:['Inter','system-ui','sans-serif'],
+      },
+      transitionTimingFunction: { out:'cubic-bezier(0.23,1,0.32,1)' },
+    }
+  }
+}
+</script>
+
+<style>
+  :root{ --border:#E5DFD6; }
+  html{ scroll-behavior:smooth; scroll-padding-top:5.5rem; }
+  body{ background:#FBFAF8; color:#1C1917; font-family:Inter,system-ui,sans-serif; -webkit-font-smoothing:antialiased; }
+  .shell{ margin-inline:auto; width:100%; max-width:1216px; padding-inline:clamp(1.25rem,5vw,2.5rem); }
+  .d-xl{ font-size:clamp(2.75rem,7vw,5.25rem); line-height:.98; letter-spacing:-.025em; }
+  .d-lg{ font-size:clamp(2.25rem,5vw,3.75rem); line-height:1.04; letter-spacing:-.02em; }
+  .d-md{ font-size:clamp(1.75rem,3.5vw,2.5rem); line-height:1.12; letter-spacing:-.015em; }
+  .eyebrow{ font-size:.6875rem; line-height:1; letter-spacing:.22em; text-transform:uppercase; font-weight:500; color:#8A6A2F; }
+  .rule{ position:relative; display:block; height:1px; width:100%; background:var(--border); }
+  .rule::before{ content:''; position:absolute; left:0; top:0; height:1px; width:2.5rem; background:#A8813F; }
+  .sec{ padding-block:clamp(5rem,12vw,9rem); }
+
+  /* Scroll reveal — 16px of travel, fires once. */
+  .rv{ opacity:0; transform:translateY(16px); transition:opacity .62s cubic-bezier(.23,1,.32,1), transform .62s cubic-bezier(.23,1,.32,1); }
+  .rv.in{ opacity:1; transform:none; }
+
+  /* Hero line cascade */
+  .hl{ display:block; overflow:hidden; padding-bottom:.06em; }
+  .hl > span{ display:block; transform:translateY(.5em); opacity:0; transition:transform .82s cubic-bezier(.23,1,.32,1), opacity .82s cubic-bezier(.23,1,.32,1); }
+  .hl.in > span{ transform:none; opacity:1; }
+
+  :where(a,button,summary):focus-visible{ outline:none; box-shadow:0 0 0 2px #FBFAF8, 0 0 0 4px #A8813F; border-radius:2px; }
+  ::selection{ background:#F0E7D6; }
+
+  @media (hover:hover) and (pointer:fine){
+    .lift{ transition:border-color .2s cubic-bezier(.23,1,.32,1), background-color .2s cubic-bezier(.23,1,.32,1); }
+    .lift:hover{ border-color:#D1C8BB; background:#fff; }
+    .navlink span{ transform:scaleX(0); transform-origin:left; transition:transform .2s cubic-bezier(.23,1,.32,1); }
+    .navlink:hover span{ transform:scaleX(1); }
+    .btn .glare{ position:absolute; inset:0 auto 0 -100%; width:100%; background:linear-gradient(90deg,transparent,rgba(255,255,255,.28),transparent); transition:transform .62s cubic-bezier(.23,1,.32,1); }
+    .btn:hover .glare{ transform:translateX(200%); }
+  }
+  .btn{ transition:transform .14s cubic-bezier(.23,1,.32,1), background-color .2s, border-color .2s, color .2s; }
+  .btn:active{ transform:scale(.97); }
+
+  .faq-body{ display:grid; grid-template-rows:0fr; transition:grid-template-rows .32s cubic-bezier(.77,0,.175,1), opacity .2s cubic-bezier(.23,1,.32,1); opacity:0; }
+  .faq-body > div{ overflow:hidden; }
+  details[open] .faq-body{ grid-template-rows:1fr; opacity:1; }
+  details[open] .plus{ transform:rotate(45deg); }
+  .plus{ transition:transform .32s cubic-bezier(.23,1,.32,1); }
+  summary::-webkit-details-marker{ display:none; }
+
+  @keyframes mq{ from{transform:translateX(0)} to{transform:translateX(-50%)} }
+  .mq{ animation:mq 38s linear infinite; }
+  .fade-x{ -webkit-mask-image:linear-gradient(to right,transparent,#000 12%,#000 88%,transparent); mask-image:linear-gradient(to right,transparent,#000 12%,#000 88%,transparent); }
+
+  .pill{ transition:background-color .2s cubic-bezier(.23,1,.32,1), color .2s, border-color .2s; }
+  .no-sb::-webkit-scrollbar{ display:none; }
+
+  @media (prefers-reduced-motion:reduce){
+    html{ scroll-behavior:auto; }
+    *,*::before,*::after{ animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
+    .rv{ opacity:1; transform:none; }
+    .hl > span{ opacity:1; transform:none; }
+  }
+</style>
+</head>
+
+<body>
+
+<!-- ============================ NAV ============================ -->
+<header id="nav" class="fixed inset-x-0 top-0 z-50 border-b border-transparent transition-[background-color,border-color,backdrop-filter] duration-300 ease-out">
+  <nav class="shell flex h-[72px] items-center justify-between gap-6">
+    <a href="#top" class="font-display text-xl tracking-tight text-ink">V<span class="text-accent">&amp;</span>Mi<span class="ml-2 hidden align-middle text-[.6875rem] uppercase tracking-[.22em] text-muted sm:inline">Nail Spa</span></a>
+    <ul class="hidden items-center gap-9 md:flex">
+      <li><a href="#services" class="navlink relative inline-flex min-h-[44px] items-center text-[.8125rem] font-medium uppercase tracking-[.14em] text-muted transition-colors duration-200 ease-out hover:text-ink">Services<span class="absolute inset-x-0 bottom-[18px] h-px bg-accent"></span></a></li>
+      <li><a href="#studio" class="navlink relative inline-flex min-h-[44px] items-center text-[.8125rem] font-medium uppercase tracking-[.14em] text-muted transition-colors duration-200 ease-out hover:text-ink">The Studio<span class="absolute inset-x-0 bottom-[18px] h-px bg-accent"></span></a></li>
+      <li><a href="#visit" class="navlink relative inline-flex min-h-[44px] items-center text-[.8125rem] font-medium uppercase tracking-[.14em] text-muted transition-colors duration-200 ease-out hover:text-ink">Visit<span class="absolute inset-x-0 bottom-[18px] h-px bg-accent"></span></a></li>
+      <li><a href="#faq" class="navlink relative inline-flex min-h-[44px] items-center text-[.8125rem] font-medium uppercase tracking-[.14em] text-muted transition-colors duration-200 ease-out hover:text-ink">Questions<span class="absolute inset-x-0 bottom-[18px] h-px bg-accent"></span></a></li>
+    </ul>
+    <a href="tel:+15613671590" class="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-border-strong px-5 text-[.8125rem] font-medium tracking-[.06em] text-ink transition-colors duration-200 ease-out hover:border-ink">(561) 367-1590</a>
+  </nav>
+</header>
+
+<main id="top">
+
+<!-- ============================ HERO ============================ -->
+<section class="pt-[104px] sm:pt-[128px]">
+  <div class="shell">
+    <div class="grid items-end gap-12 lg:grid-cols-[1.05fr_.95fr] lg:gap-16">
+      <div class="pb-4 lg:pb-16">
+        <p class="eyebrow mb-8 rv">Est. Boca Raton &middot; Florida</p>
+        <h1 class="font-display d-xl text-ink">
+          <span class="hl" data-line="0"><span>Considered</span></span>
+          <span class="hl" data-line="1"><span>nail care in</span></span>
+          <span class="hl" data-line="2"><span>Boca <em class="italic text-accent not-italic" style="font-style:italic">Raton.</em></span></span>
+        </h1>
+        <p class="mt-8 max-w-[46ch] text-[1.0625rem] leading-[1.7] text-muted rv" style="transition-delay:.42s">A quiet studio on St Andrews. Classic manicures, restorative pedicures, and healthy-nail enhancements — performed slowly, and finished properly.</p>
+        <div class="mt-10 flex flex-wrap items-center gap-3 rv" style="transition-delay:.5s">
+          <a href="tel:+15613671590" class="btn relative inline-flex min-h-[48px] items-center justify-center overflow-hidden rounded-full bg-ink px-8 text-[.8125rem] font-medium uppercase tracking-[.16em] text-bg hover:bg-espresso"><span class="glare"></span><span class="relative">Call to book</span></a>
+          <a href="#services" class="btn relative inline-flex min-h-[48px] items-center justify-center overflow-hidden rounded-full border border-border-strong px-8 text-[.8125rem] font-medium uppercase tracking-[.16em] text-ink hover:border-ink"><span class="glare"></span><span class="relative">View the menu</span></a>
+        </div>
+        <dl class="mt-14 grid max-w-lg grid-cols-1 gap-px border border-border bg-border sm:grid-cols-2 rv" style="transition-delay:.58s">
+          <div class="bg-bg p-5">
+            <dt class="text-[.6875rem] uppercase tracking-[.22em] text-muted">Find us</dt>
+            <dd class="mt-3 text-[.9375rem] leading-relaxed text-ink">21214 St Andrews Blvd<br>Boca Raton, FL 33433</dd>
+          </div>
+          <div class="bg-bg p-5">
+            <dt class="text-[.6875rem] uppercase tracking-[.22em] text-muted">Open today</dt>
+            <dd class="mt-3 text-[.9375rem] leading-relaxed text-ink">9:30 AM — 7:00 PM<span class="mt-1 block text-muted">Sun 11:00 AM — 5:00 PM</span></dd>
+          </div>
+        </dl>
+      </div>
+
+      <figure class="relative rv" style="transition-delay:.16s">
+        <div class="relative aspect-[4/5] w-full overflow-hidden border border-border bg-surface-muted">
+          <div class="absolute inset-0 flex items-center justify-center"><span class="font-display text-sm italic text-muted">Studio photograph</span></div>
+        </div>
+        <figcaption class="mt-4 flex items-baseline justify-between border-t border-border pt-4 lg:absolute lg:-left-8 lg:bottom-10 lg:mt-0 lg:w-[15rem] lg:border lg:border-border lg:bg-bg lg:p-6">
+          <span class="font-display text-2xl text-ink">15+</span>
+          <span class="text-[.6875rem] uppercase tracking-[.22em] text-muted">Years of practice</span>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ MARQUEE ============================ -->
+<section aria-hidden="true" class="mt-24 border-y border-border bg-surface-muted py-6">
+  <div class="fade-x overflow-hidden">
+    <div class="mq flex w-max items-center gap-10" id="mq"></div>
+  </div>
+</section>
+
+<!-- ============================ STUDIO ============================ -->
+<section id="studio" class="sec">
+  <div class="shell">
+    <div class="grid gap-14 lg:grid-cols-[.85fr_1.15fr] lg:gap-20">
+      <div class="lg:sticky lg:top-28 lg:self-start rv">
+        <span class="rule mb-6"></span>
+        <p class="eyebrow mb-5">The Studio</p>
+        <h2 class="font-display d-lg text-ink">The difference is in what you don't have to think about.</h2>
+        <p class="mt-6 max-w-[62ch] text-[1.0625rem] leading-[1.7] text-muted">Most people can't name what makes one salon feel better than another. It's usually three things, and none of them are the polish colour.</p>
+      </div>
+      <ul class="flex flex-col" id="pillars"></ul>
+    </div>
+    <div class="mt-24 border-y border-border py-16 rv">
+      <blockquote class="mx-auto max-w-3xl text-center">
+        <p class="font-display d-md italic text-ink">&ldquo;You should leave with your hands looking like you have someone who does them — not like you went somewhere.&rdquo;</p>
+        <footer class="mt-8 text-[.6875rem] uppercase tracking-[.22em] text-muted">The V&amp;Mi standard</footer>
+      </blockquote>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ SERVICES ============================ -->
+<section id="services" class="border-t border-border bg-surface-muted sec">
+  <div class="shell">
+    <div class="flex flex-col gap-10 lg:flex-row lg:items-end lg:justify-between">
+      <div class="rv lg:max-w-2xl">
+        <span class="rule mb-6"></span>
+        <p class="eyebrow mb-5">Services</p>
+        <h2 class="font-display d-lg text-ink">The menu.</h2>
+        <p class="mt-6 max-w-[62ch] text-[1.0625rem] leading-[1.7] text-muted">Pricing is confirmed at booking — length, shape, and condition of the natural nail all move the number, and we'd rather quote you honestly than advertise a figure that changes at the chair.</p>
+      </div>
+      <div class="shrink-0 rv">
+        <a href="tel:+15613671590" class="btn relative inline-flex min-h-[48px] items-center justify-center overflow-hidden rounded-full border border-border-strong px-8 text-[.8125rem] font-medium uppercase tracking-[.16em] text-ink hover:border-ink"><span class="glare"></span><span class="relative">Ask about pricing</span></a>
+      </div>
+    </div>
+
+    <div class="mt-14 rv">
+      <div role="tablist" class="no-sb -mx-6 flex gap-2 overflow-x-auto px-6 pb-2 lg:mx-0 lg:flex-wrap lg:px-0" id="tabs" style="scrollbar-width:none"></div>
+    </div>
+
+    <div class="mt-16 min-h-[60vh]" id="menu"></div>
+
+    <div class="mt-20 border-t border-border pt-10 rv">
+      <p class="max-w-[62ch] text-base leading-[1.7] text-muted">Gift certificates available in any amount. Walk-ins welcome when the chairs allow — calling ahead is always the surer route.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ VISIT ============================ -->
+<section id="visit" class="sec">
+  <div class="shell">
+    <div class="rv">
+      <span class="rule mb-6"></span>
+      <p class="eyebrow mb-5">Visit</p>
+      <h2 class="font-display d-lg text-ink">21214 St Andrews Blvd.</h2>
+      <p class="mt-6 max-w-[62ch] text-[1.0625rem] leading-[1.7] text-muted">In the St Andrews plaza, Boca Raton. Parking directly in front.</p>
+    </div>
+
+    <div class="mt-16 grid gap-px border border-border bg-border lg:grid-cols-2">
+      <div class="bg-bg p-8 sm:p-12">
+        <div class="border-b border-border pb-8">
+          <p class="text-[.6875rem] uppercase tracking-[.22em] text-muted">Address</p>
+          <p class="mt-4 font-display text-2xl leading-snug text-ink">21214 St Andrews Blvd<br>Boca Raton, FL 33433</p>
+          <a href="https://www.google.com/maps/search/?api=1&query=21214+St+Andrews+Blvd+Boca+Raton+FL+33433" target="_blank" rel="noopener" class="mt-4 inline-flex min-h-[44px] items-center text-[.8125rem] font-medium uppercase tracking-[.12em] text-accent-ink transition-colors duration-200 ease-out hover:text-ink">Get directions →</a>
+        </div>
+        <div class="border-b border-border py-8">
+          <p class="text-[.6875rem] uppercase tracking-[.22em] text-muted">Telephone</p>
+          <a href="tel:+15613671590" class="mt-4 inline-flex min-h-[44px] items-center font-display text-2xl text-ink transition-colors duration-200 ease-out hover:text-accent-ink">(561) 367-1590</a>
+        </div>
+        <div class="pt-8">
+          <p class="text-[.6875rem] uppercase tracking-[.22em] text-muted">Hours</p>
+          <ul class="mt-4 flex flex-col gap-3">
+            <li class="flex flex-wrap items-baseline justify-between gap-x-6 border-b border-border pb-3"><span class="text-[.9375rem] text-ink">Monday — Saturday</span><span class="text-[.9375rem] tabular-nums text-muted">9:30 AM — 7:00 PM</span></li>
+            <li class="flex flex-wrap items-baseline justify-between gap-x-6"><span class="text-[.9375rem] text-ink">Sunday</span><span class="text-[.9375rem] tabular-nums text-muted">11:00 AM — 5:00 PM</span></li>
+          </ul>
+        </div>
+        <div class="mt-10">
+          <a href="tel:+15613671590" class="btn relative inline-flex min-h-[48px] items-center justify-center overflow-hidden rounded-full bg-ink px-8 text-[.8125rem] font-medium uppercase tracking-[.16em] text-bg hover:bg-espresso"><span class="glare"></span><span class="relative">Call to book</span></a>
+        </div>
+      </div>
+      <div class="bg-surface-muted">
+        <iframe title="Map to V&amp;Mi Nail Spa" src="https://www.google.com/maps?q=21214+St+Andrews+Blvd+Boca+Raton+FL+33433&output=embed" loading="lazy" class="aspect-square h-full w-full grayscale-[.35] contrast-[1.05]" style="border:0"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ FAQ ============================ -->
+<section id="faq" class="border-t border-border bg-surface-muted sec">
+  <div class="shell">
+    <div class="grid gap-14 lg:grid-cols-[.8fr_1.2fr] lg:gap-20">
+      <div class="lg:sticky lg:top-28 lg:self-start rv">
+        <span class="rule mb-6"></span>
+        <p class="eyebrow mb-5">Questions</p>
+        <h2 class="font-display d-lg text-ink">Before you come in.</h2>
+        <p class="mt-8 max-w-[62ch] text-base leading-[1.7] text-muted">Anything not covered here, call the studio — <a href="tel:+15613671590" class="text-accent-ink underline decoration-accent/40 underline-offset-4 hover:text-ink">(561) 367-1590</a>.</p>
+      </div>
+      <ul class="flex flex-col border-t border-border rv" id="faqs"></ul>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============================ FOOTER ============================ -->
+<footer class="bg-espresso text-bg">
+  <div class="shell sec">
+    <div class="border-b border-bg/10 pb-16 rv">
+      <p class="text-[.6875rem] uppercase tracking-[.22em] text-accent">Book</p>
+      <h2 class="mt-6 max-w-3xl font-display d-lg">The chair is warm and the kettle is on.</h2>
+      <a href="tel:+15613671590" class="mt-10 inline-flex min-h-[56px] items-center gap-4 font-display d-md transition-colors duration-200 ease-out hover:text-accent">(561) 367-1590</a>
+    </div>
+    <div class="grid gap-12 pt-16 sm:grid-cols-2 lg:grid-cols-4">
+      <div class="lg:col-span-2">
+        <p class="font-display text-2xl">V<span class="text-accent">&amp;</span>Mi<span class="ml-3 align-middle text-[.6875rem] uppercase tracking-[.22em] text-bg/60">Nail Spa</span></p>
+        <p class="mt-5 max-w-sm text-[.9375rem] leading-relaxed text-bg/60">A quiet, meticulous nail studio in Boca Raton. Classic manicures, restorative pedicures, and healthy-nail enhancements — performed slowly and finished properly.</p>
+      </div>
+      <div>
+        <p class="text-[.6875rem] uppercase tracking-[.22em] text-bg/50">Explore</p>
+        <ul class="mt-6 flex flex-col gap-1 text-[.9375rem] text-bg/75">
+          <li><a href="#services" class="inline-flex min-h-[40px] items-center hover:text-accent">Services</a></li>
+          <li><a href="#studio" class="inline-flex min-h-[40px] items-center hover:text-accent">The Studio</a></li>
+          <li><a href="#visit" class="inline-flex min-h-[40px] items-center hover:text-accent">Visit</a></li>
+          <li><a href="#faq" class="inline-flex min-h-[40px] items-center hover:text-accent">Questions</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="text-[.6875rem] uppercase tracking-[.22em] text-bg/50">Find us</p>
+        <p class="mt-6 text-[.9375rem] leading-relaxed text-bg/75">21214 St Andrews Blvd<br>Boca Raton, FL 33433</p>
+        <p class="mt-6 text-[.8125rem] text-bg/60"><span class="block text-bg/75">Mon — Sat</span>9:30 AM — 7:00 PM</p>
+        <p class="mt-2 text-[.8125rem] text-bg/60"><span class="block text-bg/75">Sunday</span>11:00 AM — 5:00 PM</p>
+      </div>
+    </div>
+    <div class="mt-16 flex flex-col gap-3 border-t border-bg/10 pt-8 text-xs text-bg/45 sm:flex-row sm:justify-between">
+      <p>&copy; <span id="yr"></span> V&amp;Mi Nail Spa. All rights reserved.</p><p>Boca Raton, Florida</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+const PRICE = '$[PRICE]';
+
+const services = [
+  { id:'manicure', title:'Manicure', kicker:'Hands', items:[
+    { name:'Basic Manicure', description:'A classic touch of elegance. Includes nail trimming and shaping, precise cuticle grooming, gentle buffing, a relaxing lotion massage, hot towel service, and finished with your choice of polish.', price:PRICE },
+    { name:'V&Mi Deluxe Manicure', signature:true, description:'An extension of our Basic Manicure for ultimate hand rejuvenation. Features an exfoliating sugar scrub (lavender, green tea, or citrus) and paraffin wax to deeply soften your arms. Finished with a hot towel service and an extended hand and arm massage.', price:PRICE },
+    { name:'Gel Manicure', description:'Long-lasting, flawless shine. A hybrid formula that applies like polish but wears like gel — providing strong natural nail protection with zero drying time and zero chipping.', price:PRICE },
+  ]},
+  { id:'pedicure', title:'Pedicure', kicker:'Feet', items:[
+    { name:'Basic Pedicure', description:'Essential foot care. Includes nail trimming, shaping, cuticle grooming, buffing, a soothing lotion massage, hot towel wrap, and a polish of your choice.', price:PRICE },
+    { name:'V&Mi Deluxe Pedicure', signature:true, description:'Revitalizing luxury for your legs and feet. Includes our Basic Pedicure plus a callus remover and your choice of exfoliating sugar scrub (lavender or green tea). Completed with a hot towel service and an extended foot and leg massage.', price:PRICE },
+    { name:'Organic Pedicure', description:"Nature's best for your feet. Features a callus treatment alongside a premium exfoliating organic sugar scrub (lavender, lemon, or mandarin) to gently remove dead skin and restore moisture.", price:PRICE },
+    { name:'Jelly Spa Pedicure', signature:true, description:'An unforgettable, ultra-luxurious experience. Submerge your feet in a unique jelly foot soak that retains heat four times longer than water. Includes a 10-minute jelly soak, special neck wrap relaxation, and the full Deluxe Pedicure treatment.', price:PRICE },
+  ]},
+  { id:'dip', title:'Dipping Powder', kicker:'Healthy Nails', note:'Lightweight, vitamin-rich, and cured without UV light.', items:[
+    { name:'Dipping Powder Full Set', description:'A lightweight, durable, and vitamin-rich alternative for vibrant, strong nails.', price:PRICE },
+    { name:'Dipping Powder Pink & White Full Set', description:'A timeless, classic French look achieved with long-lasting dipping powder.', price:PRICE },
+    { name:'Ombré Full Set', description:'A seamless, modern gradient colour blend using durable dip powder.', price:PRICE },
+    { name:'Shape & Tip Additions', description:'Refine the silhouette or add length to any dipping powder set.', tiers:[{label:'Almond / Coffin / Stiletto shape',price:PRICE},{label:'Add with tip',price:PRICE}] },
+  ]},
+  { id:'enh', title:'Nail Enhancements', kicker:'Extensions', items:[
+    { name:'Solar', description:'Premium acrylic enhancements for a durable, natural look.', tiers:[{label:'Full set',price:PRICE},{label:'Fill-in',price:PRICE}] },
+    { name:'Liquid Gel', description:'A glossy, lightweight enhancement that is flexible and natural-looking.', tiers:[{label:'Full set',price:PRICE},{label:'Fill-in',price:PRICE}] },
+  ]},
+  { id:'wax', title:'Waxing', kicker:'Skin', items:[
+    { name:'Facial Waxing', description:'Gentle hair removal, shaped to the face.', price:PRICE, options:['Eyebrows','Upper lip','Chin','Nose','Ears','Sideburns','Full face'] },
+    { name:'Body Waxing', description:'Smooth, flawless skin.', price:PRICE, options:['Arms (half / full)','Legs (half / full)','Underarms','Back','Bikini','Brazilian'] },
+  ]},
+  { id:'addons', title:'Additional & Add-On', kicker:'Finishing', items:[
+    { name:'Custom Design', description:'French design, intricate nail art, or nail repairs.', price:PRICE },
+    { name:'Paraffin Treatment', description:'Intense moisture therapy using warm paraffin wax to soothe and soften skin for hands or feet.', price:PRICE },
+    { name:'Polish & Removals', description:'Gel and regular polish changes, plus gentle acrylic and gel removals.', price:PRICE },
+  ]},
+  { id:'kids', title:'Kid Services', kicker:'Under 10', items:[
+    { name:'Princess Manicure & Pedicure', description:'Gentle, fun, and safe nail care tailored specifically for our younger guests.', price:PRICE },
+  ]},
+];
+
+const pillars = [
+  ['Sanitation, without exception','Hospital-grade autoclave sterilisation. Single-use files and buffers, opened in front of you. Pipeless jetless pedicure basins, disinfected between every guest.'],
+  ['Products that respect the nail','Vitamin-enriched dipping powders, low-odour liquid gel, and organic sugar scrubs. Nothing that trades the health of the natural nail for a faster set.'],
+  ['Unhurried by design','We book to the treatment, not to the clock. A deluxe pedicure gets the full massage it was written for — including the parts most salons quietly skip.'],
+];
+
+const faqs = [
+  ['Do I need an appointment?','Walk-ins are welcome whenever a chair is open, but Fridays and Saturdays fill early. A call ahead is the surest way to get the time and the technician you want.'],
+  ['How long does dipping powder actually last?','Three to four weeks on most people, without chipping. It is lighter than acrylic, cures without UV light, and is vitamin-enriched — which is why it is the set we recommend for anyone trying to grow their natural nails out.'],
+  ['What makes the Jelly Spa Pedicure different?','The jelly soak holds heat roughly four times longer than water, so the treatment stays warm from the first minute to the last. It includes a 10-minute soak, a warmed neck wrap, and the complete Deluxe Pedicure on top.'],
+  ['How do you handle sanitation?','Metal implements are autoclave-sterilised between every guest. Files, buffers, and pumice are single-use and opened in front of you. Pedicure basins are pipeless and fully disinfected after each service.'],
+  ['Can you remove work from another salon?','Yes — gel, acrylic, and dip removals are all on the menu. We soak off rather than drill down wherever the nail allows it, which takes longer but leaves the nail plate intact.'],
+  ['Do you take children?','We do. The Princess Manicure & Pedicure is designed for guests under 10 — shorter, gentler, and priced accordingly.'],
+];
+
+const esc = (s) => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+
+/* ---- marquee ---- */
+const words = ['Manicure','Pedicure','Dipping Powder','Gel','Ombré','Solar','Liquid Gel','Waxing','Paraffin','Nail Art'];
+document.getElementById('mq').innerHTML = [...words,...words].map(w =>
+  `<span class="flex shrink-0 items-center gap-10"><span class="font-display text-lg italic text-muted">${esc(w)}</span><span class="h-1 w-1 rounded-full bg-accent"></span></span>`).join('');
+
+/* ---- pillars ---- */
+document.getElementById('pillars').innerHTML = pillars.map(([t,b]) =>
+  `<li class="lift rv border-t border-border py-10 first:border-t-0 first:pt-0"><h3 class="font-display d-md text-ink">${esc(t)}</h3><p class="mt-4 max-w-[62ch] text-base leading-[1.7] text-muted">${esc(b)}</p></li>`).join('');
+
+/* ---- faqs ---- */
+document.getElementById('faqs').innerHTML = faqs.map(([q,a],i) =>
+  `<li class="border-b border-border"><details ${i===0?'open':''} name="faq"><summary class="flex min-h-[72px] cursor-pointer list-none items-center justify-between gap-6 py-6"><span class="font-display text-xl text-ink sm:text-2xl">${esc(q)}</span><span class="plus inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-border-strong text-ink">+</span></summary><div class="faq-body"><div><p class="max-w-[62ch] pb-8 pr-14 text-base leading-[1.7] text-muted">${esc(a)}</p></div></div></details></li>`).join('');
+
+/* ---- services ---- */
+function row(it){
+  const price = it.tiers
+    ? `<ul class="flex flex-col gap-2">${it.tiers.map(t=>`<li class="flex items-baseline justify-between gap-4 sm:justify-end"><span class="text-xs uppercase tracking-[.12em] text-muted">${esc(t.label)}</span><span class="font-display text-lg tabular-nums text-ink">${esc(t.price)}</span></li>`).join('')}</ul>`
+    : `<span class="font-display text-xl tabular-nums text-ink">${esc(it.price)}</span>`;
+  const opts = it.options ? `<ul class="mt-4 flex flex-wrap gap-x-3 gap-y-2">${it.options.map(o=>`<li class="rounded-full border border-border bg-bg px-3 py-1 text-xs text-muted">${esc(o)}</li>`).join('')}</ul>` : '';
+  const sig = it.signature ? `<span class="rounded-full border border-accent px-2.5 py-0.5 text-[.625rem] font-medium uppercase tracking-[.16em] text-accent-ink">Signature</span>` : '';
+  return `<li class="lift border-b border-border px-4 py-7 first:border-t first:border-border sm:px-6"><div class="flex flex-col gap-4 sm:flex-row sm:items-baseline sm:justify-between sm:gap-10"><div class="min-w-0 flex-1"><h4 class="flex flex-wrap items-center gap-3 font-display text-xl text-ink">${esc(it.name)}${sig}</h4><p class="mt-3 max-w-[62ch] text-[.9375rem] leading-relaxed text-muted">${esc(it.description)}</p>${opts}</div><div class="shrink-0 sm:min-w-[9.5rem] sm:text-right">${price}</div></div></li>`;
+}
+function block(c){
+  return `<div><div class="mb-8 flex flex-wrap items-baseline justify-between gap-4 border-b border-border-strong pb-5"><h3 class="font-display d-md text-ink">${esc(c.title)}</h3><span class="text-[.6875rem] uppercase tracking-[.22em] text-accent-ink">${esc(c.kicker)}</span></div>${c.note?`<p class="mb-8 max-w-[62ch] text-base leading-[1.7] text-muted">${esc(c.note)}</p>`:''}<ul class="flex flex-col">${c.items.map(row).join('')}</ul></div>`;
+}
+const menu = document.getElementById('menu');
+function render(id){
+  const list = id==='all' ? services : services.filter(c=>c.id===id);
+  menu.style.opacity = 0;
+  setTimeout(()=>{ menu.innerHTML = `<div class="flex flex-col gap-20">${list.map(block).join('')}</div>`; menu.style.opacity = 1; }, 120);
+}
+menu.style.transition = 'opacity .2s cubic-bezier(.23,1,.32,1)';
+
+const tabs = [{id:'all',title:'Everything'}, ...services.map(({id,title})=>({id,title}))];
+const tabEl = document.getElementById('tabs');
+tabEl.innerHTML = tabs.map((t,i)=>`<button role="tab" data-id="${t.id}" aria-selected="${i===0}" class="pill relative inline-flex min-h-[44px] shrink-0 items-center rounded-full border px-5 text-[.8125rem] font-medium tracking-[.06em] ${i===0?'border-ink bg-ink text-bg':'border-border-strong text-muted hover:border-ink hover:text-ink'}">${esc(t.title)}</button>`).join('');
+tabEl.addEventListener('click', e => {
+  const b = e.target.closest('button[data-id]'); if(!b) return;
+  tabEl.querySelectorAll('button').forEach(x=>{
+    const on = x===b;
+    x.setAttribute('aria-selected', on);
+    x.className = `pill relative inline-flex min-h-[44px] shrink-0 items-center rounded-full border px-5 text-[.8125rem] font-medium tracking-[.06em] ${on?'border-ink bg-ink text-bg':'border-border-strong text-muted hover:border-ink hover:text-ink'}`;
+  });
+  render(b.dataset.id);
+});
+render('all');
+
+/* ---- scroll reveal ---- */
+const io = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin:'-8% 0px -8% 0px' });
+function observe(){ document.querySelectorAll('.rv:not(.in)').forEach(el => io.observe(el)); }
+observe();
+new MutationObserver(observe).observe(document.body, { childList:true, subtree:true });
+
+/* ---- hero cascade ---- */
+document.querySelectorAll('.hl').forEach((el,i)=> setTimeout(()=>el.classList.add('in'), 80 + i*90));
+
+/* ---- nav solidify ---- */
+const nav = document.getElementById('nav');
+const onScroll = () => nav.className = window.scrollY > 24
+  ? 'fixed inset-x-0 top-0 z-50 border-b border-border bg-bg/85 backdrop-blur-md transition-[background-color,border-color,backdrop-filter] duration-300 ease-out'
+  : 'fixed inset-x-0 top-0 z-50 border-b border-transparent transition-[background-color,border-color,backdrop-filter] duration-300 ease-out';
+window.addEventListener('scroll', onScroll, { passive:true }); onScroll();
+
+document.getElementById('yr').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

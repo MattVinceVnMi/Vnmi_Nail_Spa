@@ -1,0 +1,104 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==========================================================================
+   TOKEN MATRIX
+   Channel-separated RGB so Tailwind's <alpha-value> works (bg-ink/10 etc).
+   ========================================================================== */
+
+@layer base {
+  :root {
+    --bg: 251 250 248; /* #FBFAF8  bone */
+    --surface: 255 255 255; /* #FFFFFF */
+    --surface-muted: 244 241 236; /* #F4F1EC  warm linen */
+    --border: 229 223 214; /* #E5DFD6  hairline */
+    --border-strong: 209 200 187; /* #D1C8BB */
+    --text: 28 25 23; /* #1C1917  espresso ink   15.9:1 */
+    --text-muted: 95 87 78; /* #5F574E              6.4:1  */
+    --accent: 168 129 63; /* #A8813F  brand gold   3.4:1 — large/decorative only */
+    --accent-ink: 138 106 47; /* #8A6A2F  gold text    4.6:1 — body-safe */
+    --accent-soft: 240 231 214; /* #F0E7D6 */
+    --espresso: 43 36 30; /* #2B241E  footer surface */
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* Offset anchor targets so the fixed nav never covers a heading. */
+    scroll-padding-top: 5.5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-bg text-ink font-sans text-body antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Visible, branded focus ring on every interactive element.
+     :focus-visible only — mouse users never see it, keyboard users always do. */
+  :where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+    @apply outline-none ring-2 ring-accent ring-offset-2 ring-offset-bg rounded-[2px];
+  }
+
+  ::selection {
+    @apply bg-accent-soft text-ink;
+  }
+
+  /* Reduced motion: kill decorative loops outright. Framer Motion transitions
+     are handled per-component via useReducedMotion so they degrade to a
+     crossfade rather than snapping. */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  .shell {
+    @apply mx-auto w-full max-w-shell px-gutter;
+  }
+
+  .eyebrow {
+    @apply font-sans text-eyebrow font-medium uppercase text-accent-ink;
+  }
+
+  /* Hairline rule with a gold seed — used above every section eyebrow.
+     Borders over shadows, everywhere. */
+  .rule {
+    @apply relative block h-px w-full bg-border;
+  }
+  .rule::before {
+    content: '';
+    @apply absolute left-0 top-0 h-px w-10 bg-accent;
+  }
+}
+
+@layer utilities {
+  /* Hover-only affordances are gated so they never fire on touch, where
+     :hover sticks after a tap and makes the UI feel broken. */
+  @media (hover: hover) and (pointer: fine) {
+    .hover-lift {
+      @apply transition-[border-color,background-color] duration-hover ease-out;
+    }
+    .hover-lift:hover {
+      @apply border-border-strong bg-surface;
+    }
+  }
+
+  .mask-fade-x {
+    -webkit-mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+  }
+}
