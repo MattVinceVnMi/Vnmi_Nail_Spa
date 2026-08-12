@@ -1,21 +1,27 @@
 'use client';
 
+import Image from 'next/image';
 import { motion, useReducedMotion } from 'framer-motion';
-import { MapPin, Clock } from 'lucide-react';
+import { Phone } from 'lucide-react';
 import { business } from '@/data/business';
+import { media } from '@/data/media';
 import { Button } from '@/components/ui/Button';
-import { ease, duration } from '@/lib/motion';
+import { ease } from '@/lib/motion';
 
 /**
- * Hero. No orbs, no mesh gradients, no floating glass cards.
+ * Full-bleed hero — mirrors Nail Mark's structure (background image, overlay,
+ * centred content, scroll indicator) but elevated: a serif headline instead of
+ * a sans one, a real tonal scrim instead of a flat black wash, and no emoji in
+ * the buttons.
  *
- * The composition does the work: a very large serif headline against a lot of
- * bone-coloured space, one hairline rule, and a single image held in a tall
- * portrait frame. Restraint is the luxury signal.
+ * The image is `priority` + `fill` inside a wrapper with a locked height, so
+ * it is the LCP element and it reserves its own box. Nothing shifts.
  *
- * The headline animates in as three lines with a 90ms cascade. This is the one
- * place on the page with a longer, more deliberate entrance — it happens once,
- * on arrival, and it sets the pace for everything below.
+ * The scrim is two stacked gradients rather than one flat overlay: a vertical
+ * darkening from the bottom (so the text has a floor to sit on) and a gentle
+ * top vignette (so the fixed nav stays legible over any photo). Both are
+ * declared here rather than baked into the image, so swapping the photo
+ * doesn't require re-editing it.
  */
 
 const HEADLINE = ['Considered', 'nail care in', 'Boca Raton.'];
@@ -31,7 +37,7 @@ export function Hero() {
       transition: {
         duration: reduced ? 0.24 : 0.82,
         ease: ease.out,
-        delay: reduced ? 0 : 0.08 + i * 0.09,
+        delay: reduced ? 0 : 0.14 + i * 0.09,
       },
     }),
   };
@@ -41,140 +47,147 @@ export function Hero() {
     visible: (i) => ({
       opacity: 1,
       y: 0,
-      transition: { duration: reduced ? 0.24 : duration.reveal, ease: ease.out, delay: 0.42 + i * 0.08 },
+      transition: { duration: reduced ? 0.24 : 0.62, ease: ease.out, delay: 0.42 + i * 0.09 },
     }),
   };
 
   return (
-    <section id="top" className="relative overflow-hidden pt-[104px] sm:pt-[128px]">
-      <div className="shell">
-        <div className="grid items-end gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
-          {/* ---------------------------------------------------------------- */}
-          <div className="pb-4 lg:pb-16">
-            <motion.p
-              className="eyebrow mb-8"
-              variants={fade}
-              custom={-4}
-              initial="hidden"
-              animate="visible"
-            >
-              Est. Boca Raton &middot; Florida
-            </motion.p>
+    <section
+      id="top"
+      aria-label="Introduction"
+      className="relative flex min-h-[92svh] items-center justify-center overflow-hidden"
+    >
+      {/* Background. Slow ken-burns drift — 18s, 1.06 scale. Transform only,
+          GPU-composited, and killed entirely under reduced motion. */}
+      <motion.div
+        className="absolute inset-0"
+        initial={{ scale: reduced ? 1 : 1.06 }}
+        animate={{ scale: 1 }}
+        transition={{ duration: reduced ? 0 : 18, ease: 'linear' }}
+      >
+        <Image
+          src={media.hero.src}
+          alt={media.hero.alt}
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
+        />
+      </motion.div>
 
-            <h1 className="font-display text-display-xl text-ink">
-              {HEADLINE.map((text, i) => (
-                // Each line gets a clipping wrapper so the text rises out of
-                // nothing rather than fading in place. overflow-hidden on a
-                // block with fixed line-height cannot shift layout.
-                <span key={text} className="block overflow-hidden pb-[0.06em]">
-                  <motion.span
-                    className="block"
-                    variants={line}
-                    custom={i}
-                    initial="hidden"
-                    animate="visible"
-                  >
-                    {i === 2 ? (
-                      <>
-                        Boca <span className="italic text-accent">Raton.</span>
-                      </>
-                    ) : (
-                      text
-                    )}
-                  </motion.span>
-                </span>
-              ))}
-            </h1>
-
-            <motion.p
-              className="mt-8 max-w-[46ch] text-body-lg text-muted"
-              variants={fade}
-              custom={0}
-              initial="hidden"
-              animate="visible"
-            >
-              A quiet studio on St Andrews. Classic manicures, restorative pedicures, and
-              healthy-nail enhancements — performed slowly, and finished properly.
-            </motion.p>
-
-            <motion.div
-              className="mt-10 flex flex-wrap items-center gap-3"
-              variants={fade}
-              custom={1}
-              initial="hidden"
-              animate="visible"
-            >
-              <Button href={business.phone.href} variant="primary">
-                Call to book
-              </Button>
-              <Button href="#services" variant="outline">
-                View the menu
-              </Button>
-            </motion.div>
-
-            <motion.dl
-              className="mt-14 grid max-w-lg grid-cols-1 gap-px border border-border bg-border sm:grid-cols-2"
-              variants={fade}
-              custom={2}
-              initial="hidden"
-              animate="visible"
-            >
-              <div className="bg-bg p-5">
-                <dt className="flex items-center gap-2 text-eyebrow uppercase text-muted">
-                  <MapPin className="h-3.5 w-3.5 text-accent" aria-hidden="true" />
-                  Find us
-                </dt>
-                <dd className="mt-3 text-[0.9375rem] leading-relaxed text-ink">
-                  {business.address.street}
-                  <br />
-                  {business.address.city}, {business.address.state} {business.address.zip}
-                </dd>
-              </div>
-              <div className="bg-bg p-5">
-                <dt className="flex items-center gap-2 text-eyebrow uppercase text-muted">
-                  <Clock className="h-3.5 w-3.5 text-accent" aria-hidden="true" />
-                  Open today
-                </dt>
-                <dd className="mt-3 text-[0.9375rem] leading-relaxed text-ink">
-                  {business.hours[0].display}
-                  <span className="mt-1 block text-muted">Sun {business.hours[1].display}</span>
-                </dd>
-              </div>
-            </motion.dl>
-          </div>
-
-          {/* ---------------------------------------------------------------- */}
-          {/* Portrait frame. aspect-[4/5] reserves the box before the image
-              resolves, so there is no shift when it paints. Swap the inner
-              placeholder for next/image with the same aspect ratio. */}
-          <motion.figure
-            className="relative"
-            initial={{ opacity: 0, scale: reduced ? 1 : 1.02 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: reduced ? 0.3 : 1.1, ease: ease.out, delay: 0.16 }}
-          >
-            <div className="relative aspect-[4/5] w-full overflow-hidden border border-border bg-surface-muted">
-              {/*
-                TODO(vince): replace with
-                <Image src="/hero.jpg" alt="…" fill priority sizes="(max-width:1024px) 100vw, 46vw" className="object-cover" />
-                Keep the wrapper's aspect-[4/5] — that is what holds CLS at 0.
-              */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="font-display text-sm italic tracking-wide text-muted">
-                  Studio photograph
-                </span>
-              </div>
-            </div>
-
-            {/* Offset caption plate. Absolute + fixed dimensions, so it cannot
-                push the figure around at any breakpoint. */}
-            <figcaption className="mt-4 flex items-baseline justify-between border-t border-border pt-4 lg:absolute lg:-left-8 lg:bottom-10 lg:mt-0 lg:w-[15rem] lg:border-t-0 lg:bg-bg lg:p-6 lg:pt-6 lg:[border:1px_solid_rgb(var(--border))]">
-              <span className="font-display text-2xl text-ink">15+</span>
-              <span className="text-eyebrow uppercase text-muted">Years of practice</span>
-            </figcaption>
-          </motion.figure>
-        </div>
+      {/* Scrim. Sits between image and content; never intercepts pointer events. */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+        <div className="absolute inset-0 bg-gradient-to-t from-espresso/80 via-espresso/45 to-espresso/25" />
+        <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-espresso/55 to-transparent" />
       </div>
+
+      <div className="shell relative z-10 py-32 text-center">
+        <motion.p
+          className="text-[0.6875rem] font-medium uppercase tracking-[0.22em] text-accent"
+          variants={fade}
+          custom={-3.6}
+          initial="hidden"
+          animate="visible"
+        >
+          Boca Raton&rsquo;s St Andrews Plaza
+        </motion.p>
+
+        <h1 className="mt-8 font-display text-display-xl text-bg">
+          {HEADLINE.map((text, i) => (
+            <span key={text} className="block overflow-hidden pb-[0.06em]">
+              <motion.span className="block" variants={line} custom={i} initial="hidden" animate="visible">
+                {i === 2 ? (
+                  <>
+                    Boca <span className="italic text-accent">Raton.</span>
+                  </>
+                ) : (
+                  text
+                )}
+              </motion.span>
+            </span>
+          ))}
+        </h1>
+
+        <motion.p
+          className="mx-auto mt-8 max-w-[52ch] text-body-lg text-bg/75"
+          variants={fade}
+          custom={0}
+          initial="hidden"
+          animate="visible"
+        >
+          A quiet studio on St Andrews. Classic manicures, restorative pedicures, and healthy-nail
+          enhancements — performed slowly, and finished properly.
+        </motion.p>
+
+        <motion.div
+          className="mt-11 flex flex-wrap items-center justify-center gap-3"
+          variants={fade}
+          custom={1}
+          initial="hidden"
+          animate="visible"
+        >
+          <Button href={business.phone.href} variant="primary" className="!bg-accent !text-espresso hover:!bg-[#B9924C]">
+            <Phone className="mr-2 h-4 w-4" aria-hidden="true" />
+            Call to book
+          </Button>
+          <Button
+            href="#services"
+            variant="outline"
+            className="!border-bg/35 !text-bg hover:!border-bg"
+          >
+            View the menu
+          </Button>
+        </motion.div>
+
+        {/* At-a-glance strip. Hairline dividers, no boxes — the photo behind is
+            doing enough work already. */}
+        <motion.dl
+          className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-y-6 border-t border-bg/15 pt-8 text-left sm:grid-cols-3 sm:gap-x-8 sm:text-center"
+          variants={fade}
+          custom={2}
+          initial="hidden"
+          animate="visible"
+        >
+          <div>
+            <dt className="text-[0.6875rem] uppercase tracking-[0.22em] text-bg/50">Mon — Sat</dt>
+            <dd className="mt-2 text-[0.9375rem] tabular-nums text-bg">{business.hours[0].display}</dd>
+          </div>
+          <div className="sm:border-x sm:border-bg/15">
+            <dt className="text-[0.6875rem] uppercase tracking-[0.22em] text-bg/50">Sunday</dt>
+            <dd className="mt-2 text-[0.9375rem] tabular-nums text-bg">{business.hours[1].display}</dd>
+          </div>
+          <div>
+            <dt className="text-[0.6875rem] uppercase tracking-[0.22em] text-bg/50">Telephone</dt>
+            <dd className="mt-2">
+              <a
+                href={business.phone.href}
+                className="text-[0.9375rem] text-bg transition-colors duration-hover ease-out hover:text-accent"
+              >
+                {business.phone.display}
+              </a>
+            </dd>
+          </div>
+        </motion.dl>
+      </div>
+
+      {/* Scroll indicator — a hairline that travels down its own track. */}
+      <motion.div
+        aria-hidden="true"
+        className="absolute bottom-8 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-3 sm:flex"
+        variants={fade}
+        custom={3}
+        initial="hidden"
+        animate="visible"
+      >
+        <span className="text-[0.625rem] uppercase tracking-[0.22em] text-bg/50">Scroll</span>
+        <span className="relative block h-14 w-px overflow-hidden bg-bg/20">
+          <motion.span
+            className="absolute inset-x-0 top-0 block h-5 bg-accent"
+            animate={reduced ? {} : { y: ['-100%', '340%'] }}
+            transition={{ duration: 2.4, ease: 'easeInOut', repeat: Infinity, repeatDelay: 0.4 }}
+          />
+        </span>
+      </motion.div>
     </section>
   );
 }

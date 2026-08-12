@@ -61,8 +61,9 @@ export const business = {
 };
 
 export const nav = [
+  { label: 'Story', href: '#about' },
   { label: 'Services', href: '#services' },
-  { label: 'The Studio', href: '#studio' },
+  { label: 'Gallery', href: '#gallery' },
   { label: 'Visit', href: '#visit' },
   { label: 'Questions', href: '#faq' },
 ];

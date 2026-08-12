@@ -21,12 +21,22 @@ npm run build    # last verified green: 136 kB First Load JS, fully static
 | `app/globals.css` | Token matrix (CSS vars), base layer, focus rings, reduced-motion |
 | `data/business.js` | NAP, hours, nav, JSON-LD builder — **single source of truth** |
 | `data/services.js` | Full service menu |
+| `data/media.js` | Image manifest + testimonial copy |
 | `lib/motion.js` | Spring / ease / duration tokens, reveal variants |
 | `components/ui/` | `Button`, `Reveal`, `SectionHeading` — the only primitives |
 | `components/` | One file per section |
+| `public/` | Placeholder JPGs — `hero`, `about`, `gallery-01..08` |
 | `preview.html` | Standalone facsimile for viewing. **Not the build.** See below |
 
-Client Components (`'use client'`): `Nav`, `Hero`, `Services`, `FAQ`, `ui/Button`, `ui/Reveal`. Everything else is static and must stay that way.
+**Section order** (mirrors the Nail Mark reference): hero → marquee → about → services → studio → gallery → testimonials → visit → faq → cta.
+
+**The footer is a copyright line and nothing else.** Stripped at Vince's request — no nav, no repeated NAP, no socials. Everything it used to duplicate is already on the page: `Visit` carries the address, both hour blocks, and the map; the phone number is in the nav and the CTA. Do not repopulate it without asking.
+
+**Surface rhythm.** No two adjacent sections share a background: hero(photo) · marquee(linen) · about(bone) · services(linen) · studio(**espresso**) · gallery(bone) · testimonials(linen) · visit(bone) · faq(linen) · cta(**espresso**). The footer is the one deliberate exception — it shares the CTA's espresso so the two read as a single closing block, separated only by a hairline. If you add a section, keep the alternation.
+
+**The copyright year is baked at build time** (static prerender), so it reads whatever year the last deploy happened in. Rebuild to refresh, or drop the year — `© V&Mi Nail Spa` never expires.
+
+Client Components (`'use client'`): `Nav`, `Hero`, `Services`, `Gallery`, `Testimonials`, `FAQ`, `ui/Button`, `ui/Reveal`. Everything else is static and must stay that way.
 
 Path alias is `@/*` → project root (`jsconfig.json`).
 
@@ -76,8 +86,8 @@ A hand-rolled single-file facsimile using the Tailwind CDN and vanilla JS, so th
 ## Open work
 
 1. **Prices** — replace the `PRICE` sentinel.
-2. **Hero image** — placeholder in `Hero.js`. Swap for `next/image` with `fill` + `priority`, keep the wrapper's `aspect-[4/5]`.
-3. **Gallery section** — does not exist yet. Highest-leverage addition for a salon, blocked on real photos. A grid of grey rectangles is worse than no grid.
+2. **Photography** — every file in `/public` is a generated placeholder. Replace by dropping real photos in at the **same filenames and aspect ratios** (`hero.jpg` 3:2, `about.jpg` 4:5, `gallery-01.jpg` 4:5, `gallery-02..08.jpg` 1:1). Update `alt` text in `data/media.js` at the same time. If a ratio changes, change the wrapper class too — don't let it letterbox.
+3. **Testimonials** — `data/media.js` exports four sample quotes flagged `placeholder: true`, and the UI labels them "sample". Swap for real Google reviews and drop the flag. **Do not ship the samples unlabelled as real reviews.**
 4. **FAQ copy** — `components/FAQ.js` questions are inferred from the service menu, not from real customer questions.
 5. **Domain** — `SITE_URL` in `app/layout.js` is a placeholder.
 6. **Socials** — `business.social` is stubbed `null`.
@@ -86,5 +96,5 @@ A hand-rolled single-file facsimile using the Tailwind CDN and vanilla JS, so th
 
 ## Known context
 
-- The reference repo `github.com/vienhong20/Nail-Mark.git` is **private** and could not be read. Section order here follows the canonical premium-salon flow, not Nail Mark's actual structure. If that repo becomes readable, re-align naming and section order.
-- Sibling directory `skill-references/` holds Claude skill assets (ui-ux-pro-max search scripts, CSV data, fonts). **Unrelated to this site.** Do not import from it, bundle it, or deploy it.
+- Structure follows `github.com/vienhong20/Nail-Mark.git` (a single-file static site, now public): hero → about → services → why → gallery → testimonials → location → cta → footer. Deliberate departures from it: emoji icons replaced with Lucide strokes, `randomuser.me` avatars replaced with initials (generated faces on named "verified" reviews read as fabricated), and inline styles replaced with tokens.
+- Sibling directory `skill-references/` holds Claude skill assets (ui-ux-pro-max search scripts, CSV data, fonts). **Unrelated to this site.** Gitignored. Do not import from it, bundle it, or deploy it.

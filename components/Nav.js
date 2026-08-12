@@ -33,6 +33,13 @@ export function Nav() {
     };
   }, [open]);
 
+  /**
+   * The hero is a dark photograph, so at the top of the page the bar has to be
+   * light-on-transparent; once it solidifies over bone it flips to dark-on-light.
+   * Only colours change — never a dimension — so the flip cannot shift layout.
+   */
+  const onDark = !scrolled;
+
   return (
     <>
       <header
@@ -45,11 +52,17 @@ export function Nav() {
         <nav className="shell flex h-[72px] items-center justify-between gap-6" aria-label="Primary">
           <a
             href="#top"
-            className="font-display text-xl tracking-tight text-ink"
+            className={`font-display text-xl tracking-tight transition-colors duration-panel ease-out ${
+              onDark ? 'text-bg' : 'text-ink'
+            }`}
             aria-label={`${business.name} — home`}
           >
             V<span className="text-accent">&</span>Mi
-            <span className="ml-2 hidden align-middle text-eyebrow uppercase tracking-[0.22em] text-muted sm:inline">
+            <span
+              className={`ml-2 hidden align-middle text-eyebrow uppercase tracking-[0.22em] transition-colors duration-panel ease-out sm:inline ${
+                onDark ? 'text-bg/60' : 'text-muted'
+              }`}
+            >
               Nail Spa
             </span>
           </a>
@@ -59,7 +72,9 @@ export function Nav() {
               <li key={item.href}>
                 <a
                   href={item.href}
-                  className="group relative inline-flex min-h-[44px] items-center text-[0.8125rem] font-medium uppercase tracking-[0.14em] text-muted transition-colors duration-hover ease-out hover:text-ink"
+                  className={`group relative inline-flex min-h-[44px] items-center text-[0.8125rem] font-medium uppercase tracking-[0.14em] transition-colors duration-panel ease-out ${
+                    onDark ? 'text-bg/75 hover:text-bg' : 'text-muted hover:text-ink'
+                  }`}
                 >
                   {item.label}
                   {/* Underline grows from the left. transform-only, so it can't
@@ -76,7 +91,11 @@ export function Nav() {
           <div className="flex items-center gap-2">
             <a
               href={business.phone.href}
-              className="hidden min-h-[44px] items-center gap-2 rounded-pill border border-border-strong px-5 text-[0.8125rem] font-medium tracking-[0.06em] text-ink transition-colors duration-hover ease-out hover:border-ink sm:inline-flex"
+              className={`hidden min-h-[44px] items-center gap-2 rounded-pill border px-5 text-[0.8125rem] font-medium tracking-[0.06em] transition-colors duration-panel ease-out sm:inline-flex ${
+                onDark
+                  ? 'border-bg/35 text-bg hover:border-bg'
+                  : 'border-border-strong text-ink hover:border-ink'
+              }`}
             >
               <Phone className="h-3.5 w-3.5 text-accent" aria-hidden="true" />
               {business.phone.display}
@@ -88,7 +107,11 @@ export function Nav() {
               aria-label="Open menu"
               aria-expanded={open}
               aria-controls="mobile-menu"
-              className="inline-flex h-11 w-11 items-center justify-center rounded-pill border border-border-strong text-ink transition-colors duration-hover ease-out hover:border-ink md:hidden"
+              className={`inline-flex h-11 w-11 items-center justify-center rounded-pill border transition-colors duration-panel ease-out md:hidden ${
+                onDark
+                  ? 'border-bg/35 text-bg hover:border-bg'
+                  : 'border-border-strong text-ink hover:border-ink'
+              }`}
             >
               <Menu className="h-5 w-5" aria-hidden="true" />
             </button>

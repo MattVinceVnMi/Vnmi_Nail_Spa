@@ -84,6 +84,18 @@ tailwind.config = {
   .mq{ animation:mq 38s linear infinite; }
   .fade-x{ -webkit-mask-image:linear-gradient(to right,transparent,#000 12%,#000 88%,transparent); mask-image:linear-gradient(to right,transparent,#000 12%,#000 88%,transparent); }
 
+  @keyframes kb{ from{transform:scale(1.06)} to{transform:scale(1)} }
+  .kb{ animation:kb 18s linear forwards; }
+  @keyframes sd{ 0%{transform:translateY(-100%)} 100%{transform:translateY(340%)} }
+  .scroll-dot{ animation:sd 2.8s ease-in-out infinite; }
+  .g-item img{ transition:transform .52s cubic-bezier(.23,1,.32,1); }
+  @media (hover:hover){ .g-item:hover img{ transform:scale(1.04); } .g-item:hover .g-ov{ opacity:1; } }
+  .g-ov{ opacity:0; transition:opacity .2s cubic-bezier(.23,1,.32,1); }
+  .lb{ opacity:0; pointer-events:none; transition:opacity .2s cubic-bezier(.23,1,.32,1); }
+  .lb.open{ opacity:1; pointer-events:auto; }
+  .lb.open .lb-fig{ transform:scale(1); }
+  .lb-fig{ transform:scale(.97); transition:transform .32s cubic-bezier(.23,1,.32,1); }
+  .t-track{ transition:transform .5s cubic-bezier(.23,1,.32,1); }
   .pill{ transition:background-color .2s cubic-bezier(.23,1,.32,1), color .2s, border-color .2s; }
   .no-sb::-webkit-scrollbar{ display:none; }
 
@@ -101,84 +113,73 @@ tailwind.config = {
 <!-- ============================ NAV ============================ -->
 <header id="nav" class="fixed inset-x-0 top-0 z-50 border-b border-transparent transition-[background-color,border-color,backdrop-filter] duration-300 ease-out">
   <nav class="shell flex h-[72px] items-center justify-between gap-6">
-    <a href="#top" class="font-display text-xl tracking-tight text-ink">V<span class="text-accent">&amp;</span>Mi<span class="ml-2 hidden align-middle text-[.6875rem] uppercase tracking-[.22em] text-muted sm:inline">Nail Spa</span></a>
-    <ul class="hidden items-center gap-9 md:flex">
-      <li><a href="#services" class="navlink relative inline-flex min-h-[44px] items-center text-[.8125rem] font-medium uppercase tracking-[.14em] text-muted transition-colors duration-200 ease-out hover:text-ink">Services<span class="absolute inset-x-0 bottom-[18px] h-px bg-accent"></span></a></li>
-      <li><a href="#studio" class="navlink relative inline-flex min-h-[44px] items-center text-[.8125rem] font-medium uppercase tracking-[.14em] text-muted transition-colors duration-200 ease-out hover:text-ink">The Studio<span class="absolute inset-x-0 bottom-[18px] h-px bg-accent"></span></a></li>
-      <li><a href="#visit" class="navlink relative inline-flex min-h-[44px] items-center text-[.8125rem] font-medium uppercase tracking-[.14em] text-muted transition-colors duration-200 ease-out hover:text-ink">Visit<span class="absolute inset-x-0 bottom-[18px] h-px bg-accent"></span></a></li>
-      <li><a href="#faq" class="navlink relative inline-flex min-h-[44px] items-center text-[.8125rem] font-medium uppercase tracking-[.14em] text-muted transition-colors duration-200 ease-out hover:text-ink">Questions<span class="absolute inset-x-0 bottom-[18px] h-px bg-accent"></span></a></li>
-    </ul>
-    <a href="tel:+15613671590" class="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-border-strong px-5 text-[.8125rem] font-medium tracking-[.06em] text-ink transition-colors duration-200 ease-out hover:border-ink">(561) 367-1590</a>
+    <a href="#top" id="brand" class="font-display text-xl tracking-tight transition-colors duration-300 ease-out">V<span class="text-accent">&amp;</span>Mi<span id="brandsub" class="ml-2 hidden align-middle text-[.6875rem] uppercase tracking-[.22em] sm:inline">Nail Spa</span></a>
+    <ul class="hidden items-center gap-9 md:flex"><li><a href="#about" class="navlink relative inline-flex min-h-[44px] items-center text-[.8125rem] font-medium uppercase tracking-[.14em] transition-colors duration-300 ease-out">Story<span class="absolute inset-x-0 bottom-[18px] h-px bg-accent"></span></a></li><li><a href="#services" class="navlink relative inline-flex min-h-[44px] items-center text-[.8125rem] font-medium uppercase tracking-[.14em] transition-colors duration-300 ease-out">Services<span class="absolute inset-x-0 bottom-[18px] h-px bg-accent"></span></a></li><li><a href="#gallery" class="navlink relative inline-flex min-h-[44px] items-center text-[.8125rem] font-medium uppercase tracking-[.14em] transition-colors duration-300 ease-out">Gallery<span class="absolute inset-x-0 bottom-[18px] h-px bg-accent"></span></a></li><li><a href="#visit" class="navlink relative inline-flex min-h-[44px] items-center text-[.8125rem] font-medium uppercase tracking-[.14em] transition-colors duration-300 ease-out">Visit<span class="absolute inset-x-0 bottom-[18px] h-px bg-accent"></span></a></li><li><a href="#faq" class="navlink relative inline-flex min-h-[44px] items-center text-[.8125rem] font-medium uppercase tracking-[.14em] transition-colors duration-300 ease-out">Questions<span class="absolute inset-x-0 bottom-[18px] h-px bg-accent"></span></a></li></ul>
+    <a href="tel:+15613671590" id="navtel" class="inline-flex min-h-[44px] items-center gap-2 rounded-full border px-5 text-[.8125rem] font-medium tracking-[.06em] transition-colors duration-300 ease-out">(561) 367-1590</a>
   </nav>
 </header>
 
-<main id="top">
+<main id="main">
 
-<!-- ============================ HERO ============================ -->
-<section class="pt-[104px] sm:pt-[128px]">
-  <div class="shell">
-    <div class="grid items-end gap-12 lg:grid-cols-[1.05fr_.95fr] lg:gap-16">
-      <div class="pb-4 lg:pb-16">
-        <p class="eyebrow mb-8 rv">Est. Boca Raton &middot; Florida</p>
-        <h1 class="font-display d-xl text-ink">
-          <span class="hl" data-line="0"><span>Considered</span></span>
-          <span class="hl" data-line="1"><span>nail care in</span></span>
-          <span class="hl" data-line="2"><span>Boca <em class="italic text-accent not-italic" style="font-style:italic">Raton.</em></span></span>
-        </h1>
-        <p class="mt-8 max-w-[46ch] text-[1.0625rem] leading-[1.7] text-muted rv" style="transition-delay:.42s">A quiet studio on St Andrews. Classic manicures, restorative pedicures, and healthy-nail enhancements — performed slowly, and finished properly.</p>
-        <div class="mt-10 flex flex-wrap items-center gap-3 rv" style="transition-delay:.5s">
-          <a href="tel:+15613671590" class="btn relative inline-flex min-h-[48px] items-center justify-center overflow-hidden rounded-full bg-ink px-8 text-[.8125rem] font-medium uppercase tracking-[.16em] text-bg hover:bg-espresso"><span class="glare"></span><span class="relative">Call to book</span></a>
-          <a href="#services" class="btn relative inline-flex min-h-[48px] items-center justify-center overflow-hidden rounded-full border border-border-strong px-8 text-[.8125rem] font-medium uppercase tracking-[.16em] text-ink hover:border-ink"><span class="glare"></span><span class="relative">View the menu</span></a>
-        </div>
-        <dl class="mt-14 grid max-w-lg grid-cols-1 gap-px border border-border bg-border sm:grid-cols-2 rv" style="transition-delay:.58s">
-          <div class="bg-bg p-5">
-            <dt class="text-[.6875rem] uppercase tracking-[.22em] text-muted">Find us</dt>
-            <dd class="mt-3 text-[.9375rem] leading-relaxed text-ink">21214 St Andrews Blvd<br>Boca Raton, FL 33433</dd>
-          </div>
-          <div class="bg-bg p-5">
-            <dt class="text-[.6875rem] uppercase tracking-[.22em] text-muted">Open today</dt>
-            <dd class="mt-3 text-[.9375rem] leading-relaxed text-ink">9:30 AM — 7:00 PM<span class="mt-1 block text-muted">Sun 11:00 AM — 5:00 PM</span></dd>
-          </div>
-        </dl>
-      </div>
-
-      <figure class="relative rv" style="transition-delay:.16s">
-        <div class="relative aspect-[4/5] w-full overflow-hidden border border-border bg-surface-muted">
-          <div class="absolute inset-0 flex items-center justify-center"><span class="font-display text-sm italic text-muted">Studio photograph</span></div>
-        </div>
-        <figcaption class="mt-4 flex items-baseline justify-between border-t border-border pt-4 lg:absolute lg:-left-8 lg:bottom-10 lg:mt-0 lg:w-[15rem] lg:border lg:border-border lg:bg-bg lg:p-6">
-          <span class="font-display text-2xl text-ink">15+</span>
-          <span class="text-[.6875rem] uppercase tracking-[.22em] text-muted">Years of practice</span>
-        </figcaption>
-      </figure>
+<!-- ============= HERO ============= -->
+<section id="top" class="relative flex min-h-[92svh] items-center justify-center overflow-hidden">
+  <div class="absolute inset-0"><img src="public/hero.jpg" alt="V&amp;Mi Nail Spa studio interior" class="h-full w-full object-cover kb"></div>
+  <div aria-hidden="true" class="pointer-events-none absolute inset-0">
+    <div class="absolute inset-0" style="background:linear-gradient(to top,rgba(43,36,30,.8),rgba(43,36,30,.45),rgba(43,36,30,.25))"></div>
+    <div class="absolute inset-x-0 top-0 h-40" style="background:linear-gradient(to bottom,rgba(43,36,30,.55),transparent)"></div>
+  </div>
+  <div class="shell relative z-10 py-32 text-center">
+    <p class="text-[.6875rem] font-medium uppercase tracking-[.22em] text-accent rv">Boca Raton&rsquo;s St Andrews Plaza</p>
+    <h1 class="mt-8 font-display d-xl text-bg">
+      <span class="hl"><span>Considered</span></span>
+      <span class="hl"><span>nail care in</span></span>
+      <span class="hl"><span>Boca <span style="font-style:italic" class="text-accent">Raton.</span></span></span>
+    </h1>
+    <p class="mx-auto mt-8 max-w-[52ch] text-[1.0625rem] leading-[1.7] text-bg/75 rv" style="transition-delay:.42s">A quiet studio on St Andrews. Classic manicures, restorative pedicures, and healthy-nail enhancements — performed slowly, and finished properly.</p>
+    <div class="mt-11 flex flex-wrap items-center justify-center gap-3 rv" style="transition-delay:.5s">
+      <a href="tel:+15613671590" class="btn relative inline-flex min-h-[48px] items-center justify-center overflow-hidden rounded-full bg-accent px-8 text-[.8125rem] font-medium uppercase tracking-[.16em] text-espresso"><span class="glare"></span><span class="relative">Call to book</span></a>
+      <a href="#services" class="btn relative inline-flex min-h-[48px] items-center justify-center overflow-hidden rounded-full border border-bg/35 px-8 text-[.8125rem] font-medium uppercase tracking-[.16em] text-bg hover:border-bg"><span class="glare"></span><span class="relative">View the menu</span></a>
     </div>
+    <dl class="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-y-6 border-t border-bg/15 pt-8 text-left sm:grid-cols-3 sm:gap-x-8 sm:text-center rv" style="transition-delay:.58s">
+      <div><dt class="text-[.6875rem] uppercase tracking-[.22em] text-bg/50">Mon — Sat</dt><dd class="mt-2 text-[.9375rem] tabular-nums text-bg">9:30 AM — 7:00 PM</dd></div>
+      <div class="sm:border-x sm:border-bg/15"><dt class="text-[.6875rem] uppercase tracking-[.22em] text-bg/50">Sunday</dt><dd class="mt-2 text-[.9375rem] tabular-nums text-bg">11:00 AM — 5:00 PM</dd></div>
+      <div><dt class="text-[.6875rem] uppercase tracking-[.22em] text-bg/50">Telephone</dt><dd class="mt-2"><a href="tel:+15613671590" class="text-[.9375rem] text-bg hover:text-accent">(561) 367-1590</a></dd></div>
+    </dl>
+  </div>
+  <div aria-hidden="true" class="absolute bottom-8 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-3 sm:flex">
+    <span class="text-[.625rem] uppercase tracking-[.22em] text-bg/50">Scroll</span>
+    <span class="relative block h-14 w-px overflow-hidden bg-bg/20"><span class="scroll-dot absolute inset-x-0 top-0 block h-5 bg-accent"></span></span>
   </div>
 </section>
 
-<!-- ============================ MARQUEE ============================ -->
-<section aria-hidden="true" class="mt-24 border-y border-border bg-surface-muted py-6">
+<!-- ============= MARQUEE ============================ -->
+<section aria-hidden="true" class="border-y border-border bg-surface-muted py-6">
   <div class="fade-x overflow-hidden">
     <div class="mq flex w-max items-center gap-10" id="mq"></div>
   </div>
 </section>
 
-<!-- ============================ STUDIO ============================ -->
-<section id="studio" class="sec">
+<!-- ============= ABOUT ============= -->
+<section id="about" class="sec">
   <div class="shell">
-    <div class="grid gap-14 lg:grid-cols-[.85fr_1.15fr] lg:gap-20">
-      <div class="lg:sticky lg:top-28 lg:self-start rv">
-        <span class="rule mb-6"></span>
-        <p class="eyebrow mb-5">The Studio</p>
-        <h2 class="font-display d-lg text-ink">The difference is in what you don't have to think about.</h2>
-        <p class="mt-6 max-w-[62ch] text-[1.0625rem] leading-[1.7] text-muted">Most people can't name what makes one salon feel better than another. It's usually three things, and none of them are the polish colour.</p>
+    <div class="grid items-center gap-14 lg:grid-cols-2 lg:gap-20">
+      <div class="relative rv">
+        <div class="relative aspect-[4/5] w-full overflow-hidden border border-border bg-surface-muted"><img src="public/about.jpg" alt="A manicure in progress at V&amp;Mi Nail Spa" class="h-full w-full object-cover"></div>
+        <div class="mt-4 flex items-baseline justify-between border-t border-border pt-4 lg:absolute lg:-right-6 lg:bottom-10 lg:mt-0 lg:w-[13.5rem] lg:flex-col lg:items-start lg:gap-1 lg:border lg:border-border lg:bg-bg lg:p-6">
+          <span class="font-display text-3xl text-ink">5.0</span><span class="eyebrow">Google rating</span>
+        </div>
       </div>
-      <ul class="flex flex-col" id="pillars"></ul>
-    </div>
-    <div class="mt-24 border-y border-border py-16 rv">
-      <blockquote class="mx-auto max-w-3xl text-center">
-        <p class="font-display d-md italic text-ink">&ldquo;You should leave with your hands looking like you have someone who does them — not like you went somewhere.&rdquo;</p>
-        <footer class="mt-8 text-[.6875rem] uppercase tracking-[.22em] text-muted">The V&amp;Mi standard</footer>
-      </blockquote>
+      <div>
+        <div class="rv"><span class="rule mb-6"></span><p class="eyebrow mb-5">Our story</p>
+          <h2 class="font-display d-lg text-ink">Where care <span style="font-style:italic" class="text-accent">outlasts</span> the polish.</h2></div>
+        <p class="mt-7 max-w-[62ch] text-[1.0625rem] leading-[1.7] text-muted rv">V&amp;Mi is a small studio on St Andrews Boulevard, and small is the point. We book to the treatment rather than to the clock, which means the deluxe pedicure you paid for includes the full massage it was written for — not the abbreviated version.</p>
+        <p class="mt-5 max-w-[62ch] text-[1.0625rem] leading-[1.7] text-muted rv">Our technicians work in dipping powder, liquid gel, and solar acrylic, and they will tell you honestly when a set isn&rsquo;t right for the condition your nails are in. We would rather send you home with a good manicure than sell you a full set that damages the nail underneath it.</p>
+        <dl class="mt-12 grid grid-cols-3 gap-px border border-border bg-border rv">
+          <div class="bg-bg px-4 py-6 text-center"><dd><span class="block font-display text-3xl text-ink">15+</span><span class="mt-2 block text-[.6875rem] uppercase leading-relaxed tracking-[.16em] text-muted">Years of practice</span></dd></div>
+          <div class="bg-bg px-4 py-6 text-center"><dd><span class="block font-display text-3xl text-ink">4 wk</span><span class="mt-2 block text-[.6875rem] uppercase leading-relaxed tracking-[.16em] text-muted">Typical dip wear</span></dd></div>
+          <div class="bg-bg px-4 py-6 text-center"><dd><span class="block font-display text-3xl text-ink">7 days</span><span class="mt-2 block text-[.6875rem] uppercase leading-relaxed tracking-[.16em] text-muted">Open every week</span></dd></div>
+        </dl>
+      </div>
     </div>
   </div>
 </section>
@@ -207,6 +208,60 @@ tailwind.config = {
     <div class="mt-20 border-t border-border pt-10 rv">
       <p class="max-w-[62ch] text-base leading-[1.7] text-muted">Gift certificates available in any amount. Walk-ins welcome when the chairs allow — calling ahead is always the surer route.</p>
     </div>
+  </div>
+</section>
+
+<!-- ============= WHY (dark) ============= -->
+<section id="studio" class="bg-espresso sec text-bg">
+  <div class="shell">
+    <div class="mx-auto max-w-2xl text-center rv">
+      <span class="mx-auto mb-6 block h-px w-10 bg-accent"></span>
+      <p class="text-[.6875rem] font-medium uppercase tracking-[.22em] text-accent">Why V&amp;Mi</p>
+      <h2 class="mt-5 font-display d-lg">The difference is in what you don&rsquo;t have to <span style="font-style:italic" class="text-accent">think about</span>.</h2>
+      <p class="mx-auto mt-6 max-w-[62ch] text-[1.0625rem] leading-[1.7] text-bg/65">Most people can&rsquo;t name what makes one salon feel better than another. It&rsquo;s usually these four things, and none of them are the polish colour.</p>
+    </div>
+    <ul class="mt-16 grid gap-px border border-bg/10 bg-bg/10 sm:grid-cols-2" id="why"></ul>
+    <div class="mt-20 border-t border-bg/10 pt-16 rv">
+      <blockquote class="mx-auto max-w-3xl text-center">
+        <p class="font-display d-md" style="font-style:italic">&ldquo;You should leave with your hands looking like you have someone who does them — not like you went somewhere.&rdquo;</p>
+        <footer class="mt-8 text-[.6875rem] uppercase tracking-[.22em] text-accent">The V&amp;Mi standard</footer>
+      </blockquote>
+    </div>
+  </div>
+</section>
+
+<!-- ============= GALLERY ============= -->
+<section id="gallery" class="sec">
+  <div class="shell">
+    <div class="mx-auto max-w-2xl text-center rv">
+      <span class="mx-auto mb-6 block h-px w-10 bg-accent"></span><p class="eyebrow mb-5">Our work</p>
+      <h2 class="font-display d-lg text-ink">Beauty in every detail.</h2>
+      <p class="mx-auto mt-6 max-w-[62ch] text-[1.0625rem] leading-[1.7] text-muted">A glimpse of what leaves the studio. Every set below was done in-house.</p>
+    </div>
+    <div class="mt-16 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4" id="grid"></div>
+    <p class="mt-8 text-center text-[.8125rem] text-muted">Photography placeholders — real studio images to follow.</p>
+  </div>
+</section>
+
+<!-- ============= TESTIMONIALS ============= -->
+<section id="testimonials" class="border-y border-border bg-surface-muted sec">
+  <div class="shell">
+    <div class="mx-auto max-w-2xl text-center rv">
+      <span class="mx-auto mb-6 block h-px w-10 bg-accent"></span><p class="eyebrow mb-5">Happy clients</p>
+      <h2 class="font-display d-lg text-ink">What people say.</h2>
+    </div>
+    <div class="mx-auto mt-16 max-w-3xl rv" id="tZone">
+      <div class="overflow-hidden"><div class="t-track flex" id="tTrack"></div></div>
+      <div class="h-px w-full bg-border" aria-hidden="true"><div id="tBar" class="h-px w-0 bg-accent"></div></div>
+      <div class="mt-6 flex items-center justify-between gap-6">
+        <div class="flex flex-wrap gap-0.5" id="tDots"></div>
+        <div class="flex shrink-0 items-center gap-4"><span id="tCount" class="hidden text-[.75rem] tabular-nums text-muted sm:inline"></span><div class="flex gap-2">
+          <button id="tPrev" aria-label="Previous testimonials" class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border-strong text-ink transition-colors duration-200 ease-out hover:border-ink">&#8592;</button>
+          <button id="tNext" aria-label="Next testimonials" class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-border-strong text-ink transition-colors duration-200 ease-out hover:border-ink">&#8594;</button>
+        </div></div>
+      </div>
+    </div>
+    <p class="mt-8 text-center text-[.8125rem] text-muted">Sample reviews shown — to be replaced with verified Google reviews.</p>
   </div>
 </section>
 
@@ -264,42 +319,41 @@ tailwind.config = {
   </div>
 </section>
 
+<!-- ============= CTA ============= -->
+<section class="relative overflow-hidden bg-espresso">
+  <div aria-hidden="true" class="absolute inset-0"><img src="public/hero.jpg" alt="" class="h-full w-full object-cover opacity-25"><div class="absolute inset-0 bg-espresso/80"></div></div>
+  <div class="shell relative z-10 sec text-center text-bg">
+    <div class="rv">
+      <span class="mx-auto mb-6 block h-px w-10 bg-accent"></span>
+      <p class="text-[.6875rem] font-medium uppercase tracking-[.22em] text-accent">Ready?</p>
+      <h2 class="mx-auto mt-6 max-w-3xl font-display d-lg">The chair is warm and the <span style="font-style:italic" class="text-accent">kettle is on</span>.</h2>
+      <p class="mx-auto mt-6 max-w-[62ch] text-[1.0625rem] leading-[1.7] text-bg/65">Call the studio and we&rsquo;ll find you a time. Walk-ins are welcome whenever a chair is open — Fridays and Saturdays fill early.</p>
+    </div>
+    <div class="mt-11 flex flex-wrap items-center justify-center gap-3 rv">
+      <a href="tel:+15613671590" class="btn relative inline-flex min-h-[48px] items-center justify-center overflow-hidden rounded-full bg-accent px-8 text-[.8125rem] font-medium uppercase tracking-[.16em] text-espresso"><span class="glare"></span><span class="relative">(561) 367-1590</span></a>
+      <a href="https://www.google.com/maps/search/?api=1&query=21214+St+Andrews+Blvd+Boca+Raton+FL+33433" target="_blank" rel="noopener" class="btn relative inline-flex min-h-[48px] items-center justify-center overflow-hidden rounded-full border border-bg/35 px-8 text-[.8125rem] font-medium uppercase tracking-[.16em] text-bg hover:border-bg"><span class="glare"></span><span class="relative">Get directions</span></a>
+    </div>
+  </div>
+</section>
+
 </main>
 
 <!-- ============================ FOOTER ============================ -->
-<footer class="bg-espresso text-bg">
-  <div class="shell sec">
-    <div class="border-b border-bg/10 pb-16 rv">
-      <p class="text-[.6875rem] uppercase tracking-[.22em] text-accent">Book</p>
-      <h2 class="mt-6 max-w-3xl font-display d-lg">The chair is warm and the kettle is on.</h2>
-      <a href="tel:+15613671590" class="mt-10 inline-flex min-h-[56px] items-center gap-4 font-display d-md transition-colors duration-200 ease-out hover:text-accent">(561) 367-1590</a>
-    </div>
-    <div class="grid gap-12 pt-16 sm:grid-cols-2 lg:grid-cols-4">
-      <div class="lg:col-span-2">
-        <p class="font-display text-2xl">V<span class="text-accent">&amp;</span>Mi<span class="ml-3 align-middle text-[.6875rem] uppercase tracking-[.22em] text-bg/60">Nail Spa</span></p>
-        <p class="mt-5 max-w-sm text-[.9375rem] leading-relaxed text-bg/60">A quiet, meticulous nail studio in Boca Raton. Classic manicures, restorative pedicures, and healthy-nail enhancements — performed slowly and finished properly.</p>
-      </div>
-      <div>
-        <p class="text-[.6875rem] uppercase tracking-[.22em] text-bg/50">Explore</p>
-        <ul class="mt-6 flex flex-col gap-1 text-[.9375rem] text-bg/75">
-          <li><a href="#services" class="inline-flex min-h-[40px] items-center hover:text-accent">Services</a></li>
-          <li><a href="#studio" class="inline-flex min-h-[40px] items-center hover:text-accent">The Studio</a></li>
-          <li><a href="#visit" class="inline-flex min-h-[40px] items-center hover:text-accent">Visit</a></li>
-          <li><a href="#faq" class="inline-flex min-h-[40px] items-center hover:text-accent">Questions</a></li>
-        </ul>
-      </div>
-      <div>
-        <p class="text-[.6875rem] uppercase tracking-[.22em] text-bg/50">Find us</p>
-        <p class="mt-6 text-[.9375rem] leading-relaxed text-bg/75">21214 St Andrews Blvd<br>Boca Raton, FL 33433</p>
-        <p class="mt-6 text-[.8125rem] text-bg/60"><span class="block text-bg/75">Mon — Sat</span>9:30 AM — 7:00 PM</p>
-        <p class="mt-2 text-[.8125rem] text-bg/60"><span class="block text-bg/75">Sunday</span>11:00 AM — 5:00 PM</p>
-      </div>
-    </div>
-    <div class="mt-16 flex flex-col gap-3 border-t border-bg/10 pt-8 text-xs text-bg/45 sm:flex-row sm:justify-between">
-      <p>&copy; <span id="yr"></span> V&amp;Mi Nail Spa. All rights reserved.</p><p>Boca Raton, Florida</p>
-    </div>
+<footer class="border-t border-bg/10 bg-espresso">
+  <div class="shell py-8">
+    <p class="text-center text-[.75rem] tracking-wide text-bg/45">&copy; <span id="yr"></span> V&amp;Mi Nail Spa. All rights reserved.</p>
   </div>
 </footer>
+
+
+
+<div class="lb fixed inset-0 z-[80] flex items-center justify-center p-4 sm:p-8" id="lb">
+  <div class="absolute inset-0 bg-espresso/90 backdrop-blur-sm" id="lbBg"></div>
+  <figure class="lb-fig relative z-10 w-full max-w-4xl"><img id="lbImg" src="" alt="" class="max-h-[78vh] w-full object-contain"><figcaption class="mt-4 flex justify-between gap-4 text-[.8125rem] text-bg/70"><span id="lbCap"></span><span id="lbNum" class="tabular-nums text-bg/50"></span></figcaption></figure>
+  <button id="lbPrev" aria-label="Previous image" class="absolute left-2 top-1/2 z-20 inline-flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-bg/25 text-bg hover:border-accent hover:text-accent sm:left-6">&#8592;</button>
+  <button id="lbNext" aria-label="Next image" class="absolute right-2 top-1/2 z-20 inline-flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-bg/25 text-bg hover:border-accent hover:text-accent sm:right-6">&#8594;</button>
+  <button id="lbX" aria-label="Close gallery" class="absolute right-2 top-2 z-20 inline-flex h-12 w-12 items-center justify-center rounded-full border border-bg/25 text-bg hover:border-accent hover:text-accent sm:right-6 sm:top-6">&#10005;</button>
+</div>
 
 <script>
 const PRICE = '$[PRICE]';
@@ -418,7 +472,131 @@ const nav = document.getElementById('nav');
 const onScroll = () => nav.className = window.scrollY > 24
   ? 'fixed inset-x-0 top-0 z-50 border-b border-border bg-bg/85 backdrop-blur-md transition-[background-color,border-color,backdrop-filter] duration-300 ease-out'
   : 'fixed inset-x-0 top-0 z-50 border-b border-transparent transition-[background-color,border-color,backdrop-filter] duration-300 ease-out';
-window.addEventListener('scroll', onScroll, { passive:true }); onScroll();
+const onScroll2 = () => { onScroll(); paintNav(window.scrollY <= 24); };
+window.addEventListener('scroll', onScroll2, { passive:true });
+
+
+/* ---- why cards ---- */
+const why = [
+  ['Sanitation, without exception','Hospital-grade autoclave sterilisation. Single-use files and buffers, opened in front of you. Pipeless jetless basins, disinfected between every guest.'],
+  ['Products that respect the nail','Vitamin-enriched dipping powders, low-odour liquid gel, organic sugar scrubs. Nothing that trades the health of the natural nail for a faster set.'],
+  ['Unhurried by design','We book to the treatment, not the clock. A deluxe pedicure gets the full massage it was written for — including the parts most salons quietly skip.'],
+  ['Finished, not just done','Cuticles shaped, edges cleaned, sidewalls straight. The details nobody photographs are the ones that decide whether a set still looks right in week three.'],
+];
+document.getElementById('why').innerHTML = why.map(([tt,b]) =>
+  `<li class="rv bg-espresso p-8 sm:p-10"><span class="inline-flex h-11 w-11 items-center justify-center border border-bg/20"></span><h3 class="mt-6 font-display text-2xl">${esc(tt)}</h3><p class="mt-4 max-w-[62ch] text-[.9375rem] leading-relaxed text-bg/60">${esc(b)}</p></li>`).join('');
+
+/* ---- gallery ---- */
+const gal = [
+  ['public/gallery-01.jpg','Almond-shape ombré dipping powder set',true],
+  ['public/gallery-02.jpg','Classic pink and white French manicure'],
+  ['public/gallery-03.jpg','Gel manicure in a soft neutral shade'],
+  ['public/gallery-04.jpg','Hand-painted nail art detail'],
+  ['public/gallery-05.jpg','Jelly spa pedicure treatment'],
+  ['public/gallery-06.jpg','Coffin-shape liquid gel full set'],
+  ['public/gallery-07.jpg','Chrome finish on a short square set'],
+  ['public/gallery-08.jpg','Paraffin treatment for hands'],
+];
+document.getElementById('grid').innerHTML = gal.map(([src,alt,feat],i) =>
+  `<button data-i="${i}" aria-label="Open image: ${esc(alt)}" class="g-item rv relative block w-full overflow-hidden border border-border bg-surface-muted ${feat?'col-span-2 row-span-2 aspect-square md:aspect-[4/5]':'aspect-square'}"><img src="${src}" alt="${esc(alt)}" loading="lazy" class="h-full w-full object-cover"><span class="g-ov absolute inset-0 hidden items-center justify-center bg-espresso/45 md:flex"><span class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-bg/50 text-bg">+</span></span></button>`).join('');
+
+let gi = 0;
+const lb = document.getElementById('lb');
+function show(i){ gi=(i+gal.length)%gal.length; document.getElementById('lbImg').src=gal[gi][0]; document.getElementById('lbImg').alt=gal[gi][1]; document.getElementById('lbCap').textContent=gal[gi][1]; document.getElementById('lbNum').textContent=`${gi+1} / ${gal.length}`; }
+function openLb(i){ show(i); lb.classList.add('open'); document.body.style.overflow='hidden'; }
+function closeLb(){ lb.classList.remove('open'); document.body.style.overflow=''; }
+document.getElementById('grid').addEventListener('click', e => { const b=e.target.closest('[data-i]'); if(b) openLb(+b.dataset.i); });
+document.getElementById('lbBg').onclick = closeLb;
+document.getElementById('lbX').onclick = closeLb;
+document.getElementById('lbPrev').onclick = () => show(gi-1);
+document.getElementById('lbNext').onclick = () => show(gi+1);
+addEventListener('keydown', e => { if(!lb.classList.contains('open')) return;
+  if(e.key==='Escape') closeLb(); if(e.key==='ArrowRight') show(gi+1); if(e.key==='ArrowLeft') show(gi-1); });
+
+/* ---- testimonials ---- */
+const testi = [
+  ['I have been going for two years and have never once had a rushed appointment. They take the time, and it shows — my dip sets last a full four weeks without a single chip.','Danielle R.'],
+  ['The jelly pedicure is worth every minute. The water stays hot the whole way through, which sounds like a small thing until you have had the alternative everywhere else.','Marisol T.'],
+  ['They opened a brand new file and buffer in front of me without my asking. That told me everything I needed to know about how the rest of the place is run.','Karen L.'],
+  ['I came in with a badly damaged set from another salon. They soaked it off properly instead of drilling it down, and my natural nails actually recovered.','Ana P.'],
+  ['I brought my daughter in for the princess manicure before a school dance. They were patient with her, kept it short, and she has not stopped looking at her hands since.','Jessica W.'],
+  ['Booked an ombré set on a Saturday expecting a wait and got seated within ten minutes. The shaping is the cleanest I have had in Boca — the sidewalls are actually straight.','Priya N.'],
+  ['They told me my nails were too thin for a full set that day and did a strengthening manicure instead. Nobody has ever talked me out of the more expensive service before.','Robert C.'],
+  ['Been coming for eight months. Same technician every time, remembers the shape I like, no reminding needed. That consistency is the whole reason I stopped shopping around.','Lisa M.'],
+  ['The waxing is quick and genuinely painless compared to where I used to go, and they never try to upsell me into three more areas while I am lying there.','Sofia G.'],
+];
+document.getElementById('tTrack').innerHTML = testi.map(([q,n]) =>
+  `<figure class="flex min-h-[22rem] w-full shrink-0 select-none flex-col justify-between border border-border bg-bg p-8 text-center sm:min-h-[20rem] sm:p-12"><div><div class="mx-auto font-display text-4xl leading-none text-accent">&ldquo;</div><blockquote class="mt-5"><p class="mx-auto max-w-[46ch] font-display text-2xl leading-relaxed text-ink sm:text-[1.75rem]">&ldquo;${esc(q)}&rdquo;</p></blockquote></div><figcaption class="mt-9 flex flex-col items-center gap-3"><div class="flex gap-1 text-accent text-xs" aria-label="Rated 5 out of 5">★★★★★</div><span class="text-[.9375rem] text-ink">${esc(n)}</span><span class="text-[.6875rem] uppercase tracking-[.16em] text-muted">Google Review · sample</span></figcaption></figure>`).join('');
+const tTrack = document.getElementById('tTrack');
+const tDots  = document.getElementById('tDots');
+const tBar   = document.getElementById('tBar');
+const tZone  = document.getElementById('tZone');
+const DWELL  = 6500;
+let tp = 0, tPages = testi.length, timer = null, hovered = false, visible = false, dragging = false;
+const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function paint(){
+  tTrack.style.transform = `translateX(-${tp*100}%)`;
+  tDots.innerHTML = Array.from({length:tPages},(_,i)=>`<button data-p="${i}" aria-label="Review ${i+1} of ${tPages}" class="inline-flex h-11 w-6 items-center justify-center"><span class="block h-px transition-all duration-200 ${i===tp?'w-5 bg-accent':'w-2.5 bg-border-strong'}"></span></button>`).join('');
+  const c = document.getElementById('tCount'); if (c) c.textContent = `${tp+1} / ${tPages}`;
+}
+function go(d){ tp = (tp + d + tPages) % tPages; paint(); restart(); }
+
+/* autoplay — pauses on hover, focus, drag, and while off-screen */
+function running(){ return !REDUCED && visible && !hovered && !dragging; }
+function restart(){
+  clearTimeout(timer);
+  tBar.style.transition = 'none'; tBar.style.width = '0%';
+  void tBar.offsetWidth;                      // force reflow so the bar restarts
+  if (!running()) { tBar.style.width = '100%'; return; }
+  tBar.style.transition = `width ${DWELL}ms linear`; tBar.style.width = '100%';
+  timer = setTimeout(() => go(1), DWELL);
+}
+function freeze(){
+  clearTimeout(timer);
+  const w = getComputedStyle(tBar).width;
+  tBar.style.transition = 'none'; tBar.style.width = w;
+}
+tZone.addEventListener('mouseenter', () => { hovered = true;  freeze(); });
+tZone.addEventListener('mouseleave', () => { hovered = false; restart(); });
+tZone.addEventListener('focusin',    () => { hovered = true;  freeze(); });
+tZone.addEventListener('focusout',   () => { hovered = false; restart(); });
+new IntersectionObserver(([e]) => { visible = e.isIntersecting; visible ? restart() : freeze(); },
+  { threshold: 0.35 }).observe(tZone);
+
+tDots.addEventListener('click', e => { const b = e.target.closest('[data-p]'); if(b){ tp = +b.dataset.p; paint(); restart(); } });
+document.getElementById('tPrev').onclick = () => go(-1);
+document.getElementById('tNext').onclick = () => go(1);
+
+/* drag to swipe */
+let dx0 = null, dt0 = 0;
+const wrap = tTrack.parentElement;
+wrap.addEventListener('pointerdown', e => { dx0 = e.clientX; dt0 = Date.now(); dragging = true; freeze(); tTrack.style.transition = 'none'; });
+wrap.addEventListener('pointermove', e => { if(dx0 === null) return;
+  tTrack.style.transform = `translateX(calc(-${tp*100}% + ${(e.clientX-dx0)*0.35}px))`; });
+function endDrag(e){ if(dx0 === null) return;
+  const d = e.clientX - dx0, v = Math.abs(d)/Math.max(1, Date.now()-dt0);
+  dx0 = null; dragging = false; tTrack.style.transition = '';
+  if (Math.abs(d) > 90 || v > 0.4) tp = (tp + (d<0?1:-1) + tPages) % tPages;
+  paint(); restart(); }
+wrap.addEventListener('pointerup', endDrag);
+wrap.addEventListener('pointercancel', () => { dx0 = null; dragging = false; tTrack.style.transition = ''; paint(); restart(); });
+wrap.style.cursor = 'grab';
+
+paint();
+
+/* ---- nav inversion over the dark hero ---- */
+const brand=document.getElementById('brand'), bsub=document.getElementById('brandsub'), ntel=document.getElementById('navtel');
+const links=[...document.querySelectorAll('.navlink')];
+function paintNav(dark){
+  brand.style.color = dark ? '#FBFAF8' : '#1C1917';
+  bsub.style.color  = dark ? 'rgba(251,250,248,.6)' : '#5F574E';
+  ntel.style.color  = dark ? '#FBFAF8' : '#1C1917';
+  ntel.style.borderColor = dark ? 'rgba(251,250,248,.35)' : '#D1C8BB';
+  links.forEach(a => a.style.color = dark ? 'rgba(251,250,248,.75)' : '#5F574E');
+}
+
+onScroll2();
 
 document.getElementById('yr').textContent = new Date().getFullYear();
 </script>

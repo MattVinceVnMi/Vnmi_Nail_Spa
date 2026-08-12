@@ -1,72 +1,89 @@
-import { Sparkles, ShieldCheck, Leaf } from 'lucide-react';
-import { SectionHeading } from '@/components/ui/SectionHeading';
+import { ShieldCheck, Leaf, Clock3, Sparkles } from 'lucide-react';
 import { Reveal, RevealGroup, RevealItem } from '@/components/ui/Reveal';
+
+/**
+ * "The difference" — Nail Mark's Why section, which is a dark band of cards
+ * between two light sections. That inversion is doing real work: it breaks up
+ * a long bone-coloured page and gives the eye somewhere to rest.
+ *
+ * On the espresso surface the brand gold reaches 4.6:1, so `accent` is
+ * body-safe here and used freely. That is the one place on the site where
+ * that's true.
+ *
+ * Emoji replaced with Lucide strokes — emoji render differently on every
+ * platform and instantly cheapen a premium layout.
+ */
 
 const PILLARS = [
   {
     icon: ShieldCheck,
     title: 'Sanitation, without exception',
-    body: 'Hospital-grade autoclave sterilisation. Single-use files and buffers, opened in front of you. Pipeless jetless pedicure basins, disinfected between every guest.',
+    body: 'Hospital-grade autoclave sterilisation. Single-use files and buffers, opened in front of you. Pipeless jetless basins, disinfected between every guest.',
   },
   {
     icon: Leaf,
     title: 'Products that respect the nail',
-    body: 'Vitamin-enriched dipping powders, low-odour liquid gel, and organic sugar scrubs. Nothing that trades the health of the natural nail for a faster set.',
+    body: 'Vitamin-enriched dipping powders, low-odour liquid gel, organic sugar scrubs. Nothing that trades the health of the natural nail for a faster set.',
+  },
+  {
+    icon: Clock3,
+    title: 'Unhurried by design',
+    body: 'We book to the treatment, not the clock. A deluxe pedicure gets the full massage it was written for — including the parts most salons quietly skip.',
   },
   {
     icon: Sparkles,
-    title: 'Unhurried by design',
-    body: 'We book to the treatment, not to the clock. A deluxe pedicure gets the full massage it was written for — including the parts most salons quietly skip.',
+    title: 'Finished, not just done',
+    body: 'Cuticles shaped, edges cleaned, sidewalls straight. The details nobody photographs are the ones that decide whether a set still looks right in week three.',
   },
 ];
 
 export function Studio() {
   return (
-    <section id="studio" className="py-section">
+    <section id="studio" className="bg-espresso py-section text-bg">
       <div className="shell">
-        <div className="grid gap-14 lg:grid-cols-[0.85fr_1.15fr] lg:gap-20">
-          <div className="lg:sticky lg:top-28 lg:self-start">
-            <SectionHeading
-              eyebrow="The Studio"
-              title="The difference is in what you don't have to think about."
-              lede="Most people can't name what makes one salon feel better than another. It's usually three things, and none of them are the polish colour."
-            />
-          </div>
+        <Reveal className="mx-auto max-w-2xl text-center">
+          <span className="mx-auto mb-6 block h-px w-10 bg-accent" aria-hidden="true" />
+          <p className="text-eyebrow font-medium uppercase text-accent">Why V&amp;Mi</p>
+          <h2 className="mt-5 font-display text-display-lg">
+            The difference is in what you don&rsquo;t have to{' '}
+            <span className="italic text-accent">think about</span>.
+          </h2>
+          <p className="mx-auto mt-6 max-w-prose text-body-lg text-bg/65">
+            Most people can&rsquo;t name what makes one salon feel better than another. It&rsquo;s
+            usually these four things, and none of them are the polish colour.
+          </p>
+        </Reveal>
 
-          <RevealGroup as="ul" className="flex flex-col" stagger={0.08}>
-            {PILLARS.map(({ icon: Icon, title, body }) => (
-              <RevealItem
-                as="li"
-                key={title}
-                className="hover-lift border-t border-border py-10 first:border-t-0 first:pt-0"
+        <RevealGroup
+          as="ul"
+          className="mt-16 grid gap-px border border-bg/10 bg-bg/10 sm:grid-cols-2"
+          stagger={0.07}
+        >
+          {PILLARS.map(({ icon: Icon, title, body }) => (
+            <RevealItem
+              as="li"
+              key={title}
+              className="group bg-espresso p-8 transition-colors duration-hover ease-out sm:p-10 md:hover:bg-[#332B24]"
+            >
+              <span
+                className="inline-flex h-11 w-11 items-center justify-center border border-bg/20 transition-colors duration-hover ease-out group-hover:border-accent"
+                aria-hidden="true"
               >
-                <div className="flex gap-6">
-                  <span
-                    className="mt-1 inline-flex h-11 w-11 shrink-0 items-center justify-center border border-border bg-surface"
-                    aria-hidden="true"
-                  >
-                    <Icon className="h-4.5 w-4.5 text-accent" strokeWidth={1.4} />
-                  </span>
-                  <div>
-                    <h3 className="font-display text-display-md text-ink">{title}</h3>
-                    <p className="mt-4 max-w-prose text-body text-muted">{body}</p>
-                  </div>
-                </div>
-              </RevealItem>
-            ))}
-          </RevealGroup>
-        </div>
+                <Icon className="h-[1.125rem] w-[1.125rem] text-accent" strokeWidth={1.4} />
+              </span>
+              <h3 className="mt-6 font-display text-2xl">{title}</h3>
+              <p className="mt-4 max-w-prose text-[0.9375rem] leading-relaxed text-bg/60">{body}</p>
+            </RevealItem>
+          ))}
+        </RevealGroup>
 
-        {/* Editorial pull-quote. One per page — any more and it stops landing. */}
-        <Reveal className="mt-24 border-y border-border py-16">
+        <Reveal className="mt-20 border-t border-bg/10 pt-16">
           <blockquote className="mx-auto max-w-3xl text-center">
-            <p className="font-display text-display-md italic text-ink">
-              &ldquo;You should leave with your hands looking like you have someone who does
-              them — not like you went somewhere.&rdquo;
+            <p className="font-display text-display-md italic">
+              &ldquo;You should leave with your hands looking like you have someone who does them —
+              not like you went somewhere.&rdquo;
             </p>
-            <footer className="mt-8 text-eyebrow uppercase text-muted">
-              The V&amp;Mi standard
-            </footer>
+            <footer className="mt-8 text-eyebrow uppercase text-accent">The V&amp;Mi standard</footer>
           </blockquote>
         </Reveal>
       </div>
