@@ -3,6 +3,7 @@ import { business } from '@/data/business';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { Reveal } from '@/components/ui/Reveal';
 import { Button } from '@/components/ui/Button';
+import { BookButton } from '@/components/ui/BookButton';
 
 export function Visit() {
   return (
@@ -79,9 +80,10 @@ export function Visit() {
               </div>
             </dl>
 
-            <div className="mt-10">
-              <Button href={business.phone.href} variant="primary">
-                Call to book
+            <div className="mt-10 flex flex-wrap gap-3">
+              <BookButton>Book appointment</BookButton>
+              <Button href={business.phone.href} variant="outline">
+                Call instead
               </Button>
             </div>
           </div>

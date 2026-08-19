@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { Menu, X, Phone } from 'lucide-react';
 import { business, nav } from '@/data/business';
+import { BookButton } from '@/components/ui/BookButton';
 import { spring, ease, duration } from '@/lib/motion';
 
 export function Nav() {
@@ -89,9 +90,11 @@ export function Nav() {
           </ul>
 
           <div className="flex items-center gap-2">
+            {/* Phone drops off below lg so the Book button never gets crowded
+                out — booking is the action we actually want. */}
             <a
               href={business.phone.href}
-              className={`hidden min-h-[44px] items-center gap-2 rounded-pill border px-5 text-[0.8125rem] font-medium tracking-[0.06em] transition-colors duration-panel ease-out sm:inline-flex ${
+              className={`hidden min-h-[44px] items-center gap-2 rounded-pill border px-5 text-[0.8125rem] font-medium tracking-[0.06em] transition-colors duration-panel ease-out lg:inline-flex ${
                 onDark
                   ? 'border-bg/35 text-bg hover:border-bg'
                   : 'border-border-strong text-ink hover:border-ink'
@@ -100,6 +103,13 @@ export function Nav() {
               <Phone className="h-3.5 w-3.5 text-accent" aria-hidden="true" />
               {business.phone.display}
             </a>
+
+            <BookButton
+              showIcon={false}
+              className="hidden !min-h-[44px] !px-6 !text-[0.75rem] !bg-accent !text-espresso hover:!bg-[#B9924C] sm:inline-flex"
+            >
+              Book
+            </BookButton>
 
             <button
               type="button"
@@ -179,13 +189,21 @@ export function Nav() {
                 ))}
               </ul>
 
-              <a
-                href={business.phone.href}
-                className="mt-8 flex min-h-[52px] items-center justify-center gap-2 rounded-pill bg-ink text-[0.8125rem] font-medium uppercase tracking-[0.16em] text-bg"
-              >
-                <Phone className="h-4 w-4" aria-hidden="true" />
-                Call {business.phone.display}
-              </a>
+              <div className="mt-8 flex flex-col gap-3">
+                <BookButton
+                  onClick={() => setOpen(false)}
+                  className="w-full !min-h-[52px] !bg-accent !text-espresso"
+                >
+                  Book appointment
+                </BookButton>
+                <a
+                  href={business.phone.href}
+                  className="flex min-h-[52px] items-center justify-center gap-2 rounded-pill border border-border-strong text-[0.8125rem] font-medium uppercase tracking-[0.16em] text-ink"
+                >
+                  <Phone className="h-4 w-4" aria-hidden="true" />
+                  Call {business.phone.display}
+                </a>
+              </div>
             </motion.div>
           </motion.div>
         )}

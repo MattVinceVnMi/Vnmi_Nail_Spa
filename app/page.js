@@ -5,8 +5,8 @@ import { About } from '@/components/About';
 import { Services } from '@/components/Services';
 import { Studio } from '@/components/Studio';
 import { Gallery } from '@/components/Gallery';
+import { VirtualTour } from '@/components/VirtualTour';
 import { Testimonials } from '@/components/Testimonials';
-import { Visit } from '@/components/Visit';
 import { FAQ } from '@/components/FAQ';
 import { CTA } from '@/components/CTA';
 import { Footer } from '@/components/Footer';
@@ -16,19 +16,24 @@ import { Footer } from '@/components/Footer';
  *   hero → about → services → why → gallery → testimonials → location → cta
  * with a marquee after the hero and the FAQ folded in before the closing CTA.
  *
- * The footer is a copyright line and nothing else — no nav, no repeated NAP, no
- * socials. Everything it used to duplicate is already on the page: Visit carries
- * the address, both hour blocks, and the map; the phone number is in the nav and
- * the CTA. It shares the CTA's espresso so the two read as one closing block.
+ * NO VISIT SECTION. Removed at Vince's request, along with its embedded map.
+ * The address, hours, and the Directions link moved into <CTA>, which is now
+ * the only place the NAP appears in visible copy — Google wants it rendered,
+ * not just present in the JSON-LD. `components/Visit.js` is retained on disk
+ * but nothing imports it.
+ *
+ * The footer is a copyright line and nothing else. It shares the CTA's espresso
+ * so the two read as one closing block.
  *
  * Surface rhythm alternates so no two adjacent sections share a background:
  *   hero(photo) · marquee(linen) · about(bone) · services(linen) · studio(ESPRESSO)
- *   · gallery(bone) · testimonials(linen) · visit(bone) · faq(linen) · cta(ESPRESSO)
- * The footer is the one deliberate exception — it continues the CTA rather than
- * contrasting with it.
+ *   · gallery(bone) · tour(ESPRESSO) · testimonials(linen) · faq(bone)
+ *   · cta(ESPRESSO)
+ * FAQ moved from linen to bone when Visit was removed — it would otherwise have
+ * sat linen-on-linen against Testimonials.
  *
- * Server Component. Only Nav, Hero, Services, Gallery, Testimonials and FAQ
- * ship JS — About, Studio, Visit, CTA and Footer are fully static.
+ * Server Component. Only Nav, Hero, Services, Gallery, VirtualTour,
+ * Testimonials and FAQ ship JS — About, Studio, CTA and Footer are static.
  */
 export default function Home() {
   return (
@@ -41,8 +46,8 @@ export default function Home() {
         <Services />
         <Studio />
         <Gallery />
+        <VirtualTour />
         <Testimonials />
-        <Visit />
         <FAQ />
         <CTA />
       </main>

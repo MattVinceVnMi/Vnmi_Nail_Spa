@@ -4,6 +4,7 @@ import { business } from '@/data/business';
 import { media } from '@/data/media';
 import { Reveal } from '@/components/ui/Reveal';
 import { Button } from '@/components/ui/Button';
+import { BookButton } from '@/components/ui/BookButton';
 
 /**
  * Closing CTA — the dark full-width band Nail Mark puts before the footer.
@@ -28,16 +29,65 @@ export function CTA() {
             The chair is warm and the <span className="italic text-accent">kettle is on</span>.
           </h2>
           <p className="mx-auto mt-6 max-w-prose text-body-lg text-bg/65">
-            Call the studio and we&rsquo;ll find you a time. Walk-ins are welcome whenever a chair is
-            open — Fridays and Saturdays fill early.
+            Book online in under a minute, or call the studio and we&rsquo;ll find you a time.
+            Walk-ins are welcome whenever a chair is open — Fridays and Saturdays fill early.
           </p>
         </Reveal>
 
-        <Reveal className="mt-11 flex flex-wrap items-center justify-center gap-3" delay={0.08}>
+        {/* The address and hours live here now that Visit is gone. This is the
+            only place on the page they appear in visible copy — the JSON-LD in
+            layout.js reads from the same object, so the two cannot drift, but
+            Google also wants the NAP rendered, not just in structured data. */}
+        <Reveal className="mx-auto mt-12 max-w-3xl border-y border-bg/10 py-8" delay={0.04}>
+          <dl className="grid gap-8 sm:grid-cols-3 sm:gap-6">
+            <div className="sm:text-left">
+              <dt className="text-eyebrow uppercase text-bg/45">Address</dt>
+              <dd className="mt-3 text-[0.9375rem] leading-relaxed text-bg/85">
+                <a
+                  href={business.address.mapsHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="transition-colors duration-hover ease-out hover:text-accent"
+                >
+                  {business.address.street}
+                  <br />
+                  {business.address.city}, {business.address.state} {business.address.zip}
+                </a>
+              </dd>
+            </div>
+            <div className="sm:text-left">
+              <dt className="text-eyebrow uppercase text-bg/45">Hours</dt>
+              <dd className="mt-3 text-[0.9375rem] leading-relaxed text-bg/85">
+                {business.hours.map((block) => (
+                  <span key={block.label} className="block">
+                    <span className="text-bg/55">{block.label.replace(' — ', '–')}</span>{' '}
+                    <span className="tabular-nums">{block.display}</span>
+                  </span>
+                ))}
+              </dd>
+            </div>
+            <div className="sm:text-left">
+              <dt className="text-eyebrow uppercase text-bg/45">Telephone</dt>
+              <dd className="mt-3">
+                <a
+                  href={business.phone.href}
+                  className="text-[0.9375rem] text-bg/85 transition-colors duration-hover ease-out hover:text-accent"
+                >
+                  {business.phone.display}
+                </a>
+              </dd>
+            </div>
+          </dl>
+        </Reveal>
+
+        <Reveal className="mt-10 flex flex-wrap items-center justify-center gap-3" delay={0.08}>
+          <BookButton className="!bg-accent !text-espresso hover:!bg-[#B9924C]">
+            Book online
+          </BookButton>
           <Button
             href={business.phone.href}
-            variant="primary"
-            className="!bg-accent !text-espresso hover:!bg-[#B9924C]"
+            variant="outline"
+            className="!border-bg/35 !text-bg hover:!border-bg"
           >
             <Phone className="mr-2 h-4 w-4" aria-hidden="true" />
             {business.phone.display}
@@ -51,7 +101,7 @@ export function CTA() {
             className="!border-bg/35 !text-bg hover:!border-bg"
           >
             <Navigation className="mr-2 h-4 w-4" aria-hidden="true" />
-            Get directions
+            Directions
           </Button>
         </Reveal>
       </div>

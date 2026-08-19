@@ -28,11 +28,15 @@ npm run build    # last verified green: 136 kB First Load JS, fully static
 | `public/` | Placeholder JPGs — `hero`, `about`, `gallery-01..08` |
 | `preview.html` | Standalone facsimile for viewing. **Not the build.** See below |
 
-**Section order** (mirrors the Nail Mark reference): hero → marquee → about → services → studio → gallery → testimonials → visit → faq → cta.
+**Section order** (mirrors the Nail Mark reference): hero → marquee → about → services → studio → gallery → tour → testimonials → faq → cta.
+
+**There is no Visit section and no embedded map.** Removed at Vince's request. The address, hours, and the Directions link live in `<CTA>` — that is the **only** place the NAP appears in visible copy, so don't strip it from there. `components/Visit.js` is retained on disk but nothing imports it.
+
+**The virtual tour is lazy by design.** `vnmispa.com` is a full WebGL 360 viewer (media360plus). `<VirtualTour>` renders a poster and only mounts the iframe on click — **never auto-load it**. Mounting on page load pulls megabytes of panorama textures for every visitor, most of whom never scroll that far. The `aspect-video` wrapper reserves the box so poster→iframe cannot shift layout.
 
 **The footer is a copyright line and nothing else.** Stripped at Vince's request — no nav, no repeated NAP, no socials. Everything it used to duplicate is already on the page: `Visit` carries the address, both hour blocks, and the map; the phone number is in the nav and the CTA. Do not repopulate it without asking.
 
-**Surface rhythm.** No two adjacent sections share a background: hero(photo) · marquee(linen) · about(bone) · services(linen) · studio(**espresso**) · gallery(bone) · testimonials(linen) · visit(bone) · faq(linen) · cta(**espresso**). The footer is the one deliberate exception — it shares the CTA's espresso so the two read as a single closing block, separated only by a hairline. If you add a section, keep the alternation.
+**Surface rhythm.** No two adjacent sections share a background: hero(photo) · marquee(linen) · about(bone) · services(linen) · studio(**espresso**) · gallery(bone) · tour(**espresso**) · testimonials(linen) · faq(bone) · cta(**espresso**). FAQ was moved from linen to bone when Visit was removed — it would otherwise sit linen-on-linen against Testimonials. The footer is the one deliberate exception — it shares the CTA's espresso so the two read as a single closing block, separated only by a hairline. If you add a section, keep the alternation.
 
 **The copyright year is baked at build time** (static prerender), so it reads whatever year the last deploy happened in. Rebuild to refresh, or drop the year — `© V&Mi Nail Spa` never expires.
 
@@ -49,6 +53,12 @@ Path alias is `@/*` → project root (`jsconfig.json`).
 **Business details are declared once.** `data/business.js` feeds both the rendered page and the `LocalBusiness` JSON-LD via `buildLocalBusinessSchema()`. Never hardcode a phone, address, or hour in a component — the schema and the markup would drift, which is exactly what this structure prevents.
 
 **Phone numbers are always `tel:` links.** Use `business.phone.href`.
+
+**Online booking never leaves the page.** Config lives in `business.booking` (`busid: 6147101790568448`). Every booking CTA is `<BookButton>`, which dispatches `vmi:open-booking`; `<BookingModal>` — one instance, mounted in `app/layout.js` — catches it and frames the Rewanow scheduler in a dialog.
+
+**Do not load Rewanow's `widget.js`.** Their documented integration (the script plus a `rewanow-scheduler-container` class and `busid` attribute) redirects to `www.rewanow.com/scheduler/s;busid=<id>` instead of opening a modal, which abandons the customer on a third-party domain mid-booking. `components/BookingScript.js` is a deliberately inert stub documenting this — do not revive it without verifying the redirect behaviour has changed.
+
+No booking path may use `href`, `window.open`, or `target="_blank"` to a Rewanow URL. `business.booking.url` is for the `<BookingModal>` iframe only. Booking is the primary CTA everywhere; the phone is always secondary.
 
 **The two-gold split.** `accent` (#A8813F) is 3.4:1 on the bone background — decorative only: rules, icons, 24px+ display type. `accent-ink` (#8A6A2F, 4.6:1) is the body-safe variant. Never set body copy in `accent` on a light surface. On the espresso footer (#2B241E) `accent` reaches 4.6:1 and *is* body-safe — that's why the footer uses it freely. Do not "simplify" these into one token.
 
@@ -92,7 +102,7 @@ A hand-rolled single-file facsimile using the Tailwind CDN and vanilla JS, so th
 5. **Domain** — `SITE_URL` in `app/layout.js` is a placeholder.
 6. **Socials** — `business.social` is stubbed `null`.
 7. **OG image** — `app/opengraph-image.png` (1200×630) missing.
-8. **Booking** — every CTA is a `tel:` link. No Booksy / Vagaro / Square integration.
+8. **Booking deep link** — once the Rewanow modal opens it rewrites the URL to `<page>#scheduler6147101790568448`. Put that URL on the Google Business Profile and Instagram bio so those visitors land on this site with the booker already open, instead of being sent to rewanow.com.
 
 ## Known context
 

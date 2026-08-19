@@ -6,6 +6,7 @@ import { Phone } from 'lucide-react';
 import { business } from '@/data/business';
 import { media } from '@/data/media';
 import { Button } from '@/components/ui/Button';
+import { BookButton } from '@/components/ui/BookButton';
 import { ease } from '@/lib/motion';
 
 /**
@@ -119,6 +120,10 @@ export function Hero() {
           enhancements — performed slowly, and finished properly.
         </motion.p>
 
+        {/* Online booking is the primary action — it converts higher than a
+            phone number and it captures the visitor at 11pm when nobody is at
+            the desk. The phone stays one tap away for anyone who'd rather talk
+            to a person. */}
         <motion.div
           className="mt-11 flex flex-wrap items-center justify-center gap-3"
           variants={fade}
@@ -126,16 +131,14 @@ export function Hero() {
           initial="hidden"
           animate="visible"
         >
-          <Button href={business.phone.href} variant="primary" className="!bg-accent !text-espresso hover:!bg-[#B9924C]">
-            <Phone className="mr-2 h-4 w-4" aria-hidden="true" />
-            Call to book
-          </Button>
+          <BookButton className="!bg-accent !text-espresso hover:!bg-[#B9924C]" />
           <Button
-            href="#services"
+            href={business.phone.href}
             variant="outline"
             className="!border-bg/35 !text-bg hover:!border-bg"
           >
-            View the menu
+            <Phone className="mr-2 h-4 w-4" aria-hidden="true" />
+            {business.phone.display}
           </Button>
         </motion.div>
 

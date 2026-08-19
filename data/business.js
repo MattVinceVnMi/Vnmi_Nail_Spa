@@ -52,6 +52,44 @@ export const business = {
     },
   ],
 
+  /**
+   * ONLINE BOOKING — Rewanow scheduler, embedded in our own modal.
+   *
+   * WHY NOT THE OFFICIAL WIDGET:
+   * Rewanow's documented integration (widget.js + a `rewanow-scheduler-container`
+   * class + a `busid` attribute) does NOT open an in-page modal in practice — it
+   * navigates the browser to `www.rewanow.com/scheduler/s;busid=<id>`, dumping the
+   * visitor on a third-party domain mid-intent. That is abandonment waiting to
+   * happen, so the widget script is deliberately not loaded.
+   *
+   * Instead <BookButton> opens <BookingModal>, which frames `url` below. Same
+   * scheduler, same business id, but the customer never leaves the page.
+   *
+   * If Rewanow ever ships a widget that genuinely stays in-page, reinstate the
+   * documented approach — the busid is already here.
+   */
+  booking: {
+    provider: 'Rewanow',
+    busid: '6147101790568448',
+    // The URL Rewanow's own widget navigates to. Loaded into an iframe only.
+    url: 'https://www.rewanow.com/scheduler/s;busid=6147101790568448',
+  },
+
+  /**
+   * 360° VIRTUAL TOUR — the whole of vnmispa.com is the tour, produced by
+   * media360plus.com. Embedded in an iframe by <VirtualTour>.
+   *
+   * It is NOT auto-loaded. A 360 viewer pulls megabytes of panorama textures
+   * and spins up WebGL; mounting it on page load would wreck LCP and burn
+   * mobile data for the majority of visitors who never open it. The section
+   * shows a poster and only mounts the iframe on click.
+   */
+  tour: {
+    url: 'https://vnmispa.com/',
+    poster: '/tour-poster.jpg',
+    credit: 'media360plus.com',
+  },
+
   // TODO(vince): replace with the real Google Business Profile URL + socials.
   social: {
     instagram: null,
@@ -64,7 +102,7 @@ export const nav = [
   { label: 'Story', href: '#about' },
   { label: 'Services', href: '#services' },
   { label: 'Gallery', href: '#gallery' },
-  { label: 'Visit', href: '#visit' },
+  { label: 'Testimonials', href: '#testimonials' },
   { label: 'Questions', href: '#faq' },
 ];
 

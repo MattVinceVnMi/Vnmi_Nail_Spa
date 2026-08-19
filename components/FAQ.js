@@ -43,7 +43,9 @@ export function FAQ() {
   const [open, setOpen] = useState(0);
 
   return (
-    <section id="faq" className="border-t border-border bg-surface-muted py-section">
+    // Bone, not linen — Testimonials above is linen, and two linen sections
+    // back to back would read as one long undifferentiated block.
+    <section id="faq" className="py-section">
       <div className="shell">
         <div className="grid gap-14 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
           <div className="lg:sticky lg:top-28 lg:self-start">
