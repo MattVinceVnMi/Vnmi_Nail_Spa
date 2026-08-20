@@ -28,15 +28,21 @@ npm run build    # last verified green: 136 kB First Load JS, fully static
 | `public/` | Placeholder JPGs — `hero`, `about`, `gallery-01..08` |
 | `preview.html` | Standalone facsimile for viewing. **Not the build.** See below |
 
-**Section order** (mirrors the Nail Mark reference): hero → marquee → about → services → studio → gallery → tour → testimonials → faq → cta.
+**Section order** (mirrors the Nail Mark reference): hero → marquee → about → services → studio → gallery → testimonials → faq → cta.
 
 **There is no Visit section and no embedded map.** Removed at Vince's request. The address, hours, and the Directions link live in `<CTA>` — that is the **only** place the NAP appears in visible copy, so don't strip it from there. `components/Visit.js` is retained on disk but nothing imports it.
 
-**The virtual tour is lazy by design.** `vnmispa.com` is a full WebGL 360 viewer (media360plus). `<VirtualTour>` renders a poster and only mounts the iframe on click — **never auto-load it**. Mounting on page load pulls megabytes of panorama textures for every visitor, most of whom never scroll that far. The `aspect-video` wrapper reserves the box so poster→iframe cannot shift layout.
+**The 360° tour is the hero background, and its loading rules are load-bearing.** `vnmispa.com` is a full WebGL viewer (media360plus) — several MB of textures plus its own runtime.
+
+`public/hero.jpg` is the LCP element and **must** paint first. The tour iframe is mounted only *after* first paint, and only when **all** of these hold: not `prefers-reduced-motion`, viewport ≥ 1024px, `navigator.connection` not reporting saveData or 2g/3g, and 2s elapsed. Any check failing leaves the still photo, which is a perfectly good hero.
+
+**Never mount the tour synchronously or on mobile.** It would become the LCP element and tank Core Web Vitals — which is where a salon's "near me" traffic comes from. The "Explore the studio in 360°" button is always rendered and bypasses every gate, so the tour is one tap away regardless.
+
+The iframe stays `pointer-events-none` until the user explicitly opens it, so a background tour can't swallow clicks meant for the CTAs. `components/VirtualTour.js` (the old standalone section) is retained on disk but nothing imports it.
 
 **The footer is a copyright line and nothing else.** Stripped at Vince's request — no nav, no repeated NAP, no socials. Everything it used to duplicate is already on the page: `Visit` carries the address, both hour blocks, and the map; the phone number is in the nav and the CTA. Do not repopulate it without asking.
 
-**Surface rhythm.** No two adjacent sections share a background: hero(photo) · marquee(linen) · about(bone) · services(linen) · studio(**espresso**) · gallery(bone) · tour(**espresso**) · testimonials(linen) · faq(bone) · cta(**espresso**). FAQ was moved from linen to bone when Visit was removed — it would otherwise sit linen-on-linen against Testimonials. The footer is the one deliberate exception — it shares the CTA's espresso so the two read as a single closing block, separated only by a hairline. If you add a section, keep the alternation.
+**Surface rhythm.** No two adjacent sections share a background: hero(tour/photo) · marquee(linen) · about(bone) · services(linen) · studio(**espresso**) · gallery(bone) · testimonials(linen) · faq(bone) · cta(**espresso**). FAQ was moved from linen to bone when Visit was removed — it would otherwise sit linen-on-linen against Testimonials. The footer is the one deliberate exception — it shares the CTA's espresso so the two read as a single closing block, separated only by a hairline. If you add a section, keep the alternation.
 
 **The copyright year is baked at build time** (static prerender), so it reads whatever year the last deploy happened in. Rebuild to refresh, or drop the year — `© V&Mi Nail Spa` never expires.
 

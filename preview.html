@@ -124,9 +124,10 @@ tailwind.config = {
 <!-- ============= HERO ============= -->
 <section id="top" class="relative flex min-h-[92svh] items-center justify-center overflow-hidden">
   <div class="absolute inset-0"><img src="public/hero.jpg" alt="V&amp;Mi Nail Spa studio interior" class="h-full w-full object-cover kb"></div>
+  <div class="absolute inset-0" id="heroTour"></div>
   <div aria-hidden="true" class="pointer-events-none absolute inset-0">
-    <div class="absolute inset-0" style="background:linear-gradient(to top,rgba(43,36,30,.8),rgba(43,36,30,.45),rgba(43,36,30,.25))"></div>
-    <div class="absolute inset-x-0 top-0 h-40" style="background:linear-gradient(to bottom,rgba(43,36,30,.55),transparent)"></div>
+    <div class="absolute inset-0" style="background:linear-gradient(to top,rgba(43,36,30,.9),rgba(43,36,30,.6),rgba(43,36,30,.45))"></div>
+    <div class="absolute inset-x-0 top-0 h-40" style="background:linear-gradient(to bottom,rgba(43,36,30,.7),transparent)"></div>
   </div>
   <div class="shell relative z-10 py-32 text-center">
     <p class="text-[.6875rem] font-medium uppercase tracking-[.22em] text-accent rv">Boca Raton&rsquo;s St Andrews Plaza</p>
@@ -140,7 +141,10 @@ tailwind.config = {
       <button type="button" class="bookbtn btn relative inline-flex min-h-[48px] cursor-pointer items-center justify-center overflow-hidden rounded-full bg-accent px-8 text-[.8125rem] font-medium uppercase tracking-[.16em] text-espresso"><span class="glare"></span><span class="relative">Book appointment</span></button>
       <a href="tel:+15613671590" class="btn relative inline-flex min-h-[48px] items-center justify-center overflow-hidden rounded-full border border-bg/35 px-8 text-[.8125rem] font-medium uppercase tracking-[.16em] text-bg hover:border-bg"><span class="glare"></span><span class="relative">(561) 367-1590</span></a>
     </div>
-    <dl class="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-y-6 border-t border-bg/15 pt-8 text-left sm:grid-cols-3 sm:gap-x-8 sm:text-center rv" style="transition-delay:.58s">
+    <div class="mt-8 rv" style="transition-delay:.58s">
+      <button type="button" id="heroExplore" class="inline-flex min-h-[44px] items-center gap-2 border-b border-bg/25 pb-1 text-[.75rem] font-medium uppercase tracking-[.16em] text-bg/75 transition-colors duration-200 hover:border-accent hover:text-accent">Explore the studio in 360&deg;</button>
+    </div>
+    <dl class="mx-auto mt-14 grid max-w-2xl grid-cols-1 gap-y-6 border-t border-bg/15 pt-8 text-left sm:grid-cols-3 sm:gap-x-8 sm:text-center rv" style="transition-delay:.58s">
       <div><dt class="text-[.6875rem] uppercase tracking-[.22em] text-bg/50">Mon — Sat</dt><dd class="mt-2 text-[.9375rem] tabular-nums text-bg">9:30 AM — 7:00 PM</dd></div>
       <div class="sm:border-x sm:border-bg/15"><dt class="text-[.6875rem] uppercase tracking-[.22em] text-bg/50">Sunday</dt><dd class="mt-2 text-[.9375rem] tabular-nums text-bg">11:00 AM — 5:00 PM</dd></div>
       <div><dt class="text-[.6875rem] uppercase tracking-[.22em] text-bg/50">Telephone</dt><dd class="mt-2"><a href="tel:+15613671590" class="text-[.9375rem] text-bg hover:text-accent">(561) 367-1590</a></dd></div>
@@ -240,36 +244,6 @@ tailwind.config = {
     </div>
     <div class="mt-16 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4" id="grid"></div>
     <p class="mt-8 text-center text-[.8125rem] text-muted">Photography placeholders — real studio images to follow.</p>
-  </div>
-</section>
-
-<!-- ============= VIRTUAL TOUR ============= -->
-<section id="tour" class="bg-espresso sec text-bg">
-  <div class="shell">
-    <div class="mx-auto max-w-2xl text-center rv">
-      <span class="mx-auto mb-6 block h-px w-10 bg-accent"></span>
-      <p class="text-[.6875rem] font-medium uppercase tracking-[.22em] text-accent">Look around</p>
-      <h2 class="mt-5 font-display d-lg">Walk the studio <span style="font-style:italic" class="text-accent">before you come in</span>.</h2>
-      <p class="mx-auto mt-6 max-w-[62ch] text-[1.0625rem] leading-[1.7] text-bg/65">A full 360&deg; tour of the space — the chairs, the stations, the pedicure room. Drag to look around, or tap a hotspot to move through.</p>
-    </div>
-    <div class="mt-14 rv">
-      <div class="relative aspect-video w-full overflow-hidden border border-bg/15 bg-espresso" id="tourBox">
-        <button type="button" id="tourStart" aria-label="Start the 360 degree virtual tour" class="group absolute inset-0 h-full w-full">
-          <img src="public/tour-poster.jpg" alt="The V&amp;Mi Nail Spa studio interior" class="h-full w-full object-cover opacity-70 transition-opacity duration-200 group-hover:opacity-80">
-          <span class="absolute inset-0 bg-espresso/35"></span>
-          <span class="absolute inset-0 flex flex-col items-center justify-center gap-5">
-            <span class="inline-flex h-20 w-20 items-center justify-center rounded-full border border-bg/40 bg-espresso/45 backdrop-blur-sm transition-colors duration-200 group-hover:border-accent">
-              <svg viewBox="0 0 24 24" class="ml-1 h-7 w-7" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M5 3l14 9-14 9V3z"/></svg>
-            </span>
-            <span class="text-[.6875rem] uppercase tracking-[.22em] text-bg/80">Start the 360&deg; tour</span>
-          </span>
-        </button>
-      </div>
-      <div class="mt-4 flex flex-wrap items-center justify-between gap-4">
-        <p class="text-[.75rem] text-bg/45">Tour by media360plus.com</p>
-        <button type="button" id="tourFs" class="hidden min-h-[44px] items-center gap-2 text-[.75rem] font-medium uppercase tracking-[.12em] text-bg/70 transition-colors duration-200 hover:text-accent">Fullscreen</button>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -621,26 +595,45 @@ addEventListener('keydown', e => { if(e.key === 'Escape' && bk.classList.contain
 document.querySelectorAll('.bookbtn').forEach(el => el.addEventListener('click', openBooking));
 
 
-/* ---- virtual tour (facade: iframe only mounts on click) ---- */
+
+
+/* ---- hero 360 tour ----
+   The poster is the LCP element and paints immediately. The tour mounts only
+   after first paint, and only on a wide viewport, a non-saving connection, and
+   without prefers-reduced-motion. The Explore button ignores every gate. */
 (function(){
-  const box = document.getElementById('tourBox');
-  const start = document.getElementById('tourStart');
-  const fs = document.getElementById('tourFs');
-  if (!box || !start) return;
-  start.addEventListener('click', () => {
-    box.innerHTML = '<span class="absolute inset-0 flex items-center justify-center text-[.6875rem] uppercase tracking-[.22em] text-bg/60">Loading the tour</span>';
-    const f = document.createElement('iframe');
-    f.title = 'V&Mi Nail Spa 360 virtual tour';
-    f.src = 'https://vnmispa.com/';
-    f.className = 'absolute inset-0 h-full w-full opacity-0 transition-opacity duration-500';
-    f.style.border = '0';
-    f.allow = 'accelerometer; gyroscope; magnetometer; xr-spatial-tracking; fullscreen';
-    f.allowFullscreen = true;
-    f.addEventListener('load', () => { f.classList.remove('opacity-0'); });
-    box.appendChild(f);
-    fs.classList.remove('hidden'); fs.classList.add('inline-flex');
-    fs.onclick = () => (f.requestFullscreen || f.webkitRequestFullscreen)?.call(f);
-  });
+  const host = document.getElementById('heroTour');
+  const btn  = document.getElementById('heroExplore');
+  if (!host || !btn) return;
+  let frame = null, interactive = false;
+
+  function mount(force){
+    if (frame) { if (force) enable(); return; }
+    frame = document.createElement('iframe');
+    frame.title = 'V&Mi Nail Spa 360 virtual tour';
+    frame.src = 'https://vnmispa.com/';
+    frame.className = 'absolute inset-0 h-full w-full pointer-events-none opacity-0 transition-opacity duration-[1200ms] ease-out';
+    frame.style.border = '0';
+    frame.allow = 'accelerometer; gyroscope; magnetometer; xr-spatial-tracking; fullscreen';
+    frame.allowFullscreen = true;
+    frame.setAttribute('tabindex','-1');
+    frame.addEventListener('load', () => { frame.classList.remove('opacity-0'); if (force) enable(); });
+    host.appendChild(frame);
+  }
+  function enable(){
+    if (!frame || interactive) return;
+    interactive = true;
+    frame.classList.remove('pointer-events-none');
+    btn.textContent = 'Drag to look around';
+  }
+
+  btn.addEventListener('click', () => mount(true));
+
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (!matchMedia('(min-width: 1024px)').matches) return;
+  const c = navigator.connection;
+  if (c && (c.saveData || /2g|3g/.test(c.effectiveType || ''))) return;
+  setTimeout(() => mount(false), 2000);
 })();
 
 onScroll2();
