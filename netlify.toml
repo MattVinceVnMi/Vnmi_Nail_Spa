@@ -1,16 +1,11 @@
 [build]
-functions = "functions"
-command = 'CI= npm run build'
-publish = 'build'
-[[redirects]]
-from = "/*"
-to = "/index.html"
-status = 200
+command = 'npm run build'
+publish = '.next'
+
+[[plugins]]
+package = '@netlify/plugin-nextjs'
+
 [[headers]]
-  for = "/*"
+  for = "/_next/static/*"
   [headers.values]
-	cache-control = '''
-	max-age=31536000,
-	no-cache,
-	no-store,
-	must-revalidate'''
+    cache-control = 'public, max-age=31536000, immutable'
