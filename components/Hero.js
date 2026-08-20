@@ -39,7 +39,7 @@ import { ease } from '@/lib/motion';
  * tour is one tap away even when it hasn't auto-loaded.
  */
 
-const HEADLINE = ['Considered', 'nail care in', 'Boca Raton.'];
+const HEADLINE = ['Beautiful nails.', 'Thoughtful care.', 'Boca Raton.'];
 const TOUR_DELAY_MS = 2000;
 
 export function Hero() {
@@ -153,7 +153,7 @@ export function Hero() {
           initial="hidden"
           animate="visible"
         >
-          Boca Raton&rsquo;s St Andrews Plaza
+          A neighborhood nail studio in St Andrews Plaza
         </motion.p>
 
         <h1 className="mt-8 font-display text-display-xl text-bg">
@@ -179,8 +179,8 @@ export function Hero() {
           initial="hidden"
           animate="visible"
         >
-          A quiet studio on St Andrews. Classic manicures, restorative pedicures, and healthy-nail
-          enhancements — performed slowly, and finished properly.
+          Manicures, pedicures, and nail enhancements for people who want beautiful results without
+          compromising the health of their natural nails.
         </motion.p>
 
         <motion.div
@@ -217,7 +217,7 @@ export function Hero() {
             className="inline-flex min-h-[44px] items-center gap-2 border-b border-bg/25 pb-1 text-[0.75rem] font-medium uppercase tracking-[0.16em] text-bg/75 transition-colors duration-hover ease-out hover:border-accent hover:text-accent"
           >
             <Maximize2 className="h-3.5 w-3.5" aria-hidden="true" />
-            {forced ? 'Drag to look around' : 'Explore the studio in 360°'}
+            {forced ? 'Drag to look around' : 'Take a look inside the studio'}
           </button>
         </motion.div>
 

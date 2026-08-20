@@ -6,9 +6,9 @@
 export const business = {
   name: 'V&Mi Nail Spa',
   shortName: 'V&Mi',
-  tagline: 'Boca Raton nail care, considered.',
+  tagline: 'Beautiful nails. Thoughtful care. Boca Raton.',
   description:
-    'A quiet, meticulous nail studio in Boca Raton. Classic manicures, restorative pedicures, and healthy-nail enhancements — performed slowly and finished properly.',
+    'V&Mi Nail Spa is a calm, neighborhood nail studio in Boca Raton offering manicures, pedicures, dip, gel, and acrylic enhancements with thoughtful care for natural nails.',
 
   phone: {
     display: '(561) 367-1590',

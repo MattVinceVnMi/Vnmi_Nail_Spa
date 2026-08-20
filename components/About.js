@@ -48,24 +48,24 @@ export function About() {
               <span className="rule mb-6" aria-hidden="true" />
               <p className="eyebrow mb-5">Our story</p>
               <h2 className="font-display text-display-lg text-ink">
-                Where care <span className="italic text-accent">outlasts</span> the polish.
+                A better kind of <span className="italic text-accent">nail appointment</span>.
               </h2>
             </Reveal>
 
             <Reveal className="mt-7" delay={0.06}>
               <p className="max-w-prose text-body-lg text-muted">
-                V&amp;Mi is a small studio on St Andrews Boulevard, and small is the point. We book to
-                the treatment rather than to the clock, which means the deluxe pedicure you paid for
-                includes the full massage it was written for — not the abbreviated version.
+                V&amp;Mi is a neighborhood nail studio on St Andrews Boulevard where the experience is
+                personal, calm, and never rushed. We take the time to understand what you want, then
+                give your manicure or pedicure the attention it deserves.
               </p>
             </Reveal>
 
             <Reveal className="mt-5" delay={0.1}>
               <p className="max-w-prose text-body-lg text-muted">
-                Our technicians work in dipping powder, liquid gel, and solar acrylic, and they will
-                tell you honestly when a set isn&rsquo;t right for the condition your nails are in.
-                We would rather send you home with a good manicure than sell you a full set that
-                damages the nail underneath it.
+                From classic manicures and restorative pedicures to dip, gel, and acrylic enhancements,
+                our team focuses on clean prep, thoughtful product choices, and a polished finish that
+                feels like you. If a service is not right for your nails, we will tell you honestly and
+                recommend a better option.
               </p>
             </Reveal>
 
