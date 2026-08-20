@@ -1,6 +1,7 @@
 import { Cormorant_Garamond, Inter } from 'next/font/google';
 import { business, buildLocalBusinessSchema } from '@/data/business';
 import { BookingModal } from '@/components/BookingModal';
+import { FloatingBook } from '@/components/FloatingBook';
 import './globals.css';
 
 /**
@@ -90,6 +91,10 @@ export default function RootLayout({ children }) {
             instance. Rewanow's widget.js is deliberately NOT loaded — it
             redirects to their domain instead of opening a modal. */}
         <BookingModal />
+
+        {/* Persistent book/call dock. Appears only between the hero and the
+            closing CTA, so it never doubles a CTA that's already on screen. */}
+        <FloatingBook />
 
         {/* LocalBusiness JSON-LD, generated from the same constants the page
             renders — the hours in the markup and the hours Google reads can

@@ -15,7 +15,7 @@ import { BookButton } from '@/components/ui/BookButton';
  */
 export function CTA() {
   return (
-    <section aria-label="Book an appointment" className="relative overflow-hidden bg-espresso">
+    <section id="book" aria-label="Book an appointment" className="relative overflow-hidden bg-espresso">
       <div aria-hidden="true" className="absolute inset-0">
         <Image src={media.hero.src} alt="" fill sizes="100vw" className="object-cover opacity-25" />
         <div className="absolute inset-0 bg-espresso/80" />

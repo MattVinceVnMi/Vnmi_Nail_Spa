@@ -25,6 +25,7 @@ npm run build    # last verified green: 136 kB First Load JS, fully static
 | `lib/motion.js` | Spring / ease / duration tokens, reveal variants |
 | `components/ui/` | `Button`, `Reveal`, `SectionHeading` — the only primitives |
 | `components/` | One file per section |
+| `components/FloatingBook.js` | Persistent book/call dock — mounted in `app/layout.js`, not a section |
 | `public/` | Placeholder JPGs — `hero`, `about`, `gallery-01..08` |
 | `preview.html` | Standalone facsimile for viewing. **Not the build.** See below |
 
@@ -63,6 +64,8 @@ Path alias is `@/*` → project root (`jsconfig.json`).
 **Online booking never leaves the page.** Config lives in `business.booking` (`busid: 6147101790568448`). Every booking CTA is `<BookButton>`, which dispatches `vmi:open-booking`; `<BookingModal>` — one instance, mounted in `app/layout.js` — catches it and frames the Rewanow scheduler in a dialog.
 
 **Do not load Rewanow's `widget.js`.** Their documented integration (the script plus a `rewanow-scheduler-container` class and `busid` attribute) redirects to `www.rewanow.com/scheduler/s;busid=<id>` instead of opening a modal, which abandons the customer on a third-party domain mid-booking. `components/BookingScript.js` is a deliberately inert stub documenting this — do not revive it without verifying the redirect behaviour has changed.
+
+**The floating dock is CTA-gap-only.** `<FloatingBook>` is a fixed book/call dock mounted once in `app/layout.js`. Two IntersectionObservers gate it — no scroll handler: it appears once `#top` (hero) has fully left the viewport and hides again the moment `#book` (the closing CTA) enters, so it never doubles a CTA that is already on screen and never covers the NAP in `<CTA>`. Those two ids are load-bearing; renaming either silently disables the gate. Full-width bar on phones (`pb-[max(0.875rem,env(safe-area-inset-bottom))]` keeps it clear of the iPhone home indicator), floating pill bottom-right from `sm:`. Its Book button dispatches the same `vmi:open-booking` event as every other CTA. It sits at `z-40` — below the nav (50), the mobile menu (60), the lightbox (80) and the booking modal (90).
 
 No booking path may use `href`, `window.open`, or `target="_blank"` to a Rewanow URL. `business.booking.url` is for the `<BookingModal>` iframe only. Booking is the primary CTA everywhere; the phone is always secondary.
 
