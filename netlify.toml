@@ -1,0 +1,16 @@
+[build]
+functions = "functions"
+command = 'CI= npm run build'
+publish = 'build'
+[[redirects]]
+from = "/*"
+to = "/index.html"
+status = 200
+[[headers]]
+  for = "/*"
+  [headers.values]
+	cache-control = '''
+	max-age=31536000,
+	no-cache,
+	no-store,
+	must-revalidate'''
