@@ -160,8 +160,7 @@ export function Hero() {
           animate="visible"
         >
           Step into relaxation and let us bring your vision to life. From classic looks to new
-          colors and trending designs, we offer a huge selection of colors to match any mood. Join
-          our growing family of happy clients walking out with confidence and flawless nails.
+          colors and trending designs, we offer a huge selection of colors to match any mood.
         </motion.p>
 
         {/* Online booking is the primary action — it converts higher than a
