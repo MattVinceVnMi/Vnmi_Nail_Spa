@@ -94,7 +94,7 @@ export function Button({
           />
         </span>
       )}
-      <span className="relative">{children}</span>
+      <span className="relative inline-flex items-center">{children}</span>
     </MotionTag>
   );
 }
