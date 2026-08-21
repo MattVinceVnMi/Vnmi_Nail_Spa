@@ -186,9 +186,11 @@ export function Hero() {
         </motion.div>
 
         {/* At-a-glance strip. Hairline dividers, no boxes — the photo behind is
-            doing enough work already. */}
+            doing enough work already. Hidden on phones: three extra rows of
+            hours pushed the hero well past one screen, and the hours are one
+            tap away in the footer CTA regardless. */}
         <motion.dl
-          className="mx-auto mt-14 grid max-w-2xl grid-cols-1 gap-y-6 border-t border-bg/15 pt-8 text-left sm:grid-cols-3 sm:gap-x-8 sm:text-center"
+          className="mx-auto mt-14 hidden max-w-2xl grid-cols-1 gap-y-6 border-t border-bg/15 pt-8 text-left sm:grid sm:grid-cols-3 sm:gap-x-8 sm:text-center"
           variants={fade}
           custom={2}
           initial="hidden"
