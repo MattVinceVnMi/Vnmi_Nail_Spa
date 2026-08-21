@@ -48,26 +48,36 @@ export function About() {
               <span className="rule mb-6" aria-hidden="true" />
               <p className="eyebrow mb-5">Our story</p>
               <h2 className="font-display text-display-lg text-ink">
-                A better kind of <span className="italic text-accent">nail appointment</span>.
+                Unwind in quiet. Crafted with care.{' '}
+                <span className="italic text-accent">Built to last.</span>
               </h2>
             </Reveal>
 
             <Reveal className="mt-7" delay={0.06}>
               <p className="max-w-prose text-body text-muted sm:text-body-lg">
-                V&amp;Mi is a neighborhood nail studio on St Andrews Boulevard. The room is calm, the
-                pace is unhurried, and no appointment gets cut short to make room for the next one.
+                Nail care shouldn&rsquo;t mean compromise. You shouldn&rsquo;t have to choose between a
+                salon that&rsquo;s fast and one that&rsquo;s safe, or between a pretty set and healthy
+                nails.
               </p>
             </Reveal>
 
             <Reveal className="mt-5" delay={0.1}>
               <p className="max-w-prose text-body text-muted sm:text-body-lg">
-                Manicures, pedicures, dip, gel, and acrylic — with careful prep and honest advice. If a
-                set isn&rsquo;t right for the condition your nails are in, we&rsquo;ll say so and suggest
-                one that is.
+                At V&amp;Mi on St Andrews Boulevard, we do things differently. The room is calm and
+                peaceful, the workspace is obsessively clean, and every appointment gets the breathing
+                room it needs. No timers, no assembly lines, and zero shortcuts on sterilization.
               </p>
             </Reveal>
 
-            <Reveal className="mt-10 sm:mt-12" delay={0.14}>
+            <Reveal className="mt-5" delay={0.14}>
+              <p className="max-w-prose text-body text-muted sm:text-body-lg">
+                We bring high-end quality and honest advice to every service&mdash;because a great
+                manicure isn&rsquo;t just about how it looks when you walk out; it&rsquo;s about how
+                cared for your hands feel when you&rsquo;re here.
+              </p>
+            </Reveal>
+
+            <Reveal className="mt-10 sm:mt-12" delay={0.18}>
               <dl className="grid grid-cols-3 gap-px border border-border bg-border">
                 {STATS.map(({ n, l }) => (
                   <div key={l} className="bg-bg px-3 py-5 text-center sm:px-4 sm:py-6">
