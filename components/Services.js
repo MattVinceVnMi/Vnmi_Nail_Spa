@@ -1,45 +1,33 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { services, serviceCategories } from '@/data/services';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { Reveal, RevealGroup, RevealItem } from '@/components/ui/Reveal';
-import { spring, ease, duration } from '@/lib/motion';
-
-const ALL = 'all';
 
 /**
  * Services menu.
  *
- * The filter is a tablist. Selecting a category crossfades the list; the pill
- * indicator is a shared `layoutId`, so it physically travels between pills
- * instead of blinking off and on. That travel is the only thing telling the
- * user "this is one control with a moving selection" rather than "eight
- * independent buttons".
+ * Mobile (below `lg`) and desktop use two different browsing models over the
+ * same DOM — every category is always mounted, for search engines and in-page
+ * find, and each breakpoint just controls what's visible:
  *
- * The list container carries `min-h-[60vh]` from `lg` up so switching between a
- * 7-item and a 1-item category doesn't yank the page height out from under the
- * user mid-crossfade. That's the CLS-0 guarantee on this section. Below `lg`
- * the categories are collapsed accordions (see <CategoryBlock>) and the floor
- * drops to 24rem, because a 60vh floor under seven 64px headers is just a hole.
+ *   - Below `lg`: an accordion. All seven categories are listed; only one is
+ *     open at a time (see `openId`), so the whole menu fits on roughly one
+ *     screen and the visitor chooses what to open.
+ *   - From `lg` up: a dropdown replaces the old pill-filter row. There's no
+ *     "Everything" option — picking a category shows only that one via CSS
+ *     (`desktopHidden` on the non-selected blocks), which is what keeps the
+ *     page from defaulting to all 19 items flat. `min-h-[60vh]` on the panel
+ *     stops that swap from yanking the page height around.
  */
 export function Services() {
-  const reduced = useReducedMotion();
-  const [active, setActive] = useState(ALL);
+  // Mobile accordion — only one category open at a time, to save space.
+  const [openId, setOpenId] = useState(() => services[0]?.id ?? null);
 
-  const visible = active === ALL ? services : services.filter((c) => c.id === active);
-  const tabs = [{ id: ALL, title: 'Everything' }, ...serviceCategories];
-
-  // Mobile accordion: only one category open at a time, to save space —
-  // opening one collapses whichever was open. Resets to the first item of
-  // the new list whenever the (desktop-only) filter changes.
-  const [openId, setOpenId] = useState(() => visible[0]?.id ?? null);
-  useEffect(() => {
-    setOpenId(visible[0]?.id ?? null);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [active]);
+  // Desktop dropdown — which single category is shown flat.
+  const [desktopActive, setDesktopActive] = useState(() => serviceCategories[0]?.id ?? null);
 
   return (
     <section id="services" className="border-t border-border bg-surface-muted py-section">
@@ -52,73 +40,46 @@ export function Services() {
         />
 
         {/* -------------------------------------------------------------- */}
-        {/* Filter. Desktop only — below `lg` the accordion headers already
-            name every category, so a redundant filter row is gone entirely
-            rather than hidden-but-shipped. */}
+        {/* Category picker. Desktop only — below `lg` the accordion headers
+            already name every category, so a redundant control is gone
+            entirely rather than hidden-but-shipped. */}
         <Reveal className="mt-10 hidden sm:mt-14 lg:block">
-          <div
-            role="tablist"
-            aria-label="Filter services by category"
-            className="flex flex-wrap gap-2"
-          >
-            {tabs.map((tab) => {
-              const selected = active === tab.id;
-              return (
-                <button
-                  key={tab.id}
-                  type="button"
-                  role="tab"
-                  aria-selected={selected}
-                  aria-controls="services-panel"
-                  onClick={() => setActive(tab.id)}
-                  className={`relative inline-flex min-h-[44px] shrink-0 items-center rounded-pill border px-5 text-[0.8125rem] font-medium tracking-[0.06em] transition-colors duration-hover ease-out ${
-                    selected
-                      ? 'border-ink text-bg'
-                      : 'border-border-strong text-muted hover:border-ink hover:text-ink'
-                  }`}
-                >
-                  {selected && (
-                    <motion.span
-                      layoutId="service-pill"
-                      className="absolute inset-0 rounded-pill bg-ink"
-                      transition={reduced ? { duration: 0 } : spring.panel}
-                    />
-                  )}
-                  <span className="relative">{tab.title}</span>
-                </button>
-              );
-            })}
+          <div className="relative inline-block">
+            <select
+              value={desktopActive}
+              onChange={(event) => setDesktopActive(event.target.value)}
+              aria-label="Choose a service category"
+              aria-controls="services-panel"
+              className="min-h-[44px] w-64 appearance-none rounded-pill border border-border-strong bg-bg py-2 pl-5 pr-11 text-[0.8125rem] font-medium tracking-[0.06em] text-ink transition-colors duration-hover ease-out hover:border-ink focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+            >
+              {serviceCategories.map((category) => (
+                <option key={category.id} value={category.id}>
+                  {category.title}
+                </option>
+              ))}
+            </select>
+            <ChevronDown
+              aria-hidden="true"
+              className="pointer-events-none absolute right-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted"
+            />
           </div>
         </Reveal>
 
         {/* -------------------------------------------------------------- */}
-        <div id="services-panel" role="tabpanel" className="mt-10 min-h-[24rem] sm:mt-16 lg:min-h-[60vh]">
-          {/* mode="wait" would stall on rapid clicks; "popLayout" lets an
-              interrupted exit be cancelled and retargeted immediately. */}
-          <AnimatePresence mode="popLayout" initial={false}>
-            <motion.div
-              key={active}
-              initial={{ opacity: 0, y: reduced ? 0 : 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: reduced ? 0 : -6 }}
-              transition={{
-                duration: reduced ? 0.15 : duration.hover,
-                ease: ease.out,
-              }}
-              className="flex flex-col gap-4 lg:gap-20"
-            >
-              {visible.map((category) => (
-                <CategoryBlock
-                  key={category.id}
-                  category={category}
-                  open={openId === category.id}
-                  onToggle={() =>
-                    setOpenId((cur) => (cur === category.id ? null : category.id))
-                  }
-                />
-              ))}
-            </motion.div>
-          </AnimatePresence>
+        <div id="services-panel" className="mt-10 min-h-[24rem] sm:mt-16 lg:min-h-[60vh]">
+          <div className="flex flex-col gap-4 lg:gap-20">
+            {services.map((category) => (
+              <CategoryBlock
+                key={category.id}
+                category={category}
+                open={openId === category.id}
+                onToggle={() =>
+                  setOpenId((cur) => (cur === category.id ? null : category.id))
+                }
+                desktopHidden={category.id !== desktopActive}
+              />
+            ))}
+          </div>
         </div>
 
         <Reveal className="mt-12 border-t border-border pt-8 sm:mt-20 sm:pt-10">
@@ -158,16 +119,19 @@ export function Services() {
  * The items stay mounted while collapsed — they're clipped, not removed — so
  * the full menu is in the HTML for search engines and for in-page find.
  *
- * Open state is controlled by <Services> rather than owned here — only one
- * category is ever open at a time on mobile, so opening one has to collapse
- * whichever was open, which a sibling can't do to its own local state.
+ * Open/visible state is controlled by <Services> rather than owned here:
+ * `open` is the mobile accordion (only one open at a time, so a sibling can't
+ * manage that in local state), and `desktopHidden` is the desktop dropdown
+ * hiding every category except the selected one.
  */
-function CategoryBlock({ category, open, onToggle }) {
+function CategoryBlock({ category, open, onToggle, desktopHidden }) {
   const panelId = `services-${category.id}-panel`;
   const headerId = `services-${category.id}-header`;
 
   return (
-    <div className="border-b border-border-strong lg:border-b-0">
+    <div
+      className={`border-b border-border-strong lg:border-b-0 ${desktopHidden ? 'lg:hidden' : ''}`}
+    >
       {/* MOBILE — the header is the trigger. */}
       <h3 id={headerId} className="lg:hidden">
         <button
