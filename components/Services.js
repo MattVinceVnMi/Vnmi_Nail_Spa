@@ -38,18 +38,19 @@ export function Services() {
         <SectionHeading
           eyebrow="Services"
           title="The menu."
-          lede="Pricing is confirmed at booking — length, shape, and condition of the natural nail all move the number, and we'd rather quote you honestly than advertise a figure that changes at the chair."
+          lede="Pricing Note: Final pricing varies depending on nail length, custom shaping, and natural nail condition. Please give us a call or speak with the manager for exact pricing details prior to booking."
           className="lg:max-w-2xl"
         />
 
         {/* -------------------------------------------------------------- */}
-        {/* Filter. Horizontally scrollable on mobile rather than wrapping to
-            three ragged rows. 44px min target on every pill.              */}
-        <Reveal className="mt-10 sm:mt-14">
+        {/* Filter. Desktop only — below `lg` the accordion headers already
+            name every category, so a redundant filter row is gone entirely
+            rather than hidden-but-shipped. */}
+        <Reveal className="mt-10 hidden sm:mt-14 lg:block">
           <div
             role="tablist"
             aria-label="Filter services by category"
-            className="-mx-gutter flex snap-x gap-2 overflow-x-auto px-gutter pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:mx-0 lg:flex-wrap lg:overflow-visible lg:px-0"
+            className="flex flex-wrap gap-2"
           >
             {tabs.map((tab) => {
               const selected = active === tab.id;
@@ -61,7 +62,7 @@ export function Services() {
                   aria-selected={selected}
                   aria-controls="services-panel"
                   onClick={() => setActive(tab.id)}
-                  className={`relative inline-flex min-h-[44px] shrink-0 snap-start items-center rounded-pill border px-5 text-[0.8125rem] font-medium tracking-[0.06em] transition-colors duration-hover ease-out ${
+                  className={`relative inline-flex min-h-[44px] shrink-0 items-center rounded-pill border px-5 text-[0.8125rem] font-medium tracking-[0.06em] transition-colors duration-hover ease-out ${
                     selected
                       ? 'border-ink text-bg'
                       : 'border-border-strong text-muted hover:border-ink hover:text-ink'
@@ -106,8 +107,12 @@ export function Services() {
 
         <Reveal className="mt-12 border-t border-border pt-8 sm:mt-20 sm:pt-10">
           <p className="max-w-prose text-body text-muted">
-            Gift certificates available in any amount. Walk-ins welcome when the chairs allow —
-            calling ahead is always the surer route.
+            We strive for your complete satisfaction, but please note that all services are final
+            and non-refundable. Any follow-up fixes or adjustments are provided as a courtesy
+            accommodation at our discretion and are not guaranteed.
+            <br />
+            Additionally, management reserves the right to refuse or discontinue service to anyone
+            at any time.
           </p>
         </Reveal>
       </div>
