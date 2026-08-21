@@ -71,6 +71,43 @@ export const media = {
     { src: '/gallery-07.jpg', width: 1000, height: 1000, alt: 'Chrome finish on a short square set' },
     { src: '/gallery-08.jpg', width: 1000, height: 1000, alt: 'Paraffin treatment for hands' },
   ],
+
+  /**
+   * "Why V&Mi" pillar cards, 4:3. These four are abstract gradient plates —
+   * generated in-brand (no photo shoot exists yet), not a photograph, so
+   * treat them as more temporary than the other placeholders here. Swap in a
+   * real photo per `id` at the same filename and ratio when it exists.
+   */
+  pillars: [
+    {
+      id: 'sanitation',
+      src: '/pillar-sanitation.jpg',
+      width: 1200,
+      height: 900,
+      alt: 'Sterilization tools and single-use files at V&Mi Nail Spa',
+    },
+    {
+      id: 'products',
+      src: '/pillar-products.jpg',
+      width: 1200,
+      height: 900,
+      alt: 'Vitamin-enriched dipping powders and gentle nail care products',
+    },
+    {
+      id: 'unhurried',
+      src: '/pillar-unhurried.jpg',
+      width: 1200,
+      height: 900,
+      alt: 'An unhurried pedicure treatment in progress',
+    },
+    {
+      id: 'finished',
+      src: '/pillar-finished.jpg',
+      width: 1200,
+      height: 900,
+      alt: 'A finished manicure with clean, straight sidewalls',
+    },
+  ],
 };
 
 /**

@@ -1,4 +1,6 @@
+import Image from 'next/image';
 import { ShieldCheck, Leaf, Clock3, Sparkles } from 'lucide-react';
+import { media } from '@/data/media';
 import { Reveal, RevealGroup, RevealItem } from '@/components/ui/Reveal';
 
 /**
@@ -12,25 +14,35 @@ import { Reveal, RevealGroup, RevealItem } from '@/components/ui/Reveal';
  *
  * Emoji replaced with Lucide strokes — emoji render differently on every
  * platform and instantly cheapen a premium layout.
+ *
+ * Each card carries a photo now (`media.pillars`, matched by `id` — see
+ * data/media.js). The image sits in its own `aspect-[4/3]` box above the copy
+ * rather than behind it, which is what lets it stay a placeholder gradient
+ * today without fighting the headline the way a text-behind-image treatment
+ * would — nothing is ever overlaid on top of it.
  */
 
 const PILLARS = [
   {
+    id: 'sanitation',
     icon: ShieldCheck,
     title: 'Sanitation, without exception',
     body: 'Hospital-grade autoclave sterilisation. Single-use files and buffers, opened in front of you. Pipeless jetless basins, disinfected between every guest.',
   },
   {
+    id: 'products',
     icon: Leaf,
     title: 'Products that respect the nail',
     body: 'Vitamin-enriched dipping powders, low-odour liquid gel, organic sugar scrubs. Nothing that trades the health of the natural nail for a faster set.',
   },
   {
+    id: 'unhurried',
     icon: Clock3,
     title: 'Unhurried by design',
     body: 'We book to the treatment, not the clock. A deluxe pedicure gets the full massage it was written for — including the parts most salons quietly skip.',
   },
   {
+    id: 'finished',
     icon: Sparkles,
     title: 'Finished, not just done',
     body: 'Cuticles shaped, edges cleaned, sidewalls straight. The details nobody photographs are the ones that decide whether a set still looks right in week three.',
@@ -56,25 +68,41 @@ export function Studio() {
 
         <RevealGroup
           as="ul"
-          className="mt-10 grid gap-px border border-bg/10 bg-bg/10 sm:mt-16 sm:grid-cols-2"
+          className="mt-10 grid grid-cols-1 gap-6 sm:mt-16 sm:grid-cols-2 lg:grid-cols-4"
           stagger={0.07}
         >
-          {PILLARS.map(({ icon: Icon, title, body }) => (
-            <RevealItem
-              as="li"
-              key={title}
-              className="group bg-espresso p-6 transition-colors duration-hover ease-out sm:p-10 md:hover:bg-[#332B24]"
-            >
-              <span
-                className="inline-flex h-11 w-11 items-center justify-center border border-bg/20 transition-colors duration-hover ease-out group-hover:border-accent"
-                aria-hidden="true"
+          {PILLARS.map(({ id, icon: Icon, title, body }) => {
+            const image = media.pillars.find((p) => p.id === id);
+            return (
+              <RevealItem
+                as="li"
+                key={id}
+                className="group border border-bg/10 bg-espresso transition-colors duration-hover ease-out md:hover:bg-[#332B24]"
               >
-                <Icon className="h-[1.125rem] w-[1.125rem] text-accent" strokeWidth={1.4} />
-              </span>
-              <h3 className="mt-6 font-display text-2xl">{title}</h3>
-              <p className="mt-4 max-w-prose text-[0.9375rem] leading-relaxed text-bg/60">{body}</p>
-            </RevealItem>
-          ))}
+                <div className="relative aspect-[4/3] overflow-hidden">
+                  <Image
+                    src={image.src}
+                    alt={image.alt}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                    className="object-cover transition-transform duration-[520ms] ease-out md:group-hover:scale-[1.04]"
+                  />
+                </div>
+                <div className="p-6 sm:p-8">
+                  <span
+                    className="inline-flex h-11 w-11 items-center justify-center border border-bg/20 transition-colors duration-hover ease-out group-hover:border-accent"
+                    aria-hidden="true"
+                  >
+                    <Icon className="h-[1.125rem] w-[1.125rem] text-accent" strokeWidth={1.4} />
+                  </span>
+                  <h3 className="mt-6 font-display text-2xl">{title}</h3>
+                  <p className="mt-4 max-w-prose text-[0.9375rem] leading-relaxed text-bg/60">
+                    {body}
+                  </p>
+                </div>
+              </RevealItem>
+            );
+          })}
         </RevealGroup>
 
         <Reveal className="mt-12 border-t border-bg/10 pt-10 sm:mt-20 sm:pt-16">
