@@ -47,7 +47,7 @@ export function FAQ() {
     // back to back would read as one long undifferentiated block.
     <section id="faq" className="py-section">
       <div className="shell">
-        <div className="grid gap-14 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
+        <div className="grid gap-10 sm:gap-14 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
           <div className="lg:sticky lg:top-28 lg:self-start">
             <SectionHeading eyebrow="Questions" title="Before you come in." />
             <Reveal className="mt-8">

@@ -7,7 +7,8 @@ Landing page for a nail salon in Boca Raton, FL. Built for Vince (Vien Hong).
 ```bash
 npm install
 npm run dev      # localhost:3000
-npm run build    # last verified green: 136 kB First Load JS, fully static
+npm run build    # last verified green: 146 kB First Load JS, fully static
+                 # (was 136 kB before VirtualTour moved out of Hero into its own client section — 2026-08-21)
 ```
 
 ---
@@ -29,31 +30,37 @@ npm run build    # last verified green: 136 kB First Load JS, fully static
 | `public/` | Placeholder JPGs — `hero`, `about`, `gallery-01..08` |
 | `preview.html` | Standalone facsimile for viewing. **Not the build.** See below |
 
-**Section order** (mirrors the Nail Mark reference): hero → marquee → about → services → studio → gallery → testimonials → faq → cta.
+**Section order** (mirrors the Nail Mark reference): hero → marquee → about → services → studio → gallery → testimonials → tour → faq → cta.
 
 **There is no Visit section and no embedded map.** Removed at Vince's request. The address, hours, and the Directions link live in `<CTA>` — that is the **only** place the NAP appears in visible copy, so don't strip it from there. `components/Visit.js` is retained on disk but nothing imports it.
 
-**The 360° tour is the hero background, and its loading rules are load-bearing.** `vnmispa.com` is a full WebGL viewer (media360plus) — several MB of textures plus its own runtime.
+**Hero is intentionally empty right now, pending a redesign.** `components/Hero.js` renders nothing but the `#top` anchor at the hero's usual `min-h-[92svh]` on an espresso surface — no headline, CTAs, hours, art-directed `<picture>`, phone-only video, or tour. All of that was stripped at Vince's request (2026-08-21) when the tour moved back out to its own section below; treat the empty section as deliberate, not a regression, and don't restore the old hero from git history without asking first. `<Nav>`'s light-on-transparent state at the top of the page and `<FloatingBook>`'s "hero has left the viewport" `IntersectionObserver` both key off `document.getElementById('top')`, which is why the placeholder keeps a full viewport of height instead of collapsing to 0. `media.hero.*` in `data/media.js` (src, mobileSrc, mobileVideo, alt) is untouched and ready to be wired back in whenever the hero gets redesigned.
 
-`public/hero.jpg` is the LCP element and **must** paint first. The tour iframe is mounted only *after* first paint, and only when **all** of these hold: not `prefers-reduced-motion`, viewport ≥ 1024px, `navigator.connection` not reporting saveData or 2g/3g, and 2s elapsed. Any check failing leaves the still photo, which is a perfectly good hero.
+**The 360° tour is its own section again — `<VirtualTour>`, placed right below `<Testimonials>`.** It had briefly been folded into `<Hero>` as a crossfaded background so the WebGL viewer (`vnmispa.com`, media360plus — several MB of textures plus its own runtime) never loaded twice on one page. That tradeoff no longer applies now that `<Hero>` carries no tour of its own, so `components/VirtualTour.js` is imported again instead of sitting unused.
 
-**Never mount the tour synchronously or on mobile.** It would become the LCP element and tank Core Web Vitals — which is where a salon's "near me" traffic comes from. The "Explore the studio in 360°" button is always rendered and bypasses every gate, so the tour is one tap away regardless.
-
-The iframe stays `pointer-events-none` until the user explicitly opens it, so a background tour can't swallow clicks meant for the CTAs. `components/VirtualTour.js` (the old standalone section) is retained on disk but nothing imports it.
+`<VirtualTour>` keeps its own facade pattern regardless: it renders a poster (`business.tour.poster`) with a play affordance and mounts the tour iframe only on click, inside an `aspect-video` box so swapping poster for iframe costs 0 CLS. A visitor who never scrolls this far, or scrolls past without clicking, never loads the panorama — the same discipline the old hero-background version used to justify itself with, just moved one layer of intent later (a click instead of a 2s timer + viewport/connection gate).
 
 **The footer is a copyright line and nothing else.** Stripped at Vince's request — no nav, no repeated NAP, no socials. Everything it used to duplicate is already on the page: `Visit` carries the address, both hour blocks, and the map; the phone number is in the nav and the CTA. Do not repopulate it without asking.
 
-**Surface rhythm.** No two adjacent sections share a background: hero(tour/photo) · marquee(linen) · about(bone) · services(linen) · studio(**espresso**) · gallery(bone) · testimonials(linen) · faq(bone) · cta(**espresso**). FAQ was moved from linen to bone when Visit was removed — it would otherwise sit linen-on-linen against Testimonials. The footer is the one deliberate exception — it shares the CTA's espresso so the two read as a single closing block, separated only by a hairline. If you add a section, keep the alternation.
+**The gallery is a swipe rail below `md`, a grid above it.** Eight tiles two-up is four stacked rows — 1424px on a phone, nearly all of it below the fold. As a snap rail it is one row at 666px: tiles are `w-[70vw]` so the next one always peeks in from the right, which is the only affordance saying it moves, and `snap-x snap-mandatory` makes it land cleanly. The featured tile's `col-span-2 row-span-2` is `md:`-only — in the rail every tile is the same square, which is what keeps the row one consistent height. Don't drop the `-mx-gutter … px-gutter` pair: it's what lets the rail bleed to the screen edge while the first tile still lines up with the text above it.
+
+**Mobile is a separate layout, not a narrower desktop.** The `section` spacing token is `clamp(3.25rem, 12vw, 9rem)` — the floor was 5rem, which handed a 375px phone the same 80px band as a tablet; only the floor moved, so every viewport from ~427px up is unchanged. Alongside it, the internal rhythm carries explicit mobile values with `sm:` restoring the desktop one: section-to-content gaps (`mt-10 sm:mt-16`), card padding (`p-6 sm:p-10`), body copy (`text-body sm:text-body-lg`), the About photo (`aspect-[4/3] sm:aspect-[4/5]` — a 4:5 portrait is 419px tall at 335px wide), and the Studio pull-quote (`text-2xl sm:text-display-md`). When you add a section, set its mobile spacing first and let `sm:` restore the desktop figure — never the reverse. Verified: at 1280 every section height is byte-identical to before this pass (page 12862px); at 375 the page went from 14.4 screens to 13.0.
+
+**Surface rhythm.** No two adjacent sections share a background: hero(espresso, empty) · marquee(linen) · about(bone) · services(linen) · studio(**espresso**) · gallery(bone) · testimonials(linen) · tour(**espresso**) · faq(bone) · cta(**espresso**). FAQ was moved from linen to bone when Visit was removed — it would otherwise sit linen-on-linen against Testimonials; tour slots between testimonials and faq the same way, on espresso, without breaking the alternation. The footer is the one deliberate exception — it shares the CTA's espresso so the two read as a single closing block, separated only by a hairline. If you add a section, keep the alternation.
 
 **The copyright year is baked at build time** (static prerender), so it reads whatever year the last deploy happened in. Rebuild to refresh, or drop the year — `© V&Mi Nail Spa` never expires.
 
-Client Components (`'use client'`): `Nav`, `Hero`, `Services`, `Gallery`, `Testimonials`, `FAQ`, `ui/Button`, `ui/Reveal`. Everything else is static and must stay that way.
+Client Components (`'use client'`): `Nav`, `Services`, `Gallery`, `Testimonials`, `VirtualTour`, `FAQ`, `ui/Button`, `ui/Reveal`. Everything else is static and must stay that way.
 
 Path alias is `@/*` → project root (`jsconfig.json`).
 
 ---
 
 ## Rules that must not be broken
+
+**The services menu is an accordion below `lg`, flat above it.** Laid out flat the menu is 19 items over 7 categories — 8.2 phone screens and 41% of the page. `<CategoryBlock>` renders two headers: a `<button>` trigger (`lg:hidden`) and a static one (`hidden lg:flex`). Collapse is a `grid-rows-[0fr] lg:grid-rows-[1fr]` → `grid-rows-[1fr]` transition on a `min-h-0 overflow-hidden` child — no measured height, no JS, nothing to get stuck at a stale pixel value, and the desktop layout is byte-identical to before (services section 4872px at 1280, unchanged). Do not reach for `!important` to force the desktop state: the collapsed class itself carries the `lg:` reset. Items stay mounted while collapsed — clipped, not unmounted — so the full menu is in the HTML for crawlers and in-page find. First category opens by default; `key={active}` on the filter wrapper remounts the blocks so that resets on every filter change.
+
+**Menu copy is written to be scanned, not read.** Service descriptions cap at ~130 characters (avg 78). They were up to 252 — three lines of prose per item, nineteen items, which nobody reads on a phone. Keep every factual inclusion (what's in the service, which scrubs, how long) and cut the throat-clearing — "a classic touch of elegance", "an unforgettable, ultra-luxurious experience". If a new item needs more than two lines to explain, the item is the problem, not the copy.
 
 **Prices.** Every cost is the `PRICE` sentinel in `data/services.js` (`'$[PRICE]'`). No price literal exists anywhere else. If you add a service, use the sentinel — do not invent a number.
 
@@ -105,13 +112,14 @@ A hand-rolled single-file facsimile using the Tailwind CDN and vanilla JS, so th
 ## Open work
 
 1. **Prices** — replace the `PRICE` sentinel.
-2. **Photography** — every file in `/public` is a generated placeholder. Replace by dropping real photos in at the **same filenames and aspect ratios** (`hero.jpg` 3:2, `about.jpg` 4:5, `gallery-01.jpg` 4:5, `gallery-02..08.jpg` 1:1). Update `alt` text in `data/media.js` at the same time. If a ratio changes, change the wrapper class too — don't let it letterbox.
+2. **Photography** — every file in `/public` is a generated placeholder. Replace by dropping real photos in at the **same filenames and aspect ratios** (`hero.jpg` 3:2, `hero-mobile.jpg` 3:4, `about.jpg` 4:5, `gallery-01.jpg` 4:5, `gallery-02..08.jpg` 1:1). `hero-mobile.jpg` is currently a centre crop of `hero.jpg` — replace it with a frame actually composed for portrait. Update `alt` text in `data/media.js` at the same time. If a ratio changes, change the wrapper class too — don't let it letterbox. Note: `hero.jpg`/`hero-mobile.jpg` aren't rendered anywhere while Hero is emptied out (see above) — this guidance applies once the hero is redesigned.
 3. **Testimonials** — `data/media.js` exports four sample quotes flagged `placeholder: true`, and the UI labels them "sample". Swap for real Google reviews and drop the flag. **Do not ship the samples unlabelled as real reviews.**
 4. **FAQ copy** — `components/FAQ.js` questions are inferred from the service menu, not from real customer questions.
 5. **Domain** — `SITE_URL` in `app/layout.js` is a placeholder.
 6. **Socials** — `business.social` is stubbed `null`.
 7. **OG image** — `app/opengraph-image.png` (1200×630) missing.
 8. **Booking deep link** — once the Rewanow modal opens it rewrites the URL to `<page>#scheduler6147101790568448`. Put that URL on the Google Business Profile and Instagram bio so those visitors land on this site with the booker already open, instead of being sent to rewanow.com.
+9. **Hero redesign** — `components/Hero.js` is a bare placeholder (just `#top` + height + espresso background). It needs new content; see the note under "Where things live" above before touching it.
 
 ## Known context
 

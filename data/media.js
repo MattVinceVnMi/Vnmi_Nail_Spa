@@ -15,12 +15,36 @@
  */
 
 export const media = {
-  // Full-bleed hero background. Landscape, 3:2. Shot wide — the composition
-  // is centre-weighted and the edges get cropped hard on mobile.
+  /**
+   * Full-bleed hero background — ART DIRECTED, two separate files.
+   *
+   * `src` is the landscape plate, 3:2, centre-weighted. On a 375x812 phone a
+   * 3:2 crop keeps roughly the middle third of the frame: the composition that
+   * reads on a laptop becomes an anonymous close-up. `mobileSrc` is a portrait
+   * 3:4 crop shot for that shape instead, and it is a smaller file besides —
+   * the phone never downloads the 2400px landscape at all (see the <picture>
+   * element in components/Hero.js, which is what makes that true).
+   *
+   * TO REPLACE: same filenames, same ratios — `/hero.jpg` at 3:2 and
+   * `/hero-mobile.jpg` at 3:4. They should read as the same room, not two
+   * different businesses.
+   *
+   * `mobileVideo` is optional and null by default. Give it a path (e.g.
+   * '/hero-mobile.mp4') and the hero plays it behind the copy on phones,
+   * with `mobileSrc` as the poster and as the fallback whenever the gates in
+   * <Hero> say no — reduced-motion, Data Saver, or a 2g/3g connection. Keep it
+   * SHORT, SILENT and SMALL: 6-10 seconds, no audio track, H.264 under ~2MB.
+   * A hero video is the single easiest way to make a salon site feel slow on
+   * the phone of someone standing in your car park.
+   */
   hero: {
     src: '/hero.jpg',
     width: 2400,
     height: 1600,
+    mobileSrc: '/hero-mobile.jpg',
+    mobileWidth: 1200,
+    mobileHeight: 1600,
+    mobileVideo: null,
     alt: 'The V&Mi Nail Spa studio interior in Boca Raton',
   },
 

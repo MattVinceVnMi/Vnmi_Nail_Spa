@@ -24,20 +24,20 @@ export const services = [
       {
         name: 'Basic Manicure',
         description:
-          'A classic touch of elegance. Includes nail trimming and shaping, precise cuticle grooming, gentle buffing, a relaxing lotion massage, hot towel service, and finished with your choice of polish.',
+          'Trim, shape, cuticle grooming, buffing, a lotion massage, hot towel, and the polish of your choice.',
         price: PRICE,
       },
       {
         name: 'V&Mi Deluxe Manicure',
         description:
-          'An extension of our Basic Manicure for ultimate hand rejuvenation. Features an exfoliating sugar scrub (lavender, green tea, or citrus) and paraffin wax to deeply soften your arms. Finished with a hot towel service and an extended hand and arm massage.',
+          'Everything in the Basic, plus a sugar scrub — lavender, green tea, or citrus — paraffin wax, and an extended hand and arm massage.',
         price: PRICE,
         signature: true,
       },
       {
         name: 'Gel Manicure',
         description:
-          'Long-lasting, flawless shine. A hybrid formula that applies like polish but wears like gel — providing strong natural nail protection with zero drying time and zero chipping.',
+          'Applies like polish, wears like gel. No dry time, no chipping, and the natural nail stays protected underneath.',
         price: PRICE,
       },
     ],
@@ -51,26 +51,26 @@ export const services = [
       {
         name: 'Basic Pedicure',
         description:
-          'Essential foot care. Includes nail trimming, shaping, cuticle grooming, buffing, a soothing lotion massage, hot towel wrap, and a polish of your choice.',
+          'Trim, shape, cuticle grooming, buffing, a soothing lotion massage, hot towel wrap, and polish.',
         price: PRICE,
       },
       {
         name: 'V&Mi Deluxe Pedicure',
         description:
-          'Revitalizing luxury for your legs and feet. Includes our Basic Pedicure plus a callus remover and your choice of exfoliating sugar scrub (lavender or green tea). Completed with a hot towel service and an extended foot and leg massage.',
+          'Everything in the Basic, plus callus removal, a sugar scrub — lavender or green tea — and an extended foot and leg massage.',
         price: PRICE,
         signature: true,
       },
       {
         name: 'Organic Pedicure',
         description:
-          "Nature's best for your feet. Features a callus treatment alongside a premium exfoliating organic sugar scrub (lavender, lemon, or mandarin) to gently remove dead skin and restore moisture.",
+          'Callus treatment with an organic sugar scrub — lavender, lemon, or mandarin — to lift dead skin and restore moisture.',
         price: PRICE,
       },
       {
         name: 'Jelly Spa Pedicure',
         description:
-          'An unforgettable, ultra-luxurious experience. Submerge your feet in a unique jelly foot soak that retains heat four times longer than water. Includes a 10-minute jelly soak, special neck wrap relaxation, and the full Deluxe Pedicure treatment.',
+          'A 10-minute jelly soak that holds heat four times longer than water, a warmed neck wrap, and the full Deluxe Pedicure.',
         price: PRICE,
         signature: true,
       },
@@ -174,7 +174,7 @@ export const services = [
       {
         name: 'Paraffin Treatment',
         description:
-          'Intense moisture therapy using warm paraffin wax to soothe and soften skin for hands or feet.',
+          'Warm paraffin wax to soothe and soften — hands or feet.',
         price: PRICE,
       },
       {
@@ -193,7 +193,7 @@ export const services = [
       {
         name: 'Princess Manicure & Pedicure',
         description:
-          'Gentle, fun, and safe nail care tailored specifically for our younger guests.',
+          'Gentle, fun, and safe — sized for guests under 10.',
         price: PRICE,
       },
     ],

@@ -55,7 +55,7 @@ module.exports = {
         'body-lg': ['1.0625rem', { lineHeight: '1.7' }],
       },
       spacing: {
-        section: 'clamp(5rem, 12vw, 9rem)',
+        section: 'clamp(3.25rem, 12vw, 9rem)',
         gutter: 'clamp(1.25rem, 5vw, 2.5rem)',
       },
       maxWidth: {

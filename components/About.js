@@ -21,10 +21,10 @@ export function About() {
   return (
     <section id="about" className="py-section">
       <div className="shell">
-        <div className="grid items-center gap-14 lg:grid-cols-2 lg:gap-20">
+        <div className="grid items-center gap-10 sm:gap-14 lg:grid-cols-2 lg:gap-20">
           {/* ---- image ---- */}
           <Reveal className="relative">
-            <div className="relative aspect-[4/5] w-full overflow-hidden border border-border bg-surface-muted">
+            <div className="relative aspect-[4/3] w-full overflow-hidden border border-border bg-surface-muted sm:aspect-[4/5]">
               <Image
                 src={media.about.src}
                 alt={media.about.alt}
@@ -53,26 +53,24 @@ export function About() {
             </Reveal>
 
             <Reveal className="mt-7" delay={0.06}>
-              <p className="max-w-prose text-body-lg text-muted">
-                V&amp;Mi is a neighborhood nail studio on St Andrews Boulevard where the experience is
-                personal, calm, and never rushed. We take the time to understand what you want, then
-                give your manicure or pedicure the attention it deserves.
+              <p className="max-w-prose text-body text-muted sm:text-body-lg">
+                V&amp;Mi is a neighborhood nail studio on St Andrews Boulevard. The room is calm, the
+                pace is unhurried, and no appointment gets cut short to make room for the next one.
               </p>
             </Reveal>
 
             <Reveal className="mt-5" delay={0.1}>
-              <p className="max-w-prose text-body-lg text-muted">
-                From classic manicures and restorative pedicures to dip, gel, and acrylic enhancements,
-                our team focuses on clean prep, thoughtful product choices, and a polished finish that
-                feels like you. If a service is not right for your nails, we will tell you honestly and
-                recommend a better option.
+              <p className="max-w-prose text-body text-muted sm:text-body-lg">
+                Manicures, pedicures, dip, gel, and acrylic — with careful prep and honest advice. If a
+                set isn&rsquo;t right for the condition your nails are in, we&rsquo;ll say so and suggest
+                one that is.
               </p>
             </Reveal>
 
-            <Reveal className="mt-12" delay={0.14}>
+            <Reveal className="mt-10 sm:mt-12" delay={0.14}>
               <dl className="grid grid-cols-3 gap-px border border-border bg-border">
                 {STATS.map(({ n, l }) => (
-                  <div key={l} className="bg-bg px-4 py-6 text-center">
+                  <div key={l} className="bg-bg px-3 py-5 text-center sm:px-4 sm:py-6">
                     <dt className="sr-only">{l}</dt>
                     <dd>
                       <span className="block font-display text-3xl text-ink">{n}</span>

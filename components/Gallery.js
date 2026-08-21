@@ -13,9 +13,10 @@ import { spring, ease, duration } from '@/lib/motion';
  * Gallery with lightbox — Nail Mark's grid (featured tile spanning 2x2, hover
  * overlay with a plus) rebuilt with keyboard support and a real dialog.
  *
- * Grid: 2 cols mobile / 4 cols desktop. The featured tile spans 2x2, so the
- * row rhythm stays intact rather than leaving a hole. Every tile has a locked
- * aspect ratio, so images landing at different times cannot reflow the grid.
+ * Layout: a horizontal snap rail below `md`, a 4-column grid from `md` up where
+ * the featured tile spans 2x2 so the row rhythm stays intact rather than leaving
+ * a hole. Every tile has a locked aspect ratio, so images landing at different
+ * times cannot reflow either layout.
  *
  * Lightbox: scale-and-fade in, faster fade out. Arrow keys page, Escape closes,
  * body scroll is locked while open. Because it lives in AnimatePresence, a
@@ -58,14 +59,24 @@ export function Gallery() {
           className="mx-auto max-w-2xl"
         />
 
+        {/* Below `md` this is a swipe rail, not a grid.
+            Eight tiles in a 2-up grid is four stacked rows — 1424px, most of it
+            below the fold, and the visitor has to scroll past all of it to reach
+            the next section. As a rail it is one row: tiles are 70vw so the next
+            one always peeks in from the right, which is the affordance telling
+            you it moves. Scroll snapping makes it land cleanly instead of
+            drifting. From `md` the original 4-column grid with the 2x2 featured
+            tile comes back untouched. */}
         <RevealGroup
-          className="mt-16 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4"
+          className="-mx-gutter mt-10 flex snap-x snap-mandatory gap-3 overflow-x-auto px-gutter pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mt-16 sm:gap-4 md:mx-0 md:grid md:grid-cols-4 md:overflow-visible md:px-0 md:pb-0"
           stagger={0.05}
         >
           {items.map((item, i) => (
             <RevealItem
               key={item.src}
-              className={item.featured ? 'col-span-2 row-span-2' : ''}
+              className={`w-[70vw] max-w-[17rem] shrink-0 snap-start md:w-auto md:max-w-none ${
+                item.featured ? 'md:col-span-2 md:row-span-2' : ''
+              }`}
             >
               <button
                 type="button"

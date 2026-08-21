@@ -48,7 +48,7 @@ export function Studio() {
             The difference is in what you don&rsquo;t have to{' '}
             <span className="italic text-accent">think about</span>.
           </h2>
-          <p className="mx-auto mt-6 max-w-prose text-body-lg text-bg/65">
+          <p className="mx-auto mt-6 max-w-prose text-body text-bg/65 sm:text-body-lg">
             Most people can&rsquo;t name what makes one salon feel better than another. It&rsquo;s
             usually these four things, and none of them are the polish colour.
           </p>
@@ -56,14 +56,14 @@ export function Studio() {
 
         <RevealGroup
           as="ul"
-          className="mt-16 grid gap-px border border-bg/10 bg-bg/10 sm:grid-cols-2"
+          className="mt-10 grid gap-px border border-bg/10 bg-bg/10 sm:mt-16 sm:grid-cols-2"
           stagger={0.07}
         >
           {PILLARS.map(({ icon: Icon, title, body }) => (
             <RevealItem
               as="li"
               key={title}
-              className="group bg-espresso p-8 transition-colors duration-hover ease-out sm:p-10 md:hover:bg-[#332B24]"
+              className="group bg-espresso p-6 transition-colors duration-hover ease-out sm:p-10 md:hover:bg-[#332B24]"
             >
               <span
                 className="inline-flex h-11 w-11 items-center justify-center border border-bg/20 transition-colors duration-hover ease-out group-hover:border-accent"
@@ -77,13 +77,13 @@ export function Studio() {
           ))}
         </RevealGroup>
 
-        <Reveal className="mt-20 border-t border-bg/10 pt-16">
+        <Reveal className="mt-12 border-t border-bg/10 pt-10 sm:mt-20 sm:pt-16">
           <blockquote className="mx-auto max-w-3xl text-center">
-            <p className="font-display text-display-md italic">
+            <p className="font-display text-2xl italic sm:text-display-md">
               &ldquo;You should leave with your hands looking like you have someone who does them —
               not like you went somewhere.&rdquo;
             </p>
-            <footer className="mt-8 text-eyebrow uppercase text-accent">The V&amp;Mi standard</footer>
+            <footer className="mt-6 text-eyebrow uppercase text-accent sm:mt-8">The V&amp;Mi standard</footer>
           </blockquote>
         </Reveal>
       </div>

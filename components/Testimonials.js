@@ -76,7 +76,7 @@ export function Testimonials() {
           className="mx-auto max-w-2xl"
         />
 
-        <Reveal className="mx-auto mt-16 max-w-3xl">
+        <Reveal className="mx-auto mt-10 max-w-3xl sm:mt-16">
           {/* Pause zone. onFocus/onBlur use bubbling (focusin/focusout
               semantics in React), so tabbing to the arrows pauses too. */}
           <div
@@ -109,7 +109,7 @@ export function Testimonials() {
                   <figure
                     key={t.name}
                     aria-hidden={i !== index}
-                    className="flex min-h-[22rem] w-full shrink-0 select-none flex-col justify-between border border-border bg-bg p-8 text-center sm:min-h-[20rem] sm:p-12"
+                    className="flex min-h-[20rem] w-full shrink-0 select-none flex-col justify-between border border-border bg-bg p-6 text-center sm:min-h-[20rem] sm:p-12"
                   >
                     <div>
                       <Quote

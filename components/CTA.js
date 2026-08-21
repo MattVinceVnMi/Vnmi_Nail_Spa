@@ -38,7 +38,7 @@ export function CTA() {
             only place on the page they appear in visible copy — the JSON-LD in
             layout.js reads from the same object, so the two cannot drift, but
             Google also wants the NAP rendered, not just in structured data. */}
-        <Reveal className="mx-auto mt-12 max-w-3xl border-y border-bg/10 py-8" delay={0.04}>
+        <Reveal className="mx-auto mt-10 max-w-3xl border-y border-bg/10 py-7 sm:mt-12 sm:py-8" delay={0.04}>
           <dl className="grid gap-8 sm:grid-cols-3 sm:gap-6">
             <div className="sm:text-left">
               <dt className="text-eyebrow uppercase text-bg/45">Address</dt>
@@ -80,7 +80,7 @@ export function CTA() {
           </dl>
         </Reveal>
 
-        <Reveal className="mt-10 flex flex-wrap items-center justify-center gap-3" delay={0.08}>
+        <Reveal className="mt-8 flex flex-wrap items-center justify-center gap-3 sm:mt-10" delay={0.08}>
           <BookButton className="!bg-accent !text-espresso hover:!bg-[#B9924C]">
             Book online
           </BookButton>

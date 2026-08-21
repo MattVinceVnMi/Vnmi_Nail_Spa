@@ -2,11 +2,10 @@
 
 import { useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { ChevronDown } from 'lucide-react';
 import { services, serviceCategories } from '@/data/services';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { Reveal, RevealGroup, RevealItem } from '@/components/ui/Reveal';
-import { Button } from '@/components/ui/Button';
-import { business } from '@/data/business';
 import { spring, ease, duration } from '@/lib/motion';
 
 const ALL = 'all';
@@ -20,9 +19,11 @@ const ALL = 'all';
  * user "this is one control with a moving selection" rather than "eight
  * independent buttons".
  *
- * The list container carries `min-h-[60vh]` so switching between a 7-item and
- * a 1-item category doesn't yank the page height out from under the user
- * mid-crossfade. That's the CLS-0 guarantee on this section.
+ * The list container carries `min-h-[60vh]` from `lg` up so switching between a
+ * 7-item and a 1-item category doesn't yank the page height out from under the
+ * user mid-crossfade. That's the CLS-0 guarantee on this section. Below `lg`
+ * the categories are collapsed accordions (see <CategoryBlock>) and the floor
+ * drops to 24rem, because a 60vh floor under seven 64px headers is just a hole.
  */
 export function Services() {
   const reduced = useReducedMotion();
@@ -34,24 +35,17 @@ export function Services() {
   return (
     <section id="services" className="border-t border-border bg-surface-muted py-section">
       <div className="shell">
-        <div className="flex flex-col gap-10 lg:flex-row lg:items-end lg:justify-between">
-          <SectionHeading
-            eyebrow="Services"
-            title="The menu."
-            lede="Pricing is confirmed at booking — length, shape, and condition of the natural nail all move the number, and we'd rather quote you honestly than advertise a figure that changes at the chair."
-            className="lg:max-w-2xl"
-          />
-          <Reveal className="shrink-0">
-            <Button href={business.phone.href} variant="outline">
-              Ask about pricing
-            </Button>
-          </Reveal>
-        </div>
+        <SectionHeading
+          eyebrow="Services"
+          title="The menu."
+          lede="Pricing is confirmed at booking — length, shape, and condition of the natural nail all move the number, and we'd rather quote you honestly than advertise a figure that changes at the chair."
+          className="lg:max-w-2xl"
+        />
 
         {/* -------------------------------------------------------------- */}
         {/* Filter. Horizontally scrollable on mobile rather than wrapping to
             three ragged rows. 44px min target on every pill.              */}
-        <Reveal className="mt-14">
+        <Reveal className="mt-10 sm:mt-14">
           <div
             role="tablist"
             aria-label="Filter services by category"
@@ -88,7 +82,7 @@ export function Services() {
         </Reveal>
 
         {/* -------------------------------------------------------------- */}
-        <div id="services-panel" role="tabpanel" className="mt-16 min-h-[60vh]">
+        <div id="services-panel" role="tabpanel" className="mt-10 min-h-[24rem] sm:mt-16 lg:min-h-[60vh]">
           {/* mode="wait" would stall on rapid clicks; "popLayout" lets an
               interrupted exit be cancelled and retargeted immediately. */}
           <AnimatePresence mode="popLayout" initial={false}>
@@ -101,16 +95,16 @@ export function Services() {
                 duration: reduced ? 0.15 : duration.hover,
                 ease: ease.out,
               }}
-              className="flex flex-col gap-20"
+              className="flex flex-col gap-4 lg:gap-20"
             >
-              {visible.map((category) => (
-                <CategoryBlock key={category.id} category={category} />
+              {visible.map((category, index) => (
+                <CategoryBlock key={category.id} category={category} defaultOpen={index === 0} />
               ))}
             </motion.div>
           </AnimatePresence>
         </div>
 
-        <Reveal className="mt-20 border-t border-border pt-10">
+        <Reveal className="mt-12 border-t border-border pt-8 sm:mt-20 sm:pt-10">
           <p className="max-w-prose text-body text-muted">
             Gift certificates available in any amount. Walk-ins welcome when the chairs allow —
             calling ahead is always the surer route.
@@ -123,21 +117,88 @@ export function Services() {
 
 /* ------------------------------------------------------------------------ */
 
-function CategoryBlock({ category }) {
+/**
+ * One category. Two presentations, one DOM.
+ *
+ * Laid out flat, the menu is 19 items of prose — 8.2 phone screens, 41% of the
+ * page, and nobody reads item fourteen. Below `lg` each category collapses to a
+ * single header row, so the whole menu fits on roughly one screen and the
+ * visitor chooses what to open. From `lg` up there's room to read it flat, and
+ * the accordion is gone entirely: no trigger, nothing collapsed, no keyboard
+ * stop on a control that does nothing.
+ *
+ * The open/close is a `grid-template-rows: 0fr → 1fr` transition rather than an
+ * animated height. It costs no JS, needs no measurement pass, and cannot end up
+ * stuck at a wrong pixel height when the content reflows. Browsers that can't
+ * interpolate it snap open instead, which is a fine failure. `duration-panel`
+ * is the same 320ms the JS token carries, and the reduced-motion block in
+ * globals.css flattens it to 0.01ms along with every other transition.
+ *
+ * The items stay mounted while collapsed — they're clipped, not removed — so
+ * the full menu is in the HTML for search engines and for in-page find.
+ */
+function CategoryBlock({ category, defaultOpen = false }) {
+  const [open, setOpen] = useState(defaultOpen);
+  const panelId = `services-${category.id}-panel`;
+  const headerId = `services-${category.id}-header`;
+
   return (
-    <div>
-      <div className="mb-8 flex flex-wrap items-baseline justify-between gap-4 border-b border-border-strong pb-5">
+    <div className="border-b border-border-strong lg:border-b-0">
+      {/* MOBILE — the header is the trigger. */}
+      <h3 id={headerId} className="lg:hidden">
+        <button
+          type="button"
+          onClick={() => setOpen((wasOpen) => !wasOpen)}
+          aria-expanded={open}
+          aria-controls={panelId}
+          className="flex min-h-[64px] w-full items-center justify-between gap-4 py-4 text-left"
+        >
+          <span className="flex min-w-0 flex-col gap-1">
+            <span className="font-display text-2xl text-ink">{category.title}</span>
+            <span className="text-eyebrow uppercase text-accent-ink">
+              {category.kicker} · {category.items.length}{' '}
+              {category.items.length === 1 ? 'service' : 'services'}
+            </span>
+          </span>
+          <ChevronDown
+            aria-hidden="true"
+            className={`h-5 w-5 shrink-0 text-muted transition-transform duration-panel ease-out ${
+              open ? 'rotate-180' : ''
+            }`}
+          />
+        </button>
+      </h3>
+
+      {/* DESKTOP — static header, no control. */}
+      <div className="mb-8 hidden flex-wrap items-baseline justify-between gap-4 border-b border-border-strong pb-5 lg:flex">
         <h3 className="font-display text-display-md text-ink">{category.title}</h3>
         <span className="text-eyebrow uppercase text-accent-ink">{category.kicker}</span>
       </div>
 
-      {category.note && <p className="mb-8 max-w-prose text-body text-muted">{category.note}</p>}
+      <div
+        id={panelId}
+        role="region"
+        aria-labelledby={headerId}
+        className={`grid transition-[grid-template-rows] duration-panel ease-out ${
+          open ? 'grid-rows-[1fr]' : 'grid-rows-[0fr] lg:grid-rows-[1fr]'
+        }`}
+      >
+        {/* The clipping row. `min-h-0` is what lets a grid child shrink below
+            its content height — without it the 0fr row never actually closes. */}
+        <div className="min-h-0 overflow-hidden">
+          <div className="pb-6 lg:pb-0">
+            {category.note && (
+              <p className="mb-8 max-w-prose text-body text-muted">{category.note}</p>
+            )}
 
-      <RevealGroup as="ul" className="flex flex-col" stagger={0.05}>
-        {category.items.map((item) => (
-          <ServiceRow key={item.name} item={item} />
-        ))}
-      </RevealGroup>
+            <RevealGroup as="ul" className="flex flex-col" stagger={0.05}>
+              {category.items.map((item) => (
+                <ServiceRow key={item.name} item={item} />
+              ))}
+            </RevealGroup>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
@@ -146,7 +207,7 @@ function ServiceRow({ item }) {
   return (
     <RevealItem
       as="li"
-      className="hover-lift group border-b border-border px-4 py-7 first:border-t first:border-border sm:px-6"
+      className="hover-lift group border-b border-border px-1 py-6 first:border-t first:border-border sm:px-6 sm:py-7"
     >
       <div className="flex flex-col gap-4 sm:flex-row sm:items-baseline sm:justify-between sm:gap-10">
         <div className="min-w-0 flex-1">
