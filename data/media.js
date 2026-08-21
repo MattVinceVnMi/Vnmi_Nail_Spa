@@ -108,6 +108,22 @@ export const media = {
       alt: 'A finished manicure with clean, straight sidewalls',
     },
   ],
+
+  /**
+   * Services menu category banners, 21:9. One per category in
+   * data/services.js, matched by `id`. Same gradient-placeholder situation as
+   * `pillars` — swap in a real photo per category at the same filename and
+   * ratio when it exists.
+   */
+  categories: [
+    { id: 'manicure', src: '/category-manicure.jpg', width: 1680, height: 720, alt: 'A manicure in progress at V&Mi Nail Spa' },
+    { id: 'pedicure', src: '/category-pedicure.jpg', width: 1680, height: 720, alt: 'A pedicure treatment at V&Mi Nail Spa' },
+    { id: 'dipping-powder', src: '/category-dipping-powder.jpg', width: 1680, height: 720, alt: 'A dipping powder full set' },
+    { id: 'enhancements', src: '/category-enhancements.jpg', width: 1680, height: 720, alt: 'Solar and liquid gel nail enhancements' },
+    { id: 'waxing', src: '/category-waxing.jpg', width: 1680, height: 720, alt: 'A waxing treatment at V&Mi Nail Spa' },
+    { id: 'add-ons', src: '/category-add-ons.jpg', width: 1680, height: 720, alt: 'Custom nail art and finishing touches' },
+    { id: 'kids', src: '/category-kids.jpg', width: 1680, height: 720, alt: 'A princess manicure and pedicure for kids' },
+  ],
 };
 
 /**

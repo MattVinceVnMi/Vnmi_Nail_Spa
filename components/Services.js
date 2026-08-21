@@ -1,8 +1,10 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { ChevronDown } from 'lucide-react';
 import { services, serviceCategories } from '@/data/services';
+import { media } from '@/data/media';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { Reveal, RevealGroup, RevealItem } from '@/components/ui/Reveal';
 
@@ -123,10 +125,17 @@ export function Services() {
  * `open` is the mobile accordion (only one open at a time, so a sibling can't
  * manage that in local state), and `desktopHidden` is the desktop dropdown
  * hiding every category except the selected one.
+ *
+ * Each category also gets a banner photo (`media.categories`, matched by
+ * `id` — see data/media.js), living inside the collapsible region rather
+ * than up in the always-visible header. That's what keeps a collapsed
+ * mobile row a single compact line — the photo only costs space once a
+ * visitor actually opens that category.
  */
 function CategoryBlock({ category, open, onToggle, desktopHidden }) {
   const panelId = `services-${category.id}-panel`;
   const headerId = `services-${category.id}-header`;
+  const image = media.categories.find((c) => c.id === category.id);
 
   return (
     <div
@@ -175,6 +184,18 @@ function CategoryBlock({ category, open, onToggle, desktopHidden }) {
             its content height — without it the 0fr row never actually closes. */}
         <div className="min-h-0 overflow-hidden">
           <div className="pb-6 lg:pb-0">
+            {image && (
+              <div className="relative mb-8 aspect-[21/9] overflow-hidden">
+                <Image
+                  src={image.src}
+                  alt={image.alt}
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 800px"
+                  className="object-cover"
+                />
+              </div>
+            )}
+
             {category.note && (
               <p className="mb-8 max-w-prose text-body text-muted">{category.note}</p>
             )}
