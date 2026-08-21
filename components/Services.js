@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 import { services, serviceCategories } from '@/data/services';
@@ -31,6 +31,15 @@ export function Services() {
 
   const visible = active === ALL ? services : services.filter((c) => c.id === active);
   const tabs = [{ id: ALL, title: 'Everything' }, ...serviceCategories];
+
+  // Mobile accordion: only one category open at a time, to save space —
+  // opening one collapses whichever was open. Resets to the first item of
+  // the new list whenever the (desktop-only) filter changes.
+  const [openId, setOpenId] = useState(() => visible[0]?.id ?? null);
+  useEffect(() => {
+    setOpenId(visible[0]?.id ?? null);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [active]);
 
   return (
     <section id="services" className="border-t border-border bg-surface-muted py-section">
@@ -98,8 +107,15 @@ export function Services() {
               }}
               className="flex flex-col gap-4 lg:gap-20"
             >
-              {visible.map((category, index) => (
-                <CategoryBlock key={category.id} category={category} defaultOpen={index === 0} />
+              {visible.map((category) => (
+                <CategoryBlock
+                  key={category.id}
+                  category={category}
+                  open={openId === category.id}
+                  onToggle={() =>
+                    setOpenId((cur) => (cur === category.id ? null : category.id))
+                  }
+                />
               ))}
             </motion.div>
           </AnimatePresence>
@@ -141,9 +157,12 @@ export function Services() {
  *
  * The items stay mounted while collapsed — they're clipped, not removed — so
  * the full menu is in the HTML for search engines and for in-page find.
+ *
+ * Open state is controlled by <Services> rather than owned here — only one
+ * category is ever open at a time on mobile, so opening one has to collapse
+ * whichever was open, which a sibling can't do to its own local state.
  */
-function CategoryBlock({ category, defaultOpen = false }) {
-  const [open, setOpen] = useState(defaultOpen);
+function CategoryBlock({ category, open, onToggle }) {
   const panelId = `services-${category.id}-panel`;
   const headerId = `services-${category.id}-header`;
 
@@ -153,7 +172,7 @@ function CategoryBlock({ category, defaultOpen = false }) {
       <h3 id={headerId} className="lg:hidden">
         <button
           type="button"
-          onClick={() => setOpen((wasOpen) => !wasOpen)}
+          onClick={onToggle}
           aria-expanded={open}
           aria-controls={panelId}
           className="flex min-h-[64px] w-full items-center justify-between gap-4 py-4 text-left"
