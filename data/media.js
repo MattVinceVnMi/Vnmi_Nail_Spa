@@ -29,13 +29,14 @@ export const media = {
    * `/hero-mobile.jpg` at 3:4. They should read as the same room, not two
    * different businesses.
    *
-   * `mobileVideo` is optional and null by default. Give it a path (e.g.
-   * '/hero-mobile.mp4') and the hero plays it behind the copy on phones,
-   * with `mobileSrc` as the poster and as the fallback whenever the gates in
-   * <Hero> say no — reduced-motion, Data Saver, or a 2g/3g connection. Keep it
-   * SHORT, SILENT and SMALL: 6-10 seconds, no audio track, H.264 under ~2MB.
-   * A hero video is the single easiest way to make a salon site feel slow on
-   * the phone of someone standing in your car park.
+   * `video` is optional and null by default. Give it a path and the hero
+   * plays it full-bleed behind the copy, on every breakpoint, with `src` as
+   * the poster and as the fallback whenever the gates in <Hero> say no —
+   * reduced-motion or a reported 2g/3g/Data-Saver connection. Muted, looped,
+   * no controls: it's wallpaper, not content. Strip the audio track before
+   * dropping a file in — `ffmpeg -i in.mp4 -an -c:v libx264 -crf 26 out.mp4`
+   * keeps quality reasonable while cutting size, since a hero video is the
+   * single easiest way to make a salon site feel slow on someone's phone.
    */
   hero: {
     src: '/hero.jpg',
@@ -44,7 +45,7 @@ export const media = {
     mobileSrc: '/hero-mobile.jpg',
     mobileWidth: 1200,
     mobileHeight: 1600,
-    mobileVideo: '/hero-mobile.mp4',
+    video: '/hero.mp4',
     alt: 'The V&Mi Nail Spa studio interior in Boca Raton',
   },
 

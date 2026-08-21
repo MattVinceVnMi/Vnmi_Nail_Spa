@@ -20,11 +20,10 @@ import { ease } from '@/lib/motion';
  * (`min-h-[92svh]` on the section), so it's the LCP element and reserves its
  * own box. Nothing shifts.
  *
- * `media.hero.mobileVideo`, when set, plays behind the copy on phones only —
- * `mobileSrc` is both its poster and its fallback whenever the gates below say
- * no: `prefers-reduced-motion`, a >=640px viewport (desktop keeps the static
- * plate), or a reported 2g/3g/Data-Saver connection. Muted, looped, no
- * controls — it's wallpaper, not content.
+ * `media.hero.video`, when set, plays full-bleed behind the copy on every
+ * breakpoint — `src` is both its poster and its fallback whenever the gates
+ * below say no: `prefers-reduced-motion` or a reported 2g/3g/Data-Saver
+ * connection. Muted, looped, no controls — it's wallpaper, not content.
  */
 
 const HEADLINE = ['Beautiful nails.', 'Thoughtful care.', 'Boca Raton.'];
@@ -34,10 +33,7 @@ export function Hero() {
   const [videoOk, setVideoOk] = useState(false);
 
   useEffect(() => {
-    if (reduced || !media.hero.mobileVideo) return;
-
-    const isPhone = window.matchMedia('(max-width: 639px)').matches;
-    if (!isPhone) return;
+    if (reduced || !media.hero.video) return;
 
     const conn = navigator.connection;
     if (conn && (conn.saveData || /2g|3g/.test(conn.effectiveType || ''))) return;
@@ -74,8 +70,10 @@ export function Hero() {
       className="relative flex min-h-[92svh] items-center justify-center overflow-hidden bg-espresso"
     >
       {/* Background. Slow ken-burns drift — 18s, 1.06 scale. Transform only,
-          GPU-composited, and killed entirely under reduced motion. Art
-          directed: a 3:4 crop below `sm`, the 3:2 plate from `sm` up. */}
+          GPU-composited, and killed entirely under reduced motion. Video (all
+          breakpoints) when the gates above allow it; otherwise the
+          art-directed image pair — a 3:4 crop below `sm`, the 3:2 plate from
+          `sm` up. */}
       <motion.div
         className="absolute inset-0"
         initial={{ scale: reduced ? 1 : 1.06 }}
@@ -84,34 +82,36 @@ export function Hero() {
       >
         {videoOk ? (
           <video
-            className="absolute inset-0 h-full w-full object-cover sm:hidden"
-            poster={media.hero.mobileSrc}
+            className="absolute inset-0 h-full w-full object-cover"
+            poster={media.hero.src}
             autoPlay
             muted
             loop
             playsInline
             aria-hidden="true"
           >
-            <source src={media.hero.mobileVideo} type="video/mp4" />
+            <source src={media.hero.video} type="video/mp4" />
           </video>
         ) : (
-          <Image
-            src={media.hero.mobileSrc}
-            alt={media.hero.alt}
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover sm:hidden"
-          />
+          <>
+            <Image
+              src={media.hero.mobileSrc}
+              alt={media.hero.alt}
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover sm:hidden"
+            />
+            <Image
+              src={media.hero.src}
+              alt={media.hero.alt}
+              fill
+              priority
+              sizes="100vw"
+              className="hidden object-cover sm:block"
+            />
+          </>
         )}
-        <Image
-          src={media.hero.src}
-          alt={media.hero.alt}
-          fill
-          priority
-          sizes="100vw"
-          className="hidden object-cover sm:block"
-        />
       </motion.div>
 
       {/* Scrim. Sits between image and content; never intercepts pointer events.
