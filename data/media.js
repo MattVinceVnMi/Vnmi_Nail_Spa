@@ -44,7 +44,7 @@ export const media = {
     mobileSrc: '/hero-mobile.jpg',
     mobileWidth: 1200,
     mobileHeight: 1600,
-    mobileVideo: null,
+    mobileVideo: '/hero-mobile.mp4',
     alt: 'The V&Mi Nail Spa studio interior in Boca Raton',
   },
 
