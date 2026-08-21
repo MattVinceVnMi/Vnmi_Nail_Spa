@@ -11,15 +11,15 @@ import { ease, duration, spring } from '@/lib/motion';
 /**
  * 360° virtual tour of the studio.
  *
- * FACADE PATTERN, and it matters here. The tour is a full WebGL panorama
- * viewer — megabytes of textures, its own JS runtime. Dropping a live iframe
- * into the page would make every visitor pay for it on first load, including
- * the majority who never scroll this far. So the section renders a poster with
- * a play affordance, and the iframe is only mounted when someone asks for it.
+ * The tour is a full WebGL panorama viewer — megabytes of textures, its own
+ * JS runtime. Rather than a click-gated facade, it autoloads once the section
+ * is ~40% in view (IntersectionObserver, one-shot) so visitors who scroll
+ * this far see it running without an extra tap. The poster stays as a
+ * fallback for the instant before that fires.
  *
  * That's also why the poster wrapper is `aspect-video` — the box is reserved
  * before either the poster or the iframe resolves, so swapping one for the
- * other on click cannot shift the page. CLS stays 0.
+ * other cannot shift the page. CLS stays 0.
  *
  * Espresso surface: a 360 viewer reads better surrounded by darkness (same
  * reason cinemas aren't painted white), and it keeps the page's light/dark
@@ -30,6 +30,26 @@ export function VirtualTour() {
   const [started, setStarted] = useState(false);
   const [ready, setReady] = useState(false);
   const frameRef = useRef(null);
+  const sectionRef = useRef(null);
+
+  // Autoplay once the section is meaningfully in view — one shot, no re-trigger.
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return undefined;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setStarted(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.4 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   // Focus the frame once it's up so keyboard users land inside the tour.
   useEffect(() => {
@@ -43,7 +63,7 @@ export function VirtualTour() {
   }
 
   return (
-    <section id="tour" className="bg-espresso py-section text-bg">
+    <section id="tour" ref={sectionRef} className="bg-espresso py-section text-bg">
       <div className="shell">
         <Reveal className="mx-auto max-w-2xl text-center">
           <span className="mx-auto mb-6 block h-px w-10 bg-accent" aria-hidden="true" />
