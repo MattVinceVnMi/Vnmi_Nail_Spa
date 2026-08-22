@@ -24,6 +24,12 @@ import { ease, duration, spring } from '@/lib/motion';
  * Espresso surface: a 360 viewer reads better surrounded by darkness (same
  * reason cinemas aren't painted white), and it keeps the page's light/dark
  * alternation intact between gallery (bone) and testimonials (linen).
+ *
+ * Desktop only — `hidden lg:block` on the section. Below `lg` the section
+ * never mounts into layout, so the IntersectionObserver never fires and the
+ * WebGL viewer never loads on a phone; it's a design/perf call, not a content
+ * removal (nothing else on the page links to `#tour`, so there's no dangling
+ * anchor to worry about).
  */
 export function VirtualTour() {
   const reduced = useReducedMotion();
@@ -63,7 +69,7 @@ export function VirtualTour() {
   }
 
   return (
-    <section id="tour" ref={sectionRef} className="bg-espresso py-section text-bg">
+    <section id="tour" ref={sectionRef} className="hidden bg-espresso py-section text-bg lg:block">
       <div className="shell">
         <Reveal className="mx-auto max-w-2xl text-center">
           <span className="mx-auto mb-6 block h-px w-10 bg-accent" aria-hidden="true" />
