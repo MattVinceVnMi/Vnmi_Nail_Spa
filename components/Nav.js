@@ -176,7 +176,10 @@ export function Nav() {
               </div>
 
               <ul className="flex flex-col">
-                {nav.map((item) => (
+                {/* desktopOnly items (Virtual Tour) point at a section that's
+                    hidden below `lg` — omitted here rather than shipped as a
+                    dead tap target. */}
+                {nav.filter((item) => !item.desktopOnly).map((item) => (
                   <li key={item.href} className="border-b border-border last:border-b-0">
                     <a
                       href={item.href}

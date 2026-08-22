@@ -98,12 +98,17 @@ export const business = {
   },
 };
 
+/**
+ * `desktopOnly` items are dropped from the mobile sheet menu (see Nav.js) —
+ * used for "Virtual Tour", since <VirtualTour> itself is hidden below `lg`
+ * and a nav link to a section that isn't there would be a dead tap target.
+ */
 export const nav = [
   { label: 'Story', href: '#about' },
   { label: 'Services', href: '#services' },
   { label: 'Gallery', href: '#gallery' },
   { label: 'Testimonials', href: '#testimonials' },
-  { label: 'Questions', href: '#faq' },
+  { label: 'Virtual Tour', href: '#tour', desktopOnly: true },
 ];
 
 /**
