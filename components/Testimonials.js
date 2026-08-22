@@ -71,8 +71,8 @@ export function Testimonials() {
       <div className="shell">
         <SectionHeading
           align="center"
-          eyebrow="Happy clients"
-          title="What people say."
+          eyebrow="Client experiences"
+          title="What guests appreciate."
           className="mx-auto max-w-2xl"
         />
 
@@ -211,7 +211,7 @@ export function Testimonials() {
         </Reveal>
 
         <p className="mt-8 text-center text-[0.8125rem] text-muted">
-          Sample reviews shown — to be replaced with verified Google reviews.
+          Sample testimonials shown for layout preview; replace with verified customer reviews before publishing.
         </p>
       </div>
     </section>

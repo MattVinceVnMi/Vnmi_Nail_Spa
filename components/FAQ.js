@@ -14,28 +14,28 @@ import { ease, duration } from '@/lib/motion';
  */
 const FAQS = [
   {
-    q: 'Do I need an appointment?',
-    a: 'Walk-ins are welcome whenever a chair is open, but Fridays and Saturdays fill early. A call ahead is the surest way to get the time and the technician you want.',
+    q: 'Are appointments required?',
+    a: 'Walk-ins are welcome when availability allows. We recommend booking ahead, especially for Fridays and Saturdays, so we can reserve the service and timing you prefer.',
   },
   {
-    q: 'How long does dipping powder actually last?',
-    a: 'Three to four weeks on most people, without chipping. It is lighter than acrylic, cures without UV light, and is vitamin-enriched — which is why it is the set we recommend for anyone trying to grow their natural nails out.',
+    q: 'How long does dipping powder last?',
+    a: 'Dipping powder typically wears for three to four weeks, depending on your nails and daily routine. It offers durable color with a lightweight feel and cures without UV light.',
   },
   {
-    q: 'What makes the Jelly Spa Pedicure different?',
-    a: 'The jelly soak holds heat roughly four times longer than water, so the treatment stays warm from the first minute to the last. It includes a 10-minute soak, a warmed neck wrap, and the complete Deluxe Pedicure on top.',
+    q: 'What is included with the Jelly Spa Pedicure?',
+    a: 'The service includes a 10-minute jelly soak, a warmed neck wrap, and the complete Deluxe Pedicure. The jelly treatment helps the soak stay warm and adds a relaxing finishing touch.',
   },
   {
-    q: 'How do you handle sanitation?',
-    a: 'Metal implements are autoclave-sterilised between every guest. Files, buffers, and pumice are single-use and opened in front of you. Pedicure basins are pipeless and fully disinfected after each service.',
+    q: 'How do you approach sanitation?',
+    a: 'Metal implements are sterilized between guests. Files, buffers, and pumice are single-use, and pedicure basins are thoroughly disinfected after every service.',
   },
   {
-    q: 'Can you remove work from another salon?',
-    a: 'Yes — gel, acrylic, and dip removals are all on the menu. We soak off rather than drill down wherever the nail allows it, which takes longer but leaves the nail plate intact.',
+    q: 'Can you remove product applied at another salon?',
+    a: 'Yes. We offer gel, acrylic, and dipping powder removal. Whenever possible, we soak product off carefully rather than drilling down, helping protect the natural nail.',
   },
   {
-    q: 'Do you take children?',
-    a: 'We do. The Princess Manicure & Pedicure is designed for guests under 10 — shorter, gentler, and priced accordingly.',
+    q: 'Do you offer services for children?',
+    a: 'Yes. The Princess Manicure & Pedicure is designed for guests under 10 with a shorter, gentler experience.',
   },
 ];
 
@@ -49,10 +49,10 @@ export function FAQ() {
       <div className="shell">
         <div className="grid gap-10 sm:gap-14 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
           <div className="lg:sticky lg:top-28 lg:self-start">
-            <SectionHeading eyebrow="Questions" title="Before you come in." />
+            <SectionHeading eyebrow="Frequently asked" title="Before your appointment." />
             <Reveal className="mt-8">
               <p className="max-w-prose text-body text-muted">
-                Anything not covered here, call the studio —{' '}
+                If your question is not answered here, please call the studio at{' '}
                 <a
                   href={business.phone.href}
                   className="text-accent-ink underline decoration-accent/40 underline-offset-4 transition-colors duration-hover ease-out hover:text-ink"

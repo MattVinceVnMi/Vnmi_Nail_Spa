@@ -26,26 +26,26 @@ const PILLARS = [
   {
     id: 'sanitation',
     icon: ShieldCheck,
-    title: 'Sanitation, without exception',
-    body: 'Hospital-grade autoclave sterilisation. Single-use files and buffers, opened in front of you. Pipeless jetless basins, disinfected between every guest.',
+    title: 'Sanitation, without compromise',
+    body: 'Professional sterilization practices, single-use files and buffers, and thoroughly disinfected pedicure basins help keep every appointment clean and comfortable.',
   },
   {
     id: 'products',
     icon: Leaf,
-    title: 'Products that respect the nail',
-    body: 'Vitamin-enriched dipping powders, low-odour liquid gel, organic sugar scrubs. Nothing that trades the health of the natural nail for a faster set.',
+    title: 'Products selected with care',
+    body: 'From dipping powder and liquid gel to nourishing scrubs, we select products with a focus on comfort, wear, and the condition of the natural nail.',
   },
   {
     id: 'unhurried',
     icon: Clock3,
-    title: 'Unhurried by design',
-    body: 'We book to the treatment, not the clock. A deluxe pedicure gets the full massage it was written for — including the parts most salons quietly skip.',
+    title: 'Time for the full service',
+    body: 'Each service is paced to its treatment. Deluxe appointments include the massage and finishing details that make the experience feel complete.',
   },
   {
     id: 'finished',
     icon: Sparkles,
-    title: 'Finished, not just done',
-    body: 'Cuticles shaped, edges cleaned, sidewalls straight. The details nobody photographs are the ones that decide whether a set still looks right in week three.',
+    title: 'Finished with intention',
+    body: 'Clean cuticles, refined edges, and balanced shaping create the polished finish that continues to look beautiful well after your appointment.',
   },
 ];
 
@@ -57,12 +57,12 @@ export function Studio() {
           <span className="mx-auto mb-6 block h-px w-10 bg-accent" aria-hidden="true" />
           <p className="text-eyebrow font-medium uppercase text-accent">Why V&amp;Mi</p>
           <h2 className="mt-5 font-display text-display-lg">
-            The difference is in what you don&rsquo;t have to{' '}
-            <span className="italic text-accent">think about</span>.
+            The V&amp;Mi difference is in the details you can{' '}
+            <span className="italic text-accent">feel</span>.
           </h2>
           <p className="mx-auto mt-6 max-w-prose text-body text-bg/65 sm:text-body-lg">
-            Most people can&rsquo;t name what makes one salon feel better than another. It&rsquo;s
-            usually these four things, and none of them are the polish colour.
+            A polished experience is built from more than color. It comes from thoughtful service,
+            careful preparation, and a studio that makes it easy to settle in.
           </p>
         </Reveal>
 
@@ -108,8 +108,8 @@ export function Studio() {
         <Reveal className="mt-12 border-t border-bg/10 pt-10 sm:mt-20 sm:pt-16">
           <blockquote className="mx-auto max-w-3xl text-center">
             <p className="font-display text-2xl italic sm:text-display-md">
-              &ldquo;You should leave with your hands looking like you have someone who does them —
-              not like you went somewhere.&rdquo;
+              &ldquo;You should leave feeling cared for, confident in your finish, and ready to enjoy
+              your nails.&rdquo;
             </p>
             <footer className="mt-6 text-eyebrow uppercase text-accent sm:mt-8">The V&amp;Mi standard</footer>
           </blockquote>

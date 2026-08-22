@@ -24,13 +24,13 @@ export function CTA() {
       <div className="shell relative z-10 py-section text-center text-bg">
         <Reveal>
           <span className="mx-auto mb-6 block h-px w-10 bg-accent" aria-hidden="true" />
-          <p className="text-eyebrow font-medium uppercase text-accent">Ready?</p>
+          <p className="text-eyebrow font-medium uppercase text-accent">Book your visit</p>
           <h2 className="mx-auto mt-6 max-w-3xl font-display text-display-lg">
-            The chair is warm and the <span className="italic text-accent">kettle is on</span>.
+            Your next appointment <span className="italic text-accent">starts here</span>.
           </h2>
           <p className="mx-auto mt-6 max-w-prose text-body-lg text-bg/65">
-            Book online in under a minute, or call the studio and we&rsquo;ll find you a time.
-            Walk-ins are welcome whenever a chair is open — Fridays and Saturdays fill early.
+            Reserve your preferred service online, or call the studio and our team will help you find
+            a convenient time. Walk-ins are welcome when availability allows.
           </p>
         </Reveal>
 

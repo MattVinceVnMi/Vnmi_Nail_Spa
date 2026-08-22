@@ -133,7 +133,7 @@ export function Hero() {
           initial="hidden"
           animate="visible"
         >
-          A neighborhood nail studio on St Andrews Boulevard
+          A refined nail salon on St Andrews Boulevard
         </motion.p>
 
         <h1 className="mt-8 font-display text-display-xl text-bg">
@@ -159,8 +159,8 @@ export function Hero() {
           initial="hidden"
           animate="visible"
         >
-          Step into relaxation and let us bring your vision to life. From classic looks to new
-          colors and trending designs, we offer a huge selection of colors to match any mood.
+          Enjoy a calm, personalized appointment with precise manicures, restorative pedicures, and
+          polished finishes designed around your style.
         </motion.p>
 
         {/* Online booking is the primary action — it converts higher than a

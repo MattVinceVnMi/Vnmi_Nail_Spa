@@ -55,7 +55,7 @@ export function Gallery() {
           align="center"
           eyebrow="Our work"
           title="Beauty in every detail."
-          lede="A glimpse of what leaves the studio. Every set below was done in-house."
+          lede="Explore a curated preview of manicures, pedicures, nail art, and polished finishes."
           className="mx-auto max-w-2xl"
         />
 
@@ -109,7 +109,7 @@ export function Gallery() {
         </RevealGroup>
 
         <p className="mt-8 text-center text-[0.8125rem] text-muted">
-          Photography placeholders — real studio images to follow.
+          Stock imagery shown for layout preview; replace with V&Mi&rsquo;s own work as it becomes available.
         </p>
       </div>
 

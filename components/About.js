@@ -48,32 +48,32 @@ export function About() {
               <span className="rule mb-6" aria-hidden="true" />
               <p className="eyebrow mb-5">Our story</p>
               <h2 className="font-display text-display-lg text-ink">
-                Unwind in quiet. Crafted with care.{' '}
-                <span className="italic text-accent">Built to last.</span>
+                Thoughtful care. Refined results.{' '}
+                <span className="italic text-accent">Every appointment.</span>
               </h2>
             </Reveal>
 
             <Reveal className="mt-7" delay={0.06}>
               <p className="max-w-prose text-body text-muted sm:text-body-lg">
-                Nail care shouldn&rsquo;t mean compromise. You shouldn&rsquo;t have to choose between a
-                salon that&rsquo;s fast and one that&rsquo;s safe, or between a pretty set and healthy
-                nails.
+                Nail care should feel considered from the first consultation to the final detail. We
+                pair precise technique with a calm, welcoming experience and results that wear
+                beautifully.
               </p>
             </Reveal>
 
             <Reveal className="mt-5" delay={0.1}>
               <p className="max-w-prose text-body text-muted sm:text-body-lg">
-                At V&amp;Mi on St Andrews Boulevard, we do things differently. The room is calm and
-                peaceful, the workspace is obsessively clean, and every appointment gets the breathing
-                room it needs. No timers, no assembly lines, and zero shortcuts on sterilization.
+                At V&amp;Mi Nail Spa on St Andrews Boulevard, each appointment is tailored to your nails,
+                your style, and the finish you want. Our studio is clean, comfortable, and designed to
+                give every service the time it deserves.
               </p>
             </Reveal>
 
             <Reveal className="mt-5" delay={0.14}>
               <p className="max-w-prose text-body text-muted sm:text-body-lg">
-                We bring high-end quality and honest advice to every service&mdash;because a great
-                manicure isn&rsquo;t just about how it looks when you walk out; it&rsquo;s about how
-                cared for your hands feel when you&rsquo;re here.
+                From classic manicures and restorative pedicures to dip, gel, enhancements, waxing,
+                and nail art, we offer thoughtful recommendations and polished results&mdash;so you
+                leave feeling cared for, never rushed.
               </p>
             </Reveal>
 

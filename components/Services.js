@@ -37,7 +37,7 @@ export function Services() {
         <SectionHeading
           eyebrow="Services"
           title="The menu."
-          lede="Pricing Note: Final pricing varies depending on nail length, custom shaping, and natural nail condition. Please give us a call or speak with the manager for exact pricing details prior to booking."
+          lede="Explore our complete service menu. Final pricing may vary based on nail length, shaping, and natural nail condition; please call the salon for exact pricing before booking."
           className="lg:max-w-2xl"
         />
 
@@ -86,12 +86,11 @@ export function Services() {
 
         <Reveal className="mt-12 border-t border-border pt-8 sm:mt-20 sm:pt-10">
           <p className="max-w-prose text-body text-muted">
-            We strive for your complete satisfaction, but please note that all services are final
-            and non-refundable. Any follow-up fixes or adjustments are provided as a courtesy
-            accommodation at our discretion and are not guaranteed.
+            We are committed to your satisfaction. Services are final and non-refundable; any
+            follow-up adjustment is considered at management&rsquo;s discretion and is not guaranteed.
             <br />
-            Additionally, management reserves the right to refuse or discontinue service to anyone
-            at any time.
+            For the comfort and safety of our guests and team, management reserves the right to
+            refuse or discontinue service when necessary.
           </p>
         </Reveal>
       </div>

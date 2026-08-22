@@ -73,13 +73,13 @@ export function VirtualTour() {
       <div className="shell">
         <Reveal className="mx-auto max-w-2xl text-center">
           <span className="mx-auto mb-6 block h-px w-10 bg-accent" aria-hidden="true" />
-          <p className="text-eyebrow font-medium uppercase text-accent">Look around</p>
+          <p className="text-eyebrow font-medium uppercase text-accent">The studio</p>
           <h2 className="mt-5 font-display text-display-lg">
-            Walk the studio <span className="italic text-accent">before you come in</span>.
+            Take a closer look <span className="italic text-accent">before you arrive</span>.
           </h2>
           <p className="mx-auto mt-6 max-w-prose text-body-lg text-bg/65">
-            A full 360° tour of the space — the chairs, the stations, the pedicure room. Drag to
-            look around, or tap a hotspot to move through.
+            Explore the manicure stations, pedicure area, and details that make V&amp;Mi a comfortable
+            place to slow down and enjoy your appointment.
           </p>
         </Reveal>
 
@@ -94,7 +94,7 @@ export function VirtualTour() {
               >
                 <Image
                   src={business.tour.poster}
-                  alt="The V&Mi Nail Spa studio interior"
+                  alt="A manicure service in progress"
                   fill
                   sizes="(max-width: 1216px) 100vw, 1216px"
                   className="object-cover opacity-70 transition-opacity duration-hover ease-out group-hover:opacity-80"

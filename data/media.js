@@ -1,9 +1,10 @@
 /**
  * IMAGE MANIFEST
  *
- * Every image on the site is declared here once. The files in /public are
- * on-brand PLACEHOLDERS — real dimensions, real aspect ratios, obviously
- * temporary.
+ * Every image on the site is declared here once. The non-hero files in /public
+ * use temporary stock photography at the correct dimensions and aspect ratios.
+ * The hero assets remain intentionally unchanged until the final hero direction
+ * and photography are approved.
  *
  * TO REPLACE: drop your photo into /public using the same filename and the
  * same aspect ratio. Nothing else changes. Update `alt` while you're there —
@@ -49,12 +50,12 @@ export const media = {
     alt: 'The V&Mi Nail Spa studio interior in Boca Raton',
   },
 
-  // About / story portrait. 4:5.
+  // About / story portrait. 4:5 temporary stock image.
   about: {
     src: '/about.jpg',
     width: 1200,
     height: 1500,
-    alt: 'A manicure in progress at V&Mi Nail Spa',
+    alt: 'A manicure in progress with precise nail care',
   },
 
   /**
@@ -62,21 +63,19 @@ export const media = {
    * give it your strongest portrait shot (4:5). The rest are square (1:1).
    */
   gallery: [
-    { src: '/gallery-01.jpg', width: 1200, height: 1500, alt: 'Almond-shape ombré dipping powder set', featured: true },
-    { src: '/gallery-02.jpg', width: 1000, height: 1000, alt: 'Classic pink and white French manicure' },
-    { src: '/gallery-03.jpg', width: 1000, height: 1000, alt: 'Gel manicure in a soft neutral shade' },
-    { src: '/gallery-04.jpg', width: 1000, height: 1000, alt: 'Hand-painted nail art detail' },
-    { src: '/gallery-05.jpg', width: 1000, height: 1000, alt: 'Jelly spa pedicure treatment' },
-    { src: '/gallery-06.jpg', width: 1000, height: 1000, alt: 'Coffin-shape liquid gel full set' },
-    { src: '/gallery-07.jpg', width: 1000, height: 1000, alt: 'Chrome finish on a short square set' },
-    { src: '/gallery-08.jpg', width: 1000, height: 1000, alt: 'Paraffin treatment for hands' },
+    { src: '/gallery-01.jpg', width: 1200, height: 1500, alt: 'Almond-shaped manicure in a deep purple finish', featured: true },
+    { src: '/gallery-02.jpg', width: 1000, height: 1000, alt: 'Curated nail polish colors ready for a manicure' },
+    { src: '/gallery-03.jpg', width: 1000, height: 1000, alt: 'Glossy purple manicure detail' },
+    { src: '/gallery-04.jpg', width: 1000, height: 1000, alt: 'Nail care service in progress' },
+    { src: '/gallery-05.jpg', width: 1000, height: 1000, alt: 'Pedicure detail with a rich red finish' },
+    { src: '/gallery-06.jpg', width: 1000, height: 1000, alt: 'Colorful painted nail detail' },
+    { src: '/gallery-07.jpg', width: 1000, height: 1000, alt: 'Almond-shaped manicure detail' },
+    { src: '/gallery-08.jpg', width: 1000, height: 1000, alt: 'Hand holding a nail polish jar' },
   ],
 
   /**
-   * "Why V&Mi" pillar cards, 4:3. These four are abstract gradient plates —
-   * generated in-brand (no photo shoot exists yet), not a photograph, so
-   * treat them as more temporary than the other placeholders here. Swap in a
-   * real photo per `id` at the same filename and ratio when it exists.
+   * "Why V&Mi" pillar cards, 4:3. Temporary stock photography is used until
+   * the salon's own studio photography is ready.
    */
   pillars: [
     {
@@ -84,45 +83,43 @@ export const media = {
       src: '/pillar-sanitation.jpg',
       width: 1200,
       height: 900,
-      alt: 'Sterilization tools and single-use files at V&Mi Nail Spa',
+      alt: 'Careful manicure service with professional tools',
     },
     {
       id: 'products',
       src: '/pillar-products.jpg',
       width: 1200,
       height: 900,
-      alt: 'Vitamin-enriched dipping powders and gentle nail care products',
+      alt: 'Nail polish colors prepared for a professional service',
     },
     {
       id: 'unhurried',
       src: '/pillar-unhurried.jpg',
       width: 1200,
       height: 900,
-      alt: 'An unhurried pedicure treatment in progress',
+      alt: 'Pedicure detail with a polished red finish',
     },
     {
       id: 'finished',
       src: '/pillar-finished.jpg',
       width: 1200,
       height: 900,
-      alt: 'A finished manicure with clean, straight sidewalls',
+      alt: 'A finished almond-shaped manicure',
     },
   ],
 
   /**
-   * Services menu category banners, 21:9. One per category in
-   * data/services.js, matched by `id`. Same gradient-placeholder situation as
-   * `pillars` — swap in a real photo per category at the same filename and
-   * ratio when it exists.
+   * Services menu category banners, 21:9. One temporary stock image per
+   * category, matched by `id`; replace with V&Mi photography when available.
    */
   categories: [
-    { id: 'manicure', src: '/category-manicure.jpg', width: 1680, height: 720, alt: 'A manicure in progress at V&Mi Nail Spa' },
-    { id: 'pedicure', src: '/category-pedicure.jpg', width: 1680, height: 720, alt: 'A pedicure treatment at V&Mi Nail Spa' },
-    { id: 'dipping-powder', src: '/category-dipping-powder.jpg', width: 1680, height: 720, alt: 'A dipping powder full set' },
-    { id: 'enhancements', src: '/category-enhancements.jpg', width: 1680, height: 720, alt: 'Solar and liquid gel nail enhancements' },
-    { id: 'waxing', src: '/category-waxing.jpg', width: 1680, height: 720, alt: 'A waxing treatment at V&Mi Nail Spa' },
-    { id: 'add-ons', src: '/category-add-ons.jpg', width: 1680, height: 720, alt: 'Custom nail art and finishing touches' },
-    { id: 'kids', src: '/category-kids.jpg', width: 1680, height: 720, alt: 'A princess manicure and pedicure for kids' },
+    { id: 'manicure', src: '/category-manicure.jpg', width: 1680, height: 720, alt: 'Manicure service in progress' },
+    { id: 'pedicure', src: '/category-pedicure.jpg', width: 1680, height: 720, alt: 'Pedicure detail with polished toes' },
+    { id: 'dipping-powder', src: '/category-dipping-powder.jpg', width: 1680, height: 720, alt: 'Glossy purple manicure detail' },
+    { id: 'enhancements', src: '/category-enhancements.jpg', width: 1680, height: 720, alt: 'Almond-shaped manicure detail' },
+    { id: 'waxing', src: '/category-waxing.jpg', width: 1680, height: 720, alt: 'Polished manicure detail' },
+    { id: 'add-ons', src: '/category-add-ons.jpg', width: 1680, height: 720, alt: 'Nail polish colors ready for a custom finish' },
+    { id: 'kids', src: '/category-kids.jpg', width: 1680, height: 720, alt: 'Playful nail art detail' },
   ],
 };
 
